@@ -13,7 +13,7 @@ Google Doc Embedder lets you embed PDF files and PowerPoint presentations in a w
 
 Similar to services like Sribd, Google Doc Embedder will allow you to embed a PDF or PPT (PowerPoint) file directly into your page or post, not requiring the user to have Adobe Reader or PowerPoint installed to view the contents. Unlike Scribd, the files do not need to be uploaded to any service first - including Google Documents - but can exist anywhere accessible on your site or the internet.
 
-Note: This plugin utilizes an undocumented feature of the Google Document viewer, and as such it may be subject to hazards if their viewer unexpectedly changes drastically. In this unlikely event, the plugin should degrade nicely and not break your site. :)
+Note: This plugin utilizes an undocumented feature of the Google Document viewer, and as such it may be subject to hazards if their viewer unexpectedly changes drastically. In this unlikely event, the plugin should degrade nicely and not break your site.
 
 == Installation ==
 
