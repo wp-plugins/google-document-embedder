@@ -49,8 +49,8 @@ View the source on the web page where you've embedded the viewer. In order to de
 
 == Changelog ==
 
-=0.2=
-*Initial beta release. Fully functional, but no niceties...
+= 0.2 =
+* Initial beta release. Fully functional, but no niceties...
 
 == License ==
 

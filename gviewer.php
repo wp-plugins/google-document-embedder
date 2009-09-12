@@ -3,9 +3,9 @@
 /*
 Plugin Name: Google Doc Embedder
 Plugin URI: http://wordpress.org/extend/plugins/google-document-embedder/
-Description: Lets you embed PDF files and PowerPoint presentations in a web page using the Google Document Viewer.
+Description: Lets you embed PDF files and PowerPoint presentations in a page or post using the Google Document Viewer.
 Author: Kevin Davis
-Version: 0.2
+Version: 0.2.1
 Author URI: http://www.davismetro.com/
 */
 
