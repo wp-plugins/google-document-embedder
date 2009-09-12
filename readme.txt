@@ -18,9 +18,8 @@ Note: This plugin utilizes an undocumented feature of the Google Document viewer
 == Installation ==
 
 1. Upload the entire `google-document-embedder` folder to the `/wp-content/plugins/` directory.
-1. Activate the plugin through the 'Plugins' menu in WordPress.
-
-You will find 'Contact' menu in your WordPress admin panel.
+2. Activate the plugin through the 'Plugins' menu in WordPress.
+3. Done.
 
 For basic usage, please see the [FAQ].
 
