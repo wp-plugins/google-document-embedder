@@ -33,6 +33,7 @@ Use the custom shortcode `[gview]` to embed the file, as shown:
 
 `[gview file="http://url.to/file.pdf"]`
 
+
 Optional attributes:
 
 * `save=` : Set to 0 if you wish to suppress the direct download link to the file under the embedded viewer
@@ -47,6 +48,9 @@ View the source on the web page where you've embedded the viewer. In order to de
 1. Appearance of embedded viewer (blank file)
 
 == Changelog ==
+
+= 0.3 =
+* Error checking added
 
 = 0.2 =
 * Initial beta release. Fully functional, but no niceties...
