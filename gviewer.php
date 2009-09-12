@@ -24,6 +24,8 @@ Version: 1.0.3
     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
+include('wpframe.php');
+
 // usage: [gview file="http://path.to/file.pdf" save="1" width="600" height="500"]
 function gviewer_func($atts) {
 
@@ -103,8 +105,8 @@ function gde_option_page() {
 	add_options_page(t('GDE Settings'), t('GDE Settings'), 'administrator', basename(__FILE__), 'gde_options');
 }
 function gde_options() {
-	if ( function_exists('current_user_can') && !current_user_can('manage_options') ) die(tx('An error occurred.'));
-	if (! user_can_access_admin_page()) wp_die( tx('You do not have sufficient permissions to access this page') );
+	if ( function_exists('current_user_can') && !current_user_can('manage_options') ) die(t('An error occurred.'));
+	if (! user_can_access_admin_page()) wp_die( t('You do not have sufficient permissions to access this page') );
 
 	require(ABSPATH. '/wp-content/plugins/google-document-embedder/options.php');
 }
