@@ -21,7 +21,9 @@ Note: This plugin utilizes an undocumented feature of the Google Document viewer
 2. Activate the plugin through the 'Plugins' menu in WordPress.
 3. Done.
 
-For basic usage, please see the [FAQ].
+For basic usage, please see the FAQ.
+
+Go to "GDE Settings" (under "Settings") in the admin panel to change defaults, or override individually using the shortcode syntax in the FAQ.
 
 == Frequently Asked Questions ==
 
@@ -46,8 +48,12 @@ View the source on the web page where you've embedded the viewer. In order to de
 == Screenshots ==
 
 1. Appearance of embedded viewer (blank file)
+2. Settings page
 
 == Changelog ==
+
+= 1.0 =
+* Added options page.
 
 = 0.3 =
 * Error checking added.
