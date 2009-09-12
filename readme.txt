@@ -52,6 +52,9 @@ View the source on the web page where you've embedded the viewer. In order to de
 
 == Changelog ==
 
+= 1.0.1 =
+* Installation bug fix.
+
 = 1.0 =
 * Added options page.
 
