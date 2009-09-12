@@ -105,8 +105,8 @@ function gde_option_page() {
 	add_options_page(t('GDE Settings'), t('GDE Settings'), 'administrator', basename(__FILE__), 'gde_options');
 }
 function gde_options() {
-	if ( function_exists('current_user_can') && !current_user_can('manage_options') ) die(tx('An error occurred.'));
-	if (! user_can_access_admin_page()) wp_die( tx('You do not have sufficient permissions to access this page') );
+	if ( function_exists('current_user_can') && !current_user_can('manage_options') ) die(t('An error occurred.'));
+	if (! user_can_access_admin_page()) wp_die( t('You do not have sufficient permissions to access this page') );
 
 	require(ABSPATH. '/wp-content/plugins/google-document-embedder/options.php');
 }

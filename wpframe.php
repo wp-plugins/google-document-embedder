@@ -39,7 +39,7 @@ function showMessage($message, $type='updated') {
 }
 
 /// Globalization function - Returns the transilated string
-function tx($message) {
+function t($message) {
 	return __($message, $GLOBALS['wpframe_plugin_name']);
 }
 
