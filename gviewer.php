@@ -104,14 +104,9 @@ function gde_option_page() {
 }
 function gde_options() {
 	if ( function_exists('current_user_can') && !current_user_can('manage_options') ) die(tx('An error occurred.'));
-	if (! user_can_access_admin_page()) wp_die( t('You do not have sufficient permissions to access this page') );
+	if (! user_can_access_admin_page()) wp_die( tx('You do not have sufficient permissions to access this page') );
 
 	require(ABSPATH. '/wp-content/plugins/google-document-embedder/options.php');
-}
-
-// localize errors
-function tx($message) {
-	return __($message, $GLOBALS['wpframe_plugin_name']);
 }
 
 // add additional settings link, for convenience
