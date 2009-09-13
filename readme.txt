@@ -1,6 +1,6 @@
 === Google Doc Embedder ===
 Contributors: k3davis
-Donation link: http://pledgie.com/campaigns/6048
+Donate link: http://pledgie.com/campaigns/6048
 Tags: pdf, ppt, powerpoint, google, embed, google docs, document
 Requires at least: 2.5
 Tested up to: 2.9-rare
