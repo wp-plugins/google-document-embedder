@@ -5,7 +5,7 @@ Plugin Name: Google Doc Embedder
 Plugin URI: http://wordpress.org/extend/plugins/google-document-embedder/
 Description: Lets you embed PDF files and PowerPoint presentations in a page or post using the Google Document Viewer.
 Author: Kevin Davis
-Version: 1.0.3
+Version: 1.5
 */
 
 /*  Copyright 2009 Kevin Davis. E-mail: kev@tnw.org
@@ -24,12 +24,13 @@ Version: 1.0.3
     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-include('wpframe.php');
+include_once('wpframe.php');
+include_once('functions.php');
 
 // usage: [gview file="http://path.to/file.pdf" save="1" width="600" height="500"]
 function gviewer_func($atts) {
 
-	// defaults
+	// current settings
 	$dl = get_option('gde_show_dl');
 	$wd = get_option('gde_default_width');
 	$ht = get_option('gde_default_height');
@@ -49,42 +50,58 @@ function gviewer_func($atts) {
 		$code = "\n<!-- GDE EMBED ERROR: invalid URL, please use fully qualified URL -->\n";
 	} elseif (!validType($file,$exts)) {
 		$code = "\n<!-- GDE EMBED ERROR: unsupported file type -->\n";
+	} elseif (!$fsize = validUrl($file)) {
+		$code = "\n<!-- GDE EMBED ERROR: file not found -->\n";
 	} else {
-	
+		$fn = basename($file);
+		$fnp = splitFilename($fn);
+		$fsize = formatBytes($fsize);
+		
 		$code=<<<HERE
-<iframe src="http://docs.google.com/gview?url=%U%&embedded=true" style="width:%W%px; height:%H%px;" frameborder="0"></iframe>
+<iframe src="http://docs.google.com/gview?url=%U%&embedded=true" style="width:%W%px; height:%H%px;" frameborder="0" class="gde-frame"></iframe>\n
 HERE;
+
+		if ($save == "1") {
+		
+			$dlMethod = get_option('gde_link_func');
+			if ($fnp[1] == "PDF") {
+				if ($dlMethod == "force" or $dlMethod == "force-mask") {
+					$dlFile = getPluginUrl();
+					$fileParts = parse_url($file);
+					$fileStr = str_replace($fileParts['scheme']."://","",$file);
+					$dlFile .= "/pdf.php?file=".$fileStr."&dl=1&fn=".$fn;
+					$target = "_self";
+				} elseif ($dlMethod == "default") {
+					$dlFile = $file;
+					$target = "_blank";
+				}
+				if ($dlMethod == "force-mask") {
+					$dlFile = shortUrl($dlFile);
+				}
+				
+			} else {
+				$dlFile = $file;
+				$target = "_blank";
+			}
+			$linkcode = "<p class=\"gde-link\"><a href=\"$dlFile\" target=\"$target\">$txt</a></p>";
+			
+			if (get_option('gde_link_pos') == "above") {
+				$code = $linkcode . '' . $code;
+			} else {
+				$code = $code . '' . $linkcode;
+			}
+		}
 
 		$code = str_replace("%U%", $file, $code);
 		$code = str_replace("%W%", $width, $code);
 		$code = str_replace("%H%", $height, $code);
-		if ($save == "1") {
-		$code .= "<p class=\"gde-dl\"><a href=\"$file\" target=\"_blank\">$txt</a></p>";
-		}
+		$code = str_replace("%FN", $fn, $code);
+		$code = str_replace("%FT", $fnp[1], $code);
+		$code = str_replace("%FS", $fsize, $code);
 		
 	}
 	
 	return $code;
-}
-
-function validLink($link) {
-
-$urlregex = "^https?\:\/\/([a-z0-9+!*(),;?&=\$_.-]+(\:[a-z0-9+!*(),;?&=\$_.-]+)?@)?[a-z0-9+\$_-]+(\.[a-z0-9+\$_-]+)*(\:[0-9]{2,5})?(\/([a-z0-9+\$_-]\.?)+)*\/?(\?[a-z+&\$_.-][a-z0-9;:@/&%=+\$_.-]*)?(#[a-z_.-][a-z0-9+\$_.-]*)?\$";
-
-    if (eregi($urlregex, $link)) {
-        return true;
-    } else {
-        return false;
-    }
-}
-
-function validType($link, $exts) {
-
-	if(preg_match("/($exts)$/i",$link)){
-        return true;
-    } else {
-        return false;
-    }
 }
 
 // activate plugin
@@ -93,10 +110,10 @@ function gde_activate() {
 	global $wpdb;
 	
 	// initial options
-	add_option('gde_default_width', '600');
-	add_option('gde_default_height', '500');
-	add_option('gde_show_dl', 1);
-	add_option('gde_link_text', 'download file');
+	$defaults = getDefaults();
+	foreach($defaults as $set => $val) {
+		add_option($set, $val);
+	}
 }
 
 // add an option page

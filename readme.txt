@@ -44,7 +44,7 @@ Optional attributes:
 * `height=` : To override the default height of the viewer, enter a new height value (number in pixels)
 
 = Nothing is showing up! What do I do? =
-View the source on the web page where you've embedded the viewer. In order to degrade gracefully in case an error occurs, error messages will be inserted as HTML comments in these pages at the spot the viewer is called.
+View the source on the web page where you've embedded the viewer. In order to degrade gracefully in case an error occurs, error messages will be inserted as HTML comments in these pages at the spot the viewer is called: `&lt;-- GDE ERROR: (error) --&gt;`
 
 = I wish the plug-in had feature XYZ... =
 That's not a question ;) but if you have any particular ideas on further development of this plug-in, please <a href="http://wordpress.org/tags/google-document-embedder?forum_id=10#postform">post a message</a> and I'll see what I can do.
@@ -55,6 +55,12 @@ That's not a question ;) but if you have any particular ideas on further develop
 2. Settings page
 
 == Changelog ==
+
+= 1.5 =
+* Improved error checking.
+* Improved customization options for download text.
+* Added option to override default browser behavior for PDF links (force download).
+* Added option to reset options to defaults.
 
 = 1.0.3 =
 * Installation bug fix.

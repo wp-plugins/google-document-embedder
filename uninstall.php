@@ -1,10 +1,10 @@
 <?php
+include_once('functions.php');
 
 // perform cleanup, be a good citizen
 
-$options = array('gde_default_width','gde_default_height','gde_show_dl','gde_link_text');
-
-foreach ($options as $opt) {
+$options = getDefaults();
+foreach ($options as $opt => $val) {
 	delete_option($opt);
 }
 
