@@ -29,7 +29,7 @@ Go to "GDE Settings" (under "Settings" in the admin panel) to change defaults, o
 == Frequently Asked Questions ==
 
 = What file types can be embedded? =
-This plug-in can embed PDF or PPT files only. The file to embed must first be available somewhere on the internet. You can upload it to your WordPress site using the standard techniques, or link to a file on another site. **You do not need to save the file in Google Documents first to embed it.**
+This plug-in can embed PDF or PPT files only. The file to embed must first be available somewhere on the internet. You can upload it to your WordPress site using the standard techniques, or link to a file on another site. **You do not need to save the file in Google Documents first to embed it - in fact, you should NOT do so, unless that file is shared publicly and does not require a login to be viewed.** This plug-in works with publicly available documents only.
 
 = How do I embed a file in my page or post? =
 Use the custom shortcode `[gview]` to embed the file, as shown:
