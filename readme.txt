@@ -29,7 +29,7 @@ Go to "GDE Settings" (under "Settings" in the admin panel) to change defaults, o
 == Frequently Asked Questions ==
 
 = What file types can be embedded? =
-This plug-in can embed PDF or PPT files only. The file to embed must first be available somewhere on the internet. You can upload it to your WordPress site using the standard techniques, or link to a file on another site. **You do not need to save the file in Google Documents first to embed it - in fact, you should NOT do so, unless that file is shared publicly and does not require a login to be viewed.** This plug-in works with publicly available documents only.
+This plug-in can embed PDF or PPT files only. The file to embed must first be available somewhere on the internet. You can upload it to your WordPress site using the standard techniques, or link to a file on another site. **You do not need to save the file in Google Documents first to embed it.**
 
 = How do I embed a file in my page or post? =
 Use the custom shortcode `[gview]` to embed the file, as shown:
@@ -44,7 +44,7 @@ Optional attributes:
 * `height=` : To override the default height of the viewer, enter a new height value (number in pixels)
 
 = Nothing is showing up! What do I do? =
-View the source on the web page where you've embedded the viewer. In order to degrade gracefully in case an error occurs, error messages will be inserted as HTML comments in these pages at the spot the viewer is called.
+View the source on the web page where you've embedded the viewer. In order to degrade gracefully in case an error occurs, error messages will be inserted as HTML comments in these pages at the spot the viewer is called: `&lt;-- GDE ERROR: (error) --&gt;`
 
 = I wish the plug-in had feature XYZ... =
 That's not a question ;) but if you have any particular ideas on further development of this plug-in, please <a href="http://wordpress.org/tags/google-document-embedder?forum_id=10#postform">post a message</a> and I'll see what I can do.
@@ -56,6 +56,12 @@ That's not a question ;) but if you have any particular ideas on further develop
 
 == Changelog ==
 
+= 1.5.1 =
+* Fixed: Viewer not hidden if linked file not found
+* Fixed: Divide by zero error if file size can't be determined
+* Fixed: PHP error if file not found (force download link)
+* Fixed: File not found falsely reported on some web servers
+
 = 1.5 =
 * Improved error checking.
 * Improved customization options for download text.
@@ -63,7 +69,7 @@ That's not a question ;) but if you have any particular ideas on further develop
 * Added option to reset options to defaults.
 
 = 1.0.3 =
-* Installation bug fix.
+* Installation bug fix. If you installed 1.0, please completely delete and reinstall plugin. Sorry :(
 
 = 1.0 =
 * Added options page.

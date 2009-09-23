@@ -20,12 +20,10 @@ if (!$file) {
 }
 
 $file = "http://".$file;
-$handle = fopen("$file", "rb");
 
-if (!$handle) {
+if (!$handle = fopen("$file", "rb")) {
   # file doesn't exist
   echo "<html>Nonexistant filename, action cancelled.</html>\n";
-  fclose($handle);
   exit;
 }
 

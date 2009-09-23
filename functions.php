@@ -51,8 +51,8 @@ function validUrl($url) {
     $data = curl_exec($handle);
     curl_close($handle);
 	
-	$contentLength = "Unknown";
-	if (preg_match('/Content-Length: (\d+)/', $data, $matches)) {
+	$contentLength = 0;
+	if (preg_match('/Content-Length: (\d+)/i', $data, $matches)) {
 		$contentLength = (int)$matches[1];
 	}
     return $contentLength;
@@ -73,15 +73,19 @@ function splitFilename($filename) {
 }
 
 function formatBytes($bytes, $precision = 2) {
-    $units = array('B', 'KB', 'MB', 'GB', 'TB');
+	if ($bytes < 1) {
+		return "Unknown";
+	} else {
+		$units = array('B', 'KB', 'MB', 'GB', 'TB');
   
-    $bytes = max($bytes, 0);
-    $pow = floor(($bytes ? log($bytes) : 0) / log(1024));
-    $pow = min($pow, count($units) - 1);
+		$bytes = max($bytes, 0);
+		$pow = floor(($bytes ? log($bytes) : 0) / log(1024));
+		$pow = min($pow, count($units) - 1);
   
-    $bytes /= pow(1024, $pow);
+		$bytes /= pow(1024, $pow);
   
-    return round($bytes, $precision) . '' . $units[$pow];
+		return round($bytes, $precision) . '' . $units[$pow];
+	}
 }
 
 function sanitizeOpt($value) {
