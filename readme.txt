@@ -29,7 +29,7 @@ Go to "GDE Settings" (under "Settings" in the admin panel) to change defaults, o
 == Frequently Asked Questions ==
 
 = What file types can be embedded? =
-This plug-in can embed PDF or PPT files only. The file to embed must first be available somewhere on the internet. You can upload it to your WordPress site using the standard techniques, or link to a file on another site. **You do not need to save the file in Google Documents first to embed it.**
+This plug-in can embed PDF or PPT files only. The file to embed must first be available somewhere on the internet. You can upload it to your WordPress site using the standard techniques, or link to a file on another site. **You do not need to save the file in Google Documents first to embed it, and in fact you should NOT do so, unless the file is shared publicly (can be accessed without logging in).**
 
 = How do I embed a file in my page or post? =
 Use the custom shortcode `[gview]` to embed the file, as shown:
@@ -44,7 +44,7 @@ Optional attributes:
 * `height=` : To override the default height of the viewer, enter a new height value (number in pixels)
 
 = Nothing is showing up! What do I do? =
-View the source on the web page where you've embedded the viewer. In order to degrade gracefully in case an error occurs, error messages will be inserted as HTML comments in these pages at the spot the viewer is called: `&lt;-- GDE ERROR: (error) --&gt;`
+View the source on the web page where you've embedded the viewer. In order to degrade gracefully in case an error occurs, error messages will be inserted as HTML comments in these pages at the spot the viewer is called.
 
 = I wish the plug-in had feature XYZ... =
 That's not a question ;) but if you have any particular ideas on further development of this plug-in, please <a href="http://wordpress.org/tags/google-document-embedder?forum_id=10#postform">post a message</a> and I'll see what I can do.

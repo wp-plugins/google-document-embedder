@@ -2,7 +2,7 @@
 
 /*
 Plugin Name: Google Doc Embedder
-Plugin URI: http://wordpress.org/extend/plugins/google-document-embedder/
+Plugin URI: http://davismetro.com/gde/
 Description: Lets you embed PDF files and PowerPoint presentations in a page or post using the Google Document Viewer.
 Author: Kevin Davis
 Version: 1.5.1
@@ -83,7 +83,7 @@ HERE;
 				$dlFile = $file;
 				$target = "_blank";
 			}
-			$linkcode = "<p class=\"gde-link\"><a href=\"$dlFile\" target=\"$target\">$txt</a></p>";
+			$linkcode = "<p class=\"gde-text\"><a href=\"$dlFile\" target=\"$target\" class=\"gde-link\">$txt</a></p>";
 			
 			if (get_option('gde_link_pos') == "above") {
 				$code = $linkcode . '' . $code;
