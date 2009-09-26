@@ -56,6 +56,10 @@ That's not a question ;) but if you have any particular ideas on further develop
 
 == Changelog ==
 
+= 1.5.2 =
+* Fixed: Invalid settings link in plugin list (WordPress MU)
+* Added: Additional class names for optional stylesheet use
+
 = 1.5.1 =
 * Fixed: Viewer not hidden if linked file not found
 * Fixed: Divide by zero error if file size can't be determined

@@ -68,6 +68,7 @@ function splitFilename($filename) {
     {
         $basename = substr($filename, 0, $pos);
         $extension = strtoupper(substr($filename, $pos+1));
+		if ($extension == "TIF") { $extension = "TIFF"; }
         return array($basename, $extension);
     }
 }

@@ -3,9 +3,9 @@
 /*
 Plugin Name: Google Doc Embedder
 Plugin URI: http://davismetro.com/gde/
-Description: Lets you embed PDF files and PowerPoint presentations in a page or post using the Google Document Viewer.
+Description: Lets you embed PDF files, PowerPoint presentations, and TIFF images in a web page using the Google Docs Viewer.
 Author: Kevin Davis
-Version: 1.5.1
+Version: 1.6
 */
 
 /*  Copyright 2009 Kevin Davis. E-mail: kev@tnw.org
@@ -43,7 +43,7 @@ function gviewer_func($atts) {
 	), $atts));
 
 	// supported file types - list acceptable extensions separated by |
-	$exts = "pdf|ppt";
+	$exts = "pdf|ppt|tif|tiff";
 	
 	// check link for validity
 	if (!validLink($file)){
@@ -58,7 +58,7 @@ function gviewer_func($atts) {
 		$fsize = formatBytes($fsize);
 		
 		$code=<<<HERE
-<iframe src="http://docs.google.com/gview?url=%U%&embedded=true" style="width:%W%px; height:%H%px;" frameborder="0" class="gde-frame"></iframe>\n
+<iframe src="http://docs.google.com/viewer?url=%U%&embedded=true" style="width:%W%px; height:%H%px;" frameborder="0" class="gde-frame"></iframe>\n
 HERE;
 
 		if ($save == "1") {
@@ -132,7 +132,7 @@ function gde_options() {
 $plugin = plugin_basename(__FILE__); 
 function my_plugin_actlinks( $links ) { 
  // Add a link to this plugin's settings page
- $settings_link = '<a href="/wp-admin/options-general.php?page=gviewer.php">Settings</a>'; 
+ $settings_link = '<a href="options-general.php?page=gviewer.php">Settings</a>'; 
  array_unshift( $links, $settings_link ); 
  return $links; 
 }
