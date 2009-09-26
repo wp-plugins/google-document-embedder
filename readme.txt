@@ -1,20 +1,20 @@
 === Google Doc Embedder ===
 Contributors: k3davis
 Donate link: http://pledgie.com/campaigns/6048
-Tags: pdf, ppt, powerpoint, google, embed, google docs, document
+Tags: pdf, ppt, tiff, powerpoint, google, embed, google docs, document
 Requires at least: 2.5
 Tested up to: 2.9-rare
 Stable tag: trunk
 
-Lets you embed PDF files and PowerPoint presentations in a web page using the Google Document Viewer.
+Lets you embed PDF, PowerPoint presentations (PPT), and TIFF images in a web page using the Google Docs Viewer.
 
 == Description ==
 
-Google Doc Embedder lets you embed PDF files and PowerPoint presentations in a web page using the Google Document Viewer.
+Google Doc Embedder lets you embed PDF files, PowerPoint presentations, and TIFF images in a web page using the Google Docs Viewer.
 
-Similar to services like Scribd, Google Doc Embedder will allow you to embed a PDF or PPT (PowerPoint) file directly into your page or post, not requiring the user to have Adobe Reader or PowerPoint installed to view the contents. Unlike Scribd, the files do not need to be uploaded to any service first - including Google Documents - but can exist anywhere accessible on your site or the internet.
+Similar to services like Scribd, Google Doc Embedder will allow you to embed a PDF, PowerPoint (PPT), or TIFF file directly into your page or post, not requiring the user to have Adobe Reader, PowerPoint, or other software installed to view the contents. Unlike Scribd, the files do not need to be uploaded to any service first - including Google Documents - but can exist anywhere accessible on your site or the internet.
 
-Note: This plugin utilizes an undocumented feature of the Google Document viewer, and as such it may be subject to hazards if their viewer unexpectedly changes drastically. In this unlikely event, the plugin should degrade nicely and not break your site.
+Note: While previously the functionality of this plug-in relied upon an undocumented feature of the Google Docs Viewer, this feature is now "official" and presumably reliable in the long term. However, use of this plug-in now does imply your agreement with Google's published <a href="http://docs.google.com/viewer/TOS?hl=en" target="_blank">Terms of Service</a>.
 
 == Installation ==
 
@@ -29,7 +29,7 @@ Go to "GDE Settings" (under "Settings" in the admin panel) to change defaults, o
 == Frequently Asked Questions ==
 
 = What file types can be embedded? =
-This plug-in can embed PDF or PPT files only. The file to embed must first be available somewhere on the internet. You can upload it to your WordPress site using the standard techniques, or link to a file on another site. **You do not need to save the file in Google Documents first to embed it, and in fact you should NOT do so, unless the file is shared publicly (can be accessed without logging in).**
+This plug-in can embed PDF, PowerPoint (PPT), or TIFF files only. The file to embed must first be available somewhere on the internet. You can upload it to your WordPress site using the standard techniques, or link to a file on another site. **You do not need to save the file in Google Documents first to embed it, and in fact you should NOT do so, unless the file is shared publicly (can be accessed without logging in).**
 
 = How do I embed a file in my page or post? =
 Use the custom shortcode `[gview]` to embed the file, as shown:
@@ -56,9 +56,11 @@ That's not a question ;) but if you have any particular ideas on further develop
 
 == Changelog ==
 
-= 1.5.2 =
-* Fixed: Invalid settings link in plugin list (WordPress MU)
+= 1.6 =
 * Added: Additional class names for optional stylesheet use
+* Added: Support to embed TIFF images
+* Fixed: Invalid settings link in plugin list (WordPress MU)
+* Changed: Embed path to conform to Google published guidelines
 
 = 1.5.1 =
 * Fixed: Viewer not hidden if linked file not found
