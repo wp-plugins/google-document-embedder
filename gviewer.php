@@ -5,7 +5,7 @@ Plugin Name: Google Doc Embedder
 Plugin URI: http://davismetro.com/gde/
 Description: Lets you embed PDF files, PowerPoint presentations, and TIFF images in a web page using the Google Docs Viewer.
 Author: Kevin Davis
-Version: 1.6
+Version: 1.7
 */
 
 /*  Copyright 2009 Kevin Davis. E-mail: kev@tnw.org
@@ -35,6 +35,10 @@ function gviewer_func($atts) {
 	$wd = get_option('gde_default_width');
 	$ht = get_option('gde_default_height');
 	$txt = get_option('gde_link_text');
+	$xlogo = get_option('gde_xlogo');
+	$xfull = get_option('gde_xfull');
+	$xpgup = get_option('gde_xpgup');
+	$xzoom = get_option('gde_xzoom');
 	extract(shortcode_atts(array(
 		'file' => '',
 		'save' => $dl,
@@ -53,20 +57,31 @@ function gviewer_func($atts) {
 	} elseif (!$fsize = validUrl($file)) {
 		$code = "\n<!-- GDE EMBED ERROR: file not found -->\n";
 	} else {
+		$pUrl = getPluginUrl();
+	
 		$fn = basename($file);
 		$fnp = splitFilename($fn);
 		$fsize = formatBytes($fsize);
 		
 		$code=<<<HERE
-<iframe src="http://docs.google.com/viewer?url=%U%&embedded=true" style="width:%W%px; height:%H%px;" frameborder="0" class="gde-frame"></iframe>\n
+<iframe src="%U%" style="width:%W%px; height:%H%px;" frameborder="0" class="gde-frame"></iframe>\n
 HERE;
+
+		$lnk = "http://docs.google.com/viewer?url=".urlencode($file)."&embedded=true";
+		if ($xlogo || $xfull || $xpgup || $xzoom) {
+			$lnk = $pUrl."/altview.php?loc=".urlencode($lnk);
+			if ($xlogo == "1") { $lnk .= "&logo=no"; }
+			if ($xfull == "1") { $lnk .= "&full=no"; }
+			if ($xpgup == "1") { $lnk .= "&pgup=no"; }
+			if ($xzoom == "1") { $lnk .= "&zoom=no"; }
+		}
 
 		if ($save == "1") {
 		
 			$dlMethod = get_option('gde_link_func');
 			if ($fnp[1] == "PDF") {
 				if ($dlMethod == "force" or $dlMethod == "force-mask") {
-					$dlFile = getPluginUrl();
+					$dlFile = $pUrl;
 					$fileParts = parse_url($file);
 					$fileStr = str_replace($fileParts['scheme']."://","",$file);
 					$dlFile .= "/pdf.php?file=".$fileStr."&dl=1&fn=".$fn;
@@ -79,9 +94,12 @@ HERE;
 					$dlFile = shortUrl($dlFile);
 				}
 				
+			} elseif ($dlMethod == "force-mask") {
+				$dlFile = shortUrl($file);
+				$target = "_self";
 			} else {
 				$dlFile = $file;
-				$target = "_blank";
+				$target = "_self";
 			}
 			$linkcode = "<p class=\"gde-text\"><a href=\"$dlFile\" target=\"$target\" class=\"gde-link\">$txt</a></p>";
 			
@@ -92,7 +110,7 @@ HERE;
 			}
 		}
 
-		$code = str_replace("%U%", $file, $code);
+		$code = str_replace("%U%", $lnk, $code);
 		$code = str_replace("%W%", $width, $code);
 		$code = str_replace("%H%", $height, $code);
 		$code = str_replace("%FN", $fn, $code);
@@ -131,7 +149,6 @@ function gde_options() {
 // add additional settings link, for convenience
 $plugin = plugin_basename(__FILE__); 
 function my_plugin_actlinks( $links ) { 
- // Add a link to this plugin's settings page
  $settings_link = '<a href="options-general.php?page=gviewer.php">Settings</a>'; 
  array_unshift( $links, $settings_link ); 
  return $links; 

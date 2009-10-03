@@ -51,10 +51,14 @@ That's not a question ;) but if you have any particular ideas on further develop
 
 == Screenshots ==
 
-1. Appearance of embedded viewer (blank file)
+1. Default appearance of embedded viewer
 2. Settings page
 
 == Changelog ==
+
+= 1.7 =
+* Added: Ability to hide selected viewer toolbar buttons
+* Fixed: Mask URL option ignored on non-PDF file types
 
 = 1.6 =
 * Added: Additional class names for optional stylesheet use

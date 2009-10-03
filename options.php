@@ -12,6 +12,10 @@ if(isset($_REQUEST['defaults'])) {
 	update_option('gde_link_text', $set['gde_link_text']);
 	update_option('gde_link_pos', $set['gde_link_pos']);
 	update_option('gde_link_func', $set['gde_link_func']);
+	update_option('gde_xlogo', $set['gde_xlogo']);
+	update_option('gde_xfull', $set['gde_xfull']);
+	update_option('gde_xpgup', $set['gde_xpgup']);
+	update_option('gde_xzoom', $set['gde_xzoom']);
 	
 	showMessage("Options reset to defaults");
 } elseif(isset($_REQUEST['submit'])) {
@@ -21,6 +25,26 @@ if(isset($_REQUEST['defaults'])) {
 		update_option('gde_show_dl', 1);
 	} else {
 		update_option('gde_show_dl', 0);
+	}
+	if(isset($_POST['gde_xlogo'])) {
+		update_option('gde_xlogo', 1);
+	} else {
+		update_option('gde_xlogo', 0);
+	}
+	if(isset($_POST['gde_xfull'])) {
+		update_option('gde_xfull', 1);
+	} else {
+		update_option('gde_xfull', 0);
+	}
+	if(isset($_POST['gde_xpgup'])) {
+		update_option('gde_xpgup', 1);
+	} else {
+		update_option('gde_xpgup', 0);
+	}
+	if(isset($_POST['gde_xzoom'])) {
+		update_option('gde_xzoom', 1);
+	} else {
+		update_option('gde_xzoom', 0);
 	}
 	if(isset($_POST['gde_default_width'])) {
 		$neww = $_POST['gde_default_width'];
@@ -52,8 +76,8 @@ if(isset($_REQUEST['defaults'])) {
 
 <table class="form-table">
 <tr valign="top">
-<td colspan="2"><strong>Global Viewer Size</strong><br/>
-To override on individual posts, manually set <code>height=</code> and <code>width=</code> (number in px) in the post shortcode.</td>
+<td colspan="2"><strong>Global Viewer Options</strong><br/>
+To override size on individual posts, manually set <code>height=</code> and <code>width=</code> (number in px) in the post shortcode.</td>
 </tr>
 <tr valign="top">
 <th scope="row">Default Width</th>
@@ -62,6 +86,14 @@ To override on individual posts, manually set <code>height=</code> and <code>wid
 <tr valign="top">
 <th scope="row">Default Height</th>
 <td><input type="text" size="5" name="gde_default_height" value="<?php echo get_option('gde_default_height'); ?>" /> px</td>
+</tr>
+<tr valign="top">
+<th scope="row">Hide From Toolbar:</th>
+<td><?php showCheck('gde_xlogo', t('Google Logo')); ?>
+<?php showCheck('gde_xpgup', t('Single/Double Page View')); ?>
+<?php showCheck('gde_xzoom', t('Zoom In/Out')); ?>
+<?php showCheck('gde_xfull', t('Open in New Window')); ?>
+</td>
 </tr>
 <tr valign="top">
 <td colspan="2"><strong>Download Link Options</strong><br/>
