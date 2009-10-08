@@ -36,6 +36,7 @@ Use the custom shortcode `[gview]` to embed the file, as shown:
 
 `[gview file="http://url.to/file.pdf"]`
 
+Note: the `file=` attribute (pointing to the full URL of the file) is **required**.
 
 Optional attributes:
 
