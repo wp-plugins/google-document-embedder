@@ -48,7 +48,7 @@ function validUrl($url) {
     }
     curl_setopt($handle, CURLOPT_HEADER, true);
     curl_setopt($handle, CURLOPT_FAILONERROR, true); 
-    curl_setopt($handle, CURLOPT_HTTPHEADER, Array("Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.9.1.3) Gecko/20090824 Firefox/3.5.3") ); // needed for some sites (such as digg.com)
+    curl_setopt($handle, CURLOPT_HTTPHEADER, Array("User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.9.1.3) Gecko/20090824 Firefox/3.5.3") ); // needed for some sites (such as digg.com)
     curl_setopt($handle, CURLOPT_NOBODY, true);
 	curl_setopt($handle, CURLOPT_FOLLOWLOCATION, true); // only useful in case of redirects
     curl_setopt($handle, CURLOPT_RETURNTRANSFER, true);

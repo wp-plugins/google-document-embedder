@@ -56,6 +56,10 @@ That's not a question ;) but if you have any particular ideas on further develop
 
 == Changelog ==
 
+= 1.7.1 =
+* Fixed: Misleading error message if file= attribute not used
+* Fixed: Bug in curl header may cause false "not found" error
+
 = 1.7 =
 * Added: Ability to hide selected viewer toolbar buttons
 * Fixed: Mask URL option ignored on non-PDF file types
