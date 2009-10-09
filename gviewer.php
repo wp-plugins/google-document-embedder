@@ -5,7 +5,7 @@ Plugin Name: Google Doc Embedder
 Plugin URI: http://davismetro.com/gde/
 Description: Lets you embed PDF files, PowerPoint presentations, and TIFF images in a web page using the Google Docs Viewer.
 Author: Kevin Davis
-Version: 1.7.1
+Version: 1.7.2
 */
 
 /*  Copyright 2009 Kevin Davis. E-mail: kev@tnw.org
@@ -35,10 +35,6 @@ function gviewer_func($atts) {
 	$wd = get_option('gde_default_width');
 	$ht = get_option('gde_default_height');
 	$txt = get_option('gde_link_text');
-	$xlogo = get_option('gde_xlogo');
-	$xfull = get_option('gde_xfull');
-	$xpgup = get_option('gde_xpgup');
-	$xzoom = get_option('gde_xzoom');
 	extract(shortcode_atts(array(
 		'file' => '',
 		'save' => $dl,
@@ -70,13 +66,6 @@ function gviewer_func($atts) {
 HERE;
 
 		$lnk = "http://docs.google.com/viewer?url=".urlencode($file)."&embedded=true";
-		if ($xlogo || $xfull || $xpgup || $xzoom) {
-			$lnk = $pUrl."/altview.php?loc=".urlencode($lnk);
-			if ($xlogo == "1") { $lnk .= "&logo=no"; }
-			if ($xfull == "1") { $lnk .= "&full=no"; }
-			if ($xpgup == "1") { $lnk .= "&pgup=no"; }
-			if ($xzoom == "1") { $lnk .= "&zoom=no"; }
-		}
 
 		if ($save == "1") {
 		
@@ -133,6 +122,17 @@ function gde_activate() {
 	$defaults = getDefaults();
 	foreach($defaults as $set => $val) {
 		add_option($set, $val);
+	}
+	
+	// remove legacy options if present
+	$legacy_options = array(
+		"gde_xlogo" => 0,
+		"gde_xfull" => 0,
+		"gde_xpgup" => 0,
+		"gde_xzoom" => 0
+	);
+	foreach ($legacy_options as $lopt => $val) {
+		delete_option($lopt);
 	}
 }
 

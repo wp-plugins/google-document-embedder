@@ -8,11 +8,7 @@ function getDefaults() {
 	"gde_show_dl" => 1,
 	"gde_link_text" => "Download (%FT, %FS)",
 	"gde_link_pos" => "below",
-	"gde_link_func" => "default",
-	"gde_xlogo" => 0,
-	"gde_xfull" => 0,
-	"gde_xpgup" => 0,
-	"gde_xzoom" => 0
+	"gde_link_func" => "default"
 	);
 	
 	return $defaults;

@@ -52,10 +52,13 @@ That's not a question ;) but if you have any particular ideas on further develop
 
 == Screenshots ==
 
-1. Default appearance of embedded viewer
+1. Appearance of embedded viewer
 2. Settings page
 
 == Changelog ==
+
+= 1.7.2 =
+* Removed: toolbar button options (Google prevents this from working, sorry)
 
 = 1.7.1 =
 * Fixed: Misleading error message if file= attribute not used
