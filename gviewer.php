@@ -5,7 +5,7 @@ Plugin Name: Google Doc Embedder
 Plugin URI: http://davismetro.com/gde/
 Description: Lets you embed PDF files, PowerPoint presentations, and TIFF images in a web page using the Google Docs Viewer.
 Author: Kevin Davis
-Version: 1.7.2
+Version: 1.7.3
 */
 
 /*  Copyright 2009 Kevin Davis. E-mail: kev@tnw.org

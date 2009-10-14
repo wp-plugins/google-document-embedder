@@ -57,11 +57,14 @@ That's not a question ;) but if you have any particular ideas on further develop
 
 == Changelog ==
 
+= 1.7.3 =
+* Fixed: File URL containing tilde (~) considered invalid (thanks mjurek)
+
 = 1.7.2 =
 * Removed: toolbar button options (Google prevents this from working, sorry)
 
 = 1.7.1 =
-* Fixed: Misleading error message if file= attribute not used
+* Fixed: Misleading error message if file= attribute not used (thanks ersavla)
 * Fixed: Bug in curl header may cause false "not found" error
 
 = 1.7 =
