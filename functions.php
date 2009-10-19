@@ -4,30 +4,33 @@ function getDefaults() {
 	// set global default settings
 	$defaults = array(
 	"gde_default_width" => "600",
+	"gde_width_type" => "px",
 	"gde_default_height" => "500",
+	"gde_height_type" => "px",
 	"gde_show_dl" => 1,
 	"gde_link_text" => "Download (%FT, %FS)",
 	"gde_link_pos" => "below",
 	"gde_link_func" => "default"
 	);
-	
 	return $defaults;
+}
+
+function getObsolete() {
+	// deprecated options
+	$legacy_options = array(
+		"gde_xlogo" => 0,
+		"gde_xfull" => 0,
+		"gde_xpgup" => 0,
+		"gde_xzoom" => 0
+	);
+	return $legacy_options;
 }
 
 function validLink($link) {
 
-    $urlregex = "^(https?://)"
-        . "?(([0-9A-Za-z_!~*'().&=+$%-]+: )?[0-9A-Za-z_!~*'().&=+$%-]+@)?" //user@
-        . "(([0-9]{1,3}\.){3}[0-9]{1,3}" // IP- 199.194.52.184
-        . "|" // allows either IP or domain
-        . "([0-9A-Za-z_!~*'()-]+\.)*" // tertiary domain(s)- www.
-        . "([0-9A-Za-z][0-9A-Za-z-]{0,61})?[0-9A-Za-z]\." // second level domain
-        . "[A-Za-z]{2,6})" // first level domain- .com or .museum
-        . "(:[0-9]{1,4})?" // port number- :80
-        . "((/?)|" // a slash isn't required if there is no file name
-        . "(/[0-9A-Za-z_!~*'().;?:@&=+$,%#-]+)+/?)$"; 
+    $urlregex = '/^(([\w]+:)?\/\/)?(([\d\w]|%[a-fA-f\d]{2,2})+(:([\d\w]|%[a-fA-f\d]{2,2})+)?@)?([\d\w][-\d\w]{0,253}[\d\w]\.)+[\w]{2,4}(:[\d]+)?(\/([-+_~.\d\w]|%[a-fA-f\d]{2,2})*)*(\?(&amp;?([-+_~.\d\w]|%[a-fA-f\d]{2,2})=?)*)?(#([-+_~.\d\w]|%[a-fA-f\d]{2,2})*)?$/i';
 
-    if (eregi($urlregex, $link)) {
+    if (preg_match($urlregex, $link)) {
         return true;
     } else {
         return false;
@@ -36,7 +39,7 @@ function validLink($link) {
 
 function validType($link, $exts) {
 
-	if(preg_match("/($exts)$/i",$link)){
+    if(preg_match("/($exts)$/i",$link)) {
         return true;
     } else {
         return false;
@@ -47,8 +50,7 @@ function validUrl($url) {
 
 	// checks for existence and returns filesize
     $handle = curl_init($url);
-    if (false === $handle)
-    {
+    if (false === $handle) {
         return false;
     }
     curl_setopt($handle, CURLOPT_HEADER, true);
@@ -98,8 +100,11 @@ function formatBytes($bytes, $precision = 2) {
 	}
 }
 
-function sanitizeOpt($value) {
-	$value = ereg_replace('[^0-9]+', '', $value);
+function sanitizeOpt($value, $type) {
+	$value = preg_replace("/[^0-9]*/", '', $value);
+	if (($type == "pc") && ($value > 100)) {
+		$value = "100";
+	}
 	return $value;
 }
 
@@ -111,7 +116,6 @@ function getPluginUrl() {
 
 	return plugins_url(plugin_basename(dirname(__FILE__)));
 	}
-
 
 function shortUrl($u) {
 	return file_get_contents('http://tinyurl.com/api-create.php?url='.$u);

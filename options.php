@@ -7,7 +7,9 @@ if(isset($_REQUEST['defaults'])) {
 	// reset to plug-in defaults
 	$set = getDefaults();
 	update_option('gde_default_width', $set['gde_default_width']);
+	update_option('gde_width_type', $set['gde_width_type']);
 	update_option('gde_default_height', $set['gde_default_height']);
+	update_option('gde_height_type', $set['gde_height_type']);
 	update_option('gde_show_dl', $set['gde_show_dl']);
 	update_option('gde_link_text', $set['gde_link_text']);
 	update_option('gde_link_pos', $set['gde_link_pos']);
@@ -24,11 +26,17 @@ if(isset($_REQUEST['defaults'])) {
 	}
 	if(isset($_POST['gde_default_width'])) {
 		$neww = $_POST['gde_default_width'];
-		if (strlen($neww) > 0) update_option('gde_default_width', sanitizeOpt($neww));
+		if (strlen($neww) > 0) update_option('gde_default_width', sanitizeOpt($neww, $_POST['gde_width_type']));
+	}
+	if(isset($_POST['gde_width_type'])) {
+		update_option('gde_width_type', $_POST['gde_width_type']);
 	}
 	if(isset($_POST['gde_default_height'])) {
 		$newh = $_POST['gde_default_height'];
-		if (strlen($newh) > 0) update_option('gde_default_height', sanitizeOpt($newh));
+		if (strlen($newh) > 0) update_option('gde_default_height', sanitizeOpt($newh, $_POST['gde_height_type']));
+	}
+	if(isset($_POST['gde_height_type'])) {
+		update_option('gde_height_type', $_POST['gde_height_type']);
 	}
 	if(isset($_POST['gde_link_text'])) {
 		$newt = $_POST['gde_link_text'];
@@ -53,15 +61,21 @@ if(isset($_REQUEST['defaults'])) {
 <table class="form-table">
 <tr valign="top">
 <td colspan="2"><strong>Global Viewer Options</strong><br/>
-To override size on individual posts, manually set <code>height=</code> and <code>width=</code> (number in px) in the post shortcode.</td>
+To override size on individual posts, manually set in the post shortcode using (for example) <code>height="400"</code> (px) or <code>width="80%"</code>.</td>
 </tr>
 <tr valign="top">
 <th scope="row">Default Width</th>
-<td><input type="text" size="5" name="gde_default_width" value="<?php echo get_option('gde_default_width'); ?>" /> px</td>
+<td><input type="text" size="5" name="gde_default_width" value="<?php echo get_option('gde_default_width'); ?>" /> <select name="gde_width_type">
+<?php showOption('px', 'gde_width_type', t('px')); ?>
+<?php showOption('pc', 'gde_width_type', t('%')); ?>
+</select></td>
 </tr>
 <tr valign="top">
 <th scope="row">Default Height</th>
-<td><input type="text" size="5" name="gde_default_height" value="<?php echo get_option('gde_default_height'); ?>" /> px</td>
+<td><input type="text" size="5" name="gde_default_height" value="<?php echo get_option('gde_default_height'); ?>" /> <select name="gde_height_type">
+<?php showOption('px', 'gde_height_type', t('px')); ?>
+<?php showOption('pc', 'gde_height_type', t('%')); ?>
+</select></td>
 </tr>
 <tr valign="top">
 <td colspan="2"><strong>Download Link Options</strong><br/>

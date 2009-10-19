@@ -8,14 +8,9 @@ foreach ($options as $opt => $val) {
 	delete_option($opt);
 }
 
-// remove legacy options if present
+// remove deprecated options if present
 
-$legacy_options = array(
-	"gde_xlogo" => 0,
-	"gde_xfull" => 0,
-	"gde_xpgup" => 0,
-	"gde_xzoom" => 0
-);
+$legacy_options = getObsolete();
 foreach ($legacy_options as $lopt => $val) {
 	delete_option($lopt);
 }

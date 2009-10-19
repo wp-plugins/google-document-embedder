@@ -5,7 +5,7 @@ Plugin Name: Google Doc Embedder
 Plugin URI: http://davismetro.com/gde/
 Description: Lets you embed PDF files, PowerPoint presentations, and TIFF images in a web page using the Google Docs Viewer.
 Author: Kevin Davis
-Version: 1.7.3
+Version: 1.8
 */
 
 /*  Copyright 2009 Kevin Davis. E-mail: kev@tnw.org
@@ -32,27 +32,40 @@ function gviewer_func($atts) {
 
 	// current settings
 	$dl = get_option('gde_show_dl');
-	$wd = get_option('gde_default_width');
-	$ht = get_option('gde_default_height');
 	$txt = get_option('gde_link_text');
 	extract(shortcode_atts(array(
 		'file' => '',
 		'save' => $dl,
-		'width' => $wd,
-		'height' => $ht
+		'width' => '',
+		'height' => '',
+		'force' => ''
 	), $atts));
-
+	$width = str_replace("px", "", trim($width));
+	if (!$width || !preg_match("/^\d+%?$/", $width)) {
+	    $width = get_option('gde_default_width');
+		if (get_option('gde_width_type') == "pc") {
+			$width .= "%";
+		}
+	}
+	$height = str_replace("px", "", trim($height));
+	if (!$height || !preg_match("/^\d+%?$/", $height)) {
+		$height = get_option('gde_default_height');
+		if (get_option('gde_height_type') == "pc") {
+			$height .= "%";
+		}
+	}
+	
 	// supported file types - list acceptable extensions separated by |
 	$exts = "pdf|ppt|tif|tiff";
 	
 	// check link for validity
 	if (!$file) {
 		$code = "\n<!-- GDE EMBED ERROR: file attribute not found (check syntax) -->\n";
-	} elseif (!validLink($file)){
+	} elseif ((!validLink($file)) && ($force !== "1")) {
 		$code = "\n<!-- GDE EMBED ERROR: invalid URL, please use fully qualified URL -->\n";
-	} elseif (!validType($file,$exts)) {
+	} elseif ((!validType($file,$exts)) && ($force !== "1")) {
 		$code = "\n<!-- GDE EMBED ERROR: unsupported file type -->\n";
-	} elseif (!$fsize = validUrl($file)) {
+	} elseif ((!$fsize = validUrl($file)) && ($force !== "1")) {
 		$code = "\n<!-- GDE EMBED ERROR: file not found -->\n";
 	} else {
 		$pUrl = getPluginUrl();
@@ -62,7 +75,7 @@ function gviewer_func($atts) {
 		$fsize = formatBytes($fsize);
 		
 		$code=<<<HERE
-<iframe src="%U%" style="width:%W%px; height:%H%px;" frameborder="0" class="gde-frame"></iframe>\n
+<iframe src="%U%" width="%W%" height="%H%" frameborder="0" style="min-width:305px;" class="gde-frame"></iframe>\n
 HERE;
 
 		$lnk = "http://docs.google.com/viewer?url=".urlencode($file)."&embedded=true";
@@ -124,13 +137,8 @@ function gde_activate() {
 		add_option($set, $val);
 	}
 	
-	// remove legacy options if present
-	$legacy_options = array(
-		"gde_xlogo" => 0,
-		"gde_xfull" => 0,
-		"gde_xpgup" => 0,
-		"gde_xzoom" => 0
-	);
+	// remove deprecated options if present
+	$legacy_options = getObsolete();
 	foreach ($legacy_options as $lopt => $val) {
 		delete_option($lopt);
 	}
@@ -152,7 +160,7 @@ function gde_options() {
 $plugin = plugin_basename(__FILE__); 
 function my_plugin_actlinks( $links ) { 
  $settings_link = '<a href="options-general.php?page=gviewer.php">Settings</a>'; 
- array_unshift( $links, $settings_link ); 
+ array_unshift($links, $settings_link); 
  return $links; 
 }
 add_filter("plugin_action_links_$plugin", 'my_plugin_actlinks' );

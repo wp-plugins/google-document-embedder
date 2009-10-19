@@ -29,7 +29,10 @@ Go to "GDE Settings" (under "Settings" in the admin panel) to change defaults, o
 == Frequently Asked Questions ==
 
 = What file types can be embedded? =
-This plug-in can embed PDF, PowerPoint (PPT), or TIFF files only. The file to embed must first be available somewhere on the internet. You can upload it to your WordPress site using the standard techniques, or link to a file on another site. **You do not need to save the file in Google Documents first to embed it, and in fact you should NOT do so, unless the file is shared publicly (can be accessed without logging in).**
+This plug-in can embed PDF, PowerPoint (PPT), or TIFF files only. The file to embed must first be publicly available somewhere on the internet. You can upload it to your WordPress site using the standard techniques, or link to a file on another site.
+
+= Will it embed password-protected documents/folders/sites? =
+Most likely, no. If your file requires a login to view - such as being saved to Google Docs without a public URL, or in a protected directory, or is behind a firewall (on your intranet, etc.) the viewer will probably not be able to access the file. This is what is meant above, that the document should be "publicly available." In low-security situations, you can upload the file to a "secret," publicly readable folder and mask its location with the plug-in settings (using TinyURL) - however this does not make it impossible for a savvy user to find the file.
 
 = How do I embed a file in my page or post? =
 Use the custom shortcode `[gview]` to embed the file, as shown:
@@ -41,14 +44,14 @@ Note: the `file=` attribute (pointing to the full URL of the file) is **required
 Optional attributes:
 
 * `save=` : Set to 0 if you wish to suppress the direct download link to the file under the embedded viewer (1 for on, by default)
-* `width=` : To override the default width of the viewer, enter a new width value (number in pixels)
-* `height=` : To override the default height of the viewer, enter a new height value (number in pixels)
+* `width=` : To override the default width of the viewer, enter a new width value - e.g., "400" (px) or "80%"
+* `height=` : To override the default height of the viewer, enter a new height value - e.g., "400" (px) or "80%"
 
 = Nothing is showing up! What do I do? =
 View the source on the web page where you've embedded the viewer. In order to degrade gracefully in case an error occurs, error messages will be inserted as HTML comments in these pages at the spot the viewer is called.
 
 = I wish the plug-in had feature XYZ... =
-That's not a question ;) but if you have any particular ideas on further development of this plug-in, please <a href="http://wordpress.org/tags/google-document-embedder?forum_id=10#postform">post a message</a> and I'll see what I can do.
+That's not a question ;) but if you have any particular ideas on further development of this plug-in, please <a href="http://wordpress.org/tags/google-document-embedder?forum_id=10#postform">on the forum</a> or privately using the <a href="http://www.davismetro.com/gde/support/">support form</a> and I'll see what I can do.
 
 == Screenshots ==
 
@@ -56,6 +59,10 @@ That's not a question ;) but if you have any particular ideas on further develop
 2. Settings page
 
 == Changelog ==
+
+= 1.8 =
+* Added: Ability to set height/width to percentage (thanks eturfboer)
+* Fixed: Compatibility with PHP 5.3+, various function tuning
 
 = 1.7.3 =
 * Fixed: File URL containing tilde (~) considered invalid (thanks mjurek)
