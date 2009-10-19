@@ -31,8 +31,8 @@ Go to "GDE Settings" (under "Settings" in the admin panel) to change defaults, o
 = What file types can be embedded? =
 This plug-in can embed PDF, PowerPoint (PPT), or TIFF files only. The file to embed must first be publicly available somewhere on the internet. You can upload it to your WordPress site using the standard techniques, or link to a file on another site.
 
-= Will it embed password-protected documents/folders/sites? =
-Most likely, no. If your file requires a login to view - such as being saved to Google Docs without a public URL, or in a protected directory, or is behind a firewall (on your intranet, etc.) the viewer will probably not be able to access the file. This is what is meant above, that the document should be "publicly available." In low-security situations, you can upload the file to a "secret," publicly readable folder and mask its location with the plug-in settings (using TinyURL) - however this does not make it impossible for a savvy user to find the file.
+= Will it embed files that are password-protected  or stored in protected folders/sites? =
+Most likely, no. If your file requires a login to view - such as being saved to Google Docs without a public URL, in a password-protected directory, or behind a firewall (on your intranet, etc.), the viewer will probably not be able to access the file. This is what is meant above, that the document should be "publicly available." In low-security situations, you can upload the file to a "secret," publicly readable folder and mask its location with the plug-in settings - however this does not make it impossible for a savvy user to find the file.
 
 = How do I embed a file in my page or post? =
 Use the custom shortcode `[gview]` to embed the file, as shown:
