@@ -31,9 +31,6 @@ Go to "GDE Settings" (under "Settings" in the admin panel) to change defaults, o
 = What file types can be embedded? =
 This plug-in can embed PDF, PowerPoint (PPT), or TIFF files only. The file to embed must first be publicly available somewhere on the internet. You can upload it to your WordPress site using the standard techniques, or link to a file on another site.
 
-= Will it embed files that are password-protected  or stored in protected folders/sites? =
-Most likely, no. If your file requires a login to view - such as being saved to Google Docs without a public URL, in a password-protected directory, or behind a firewall (on your intranet, etc.), the viewer will probably not be able to access the file. This is what is meant above, that the document should be "publicly available." In low-security situations, you can upload the file to a "secret," publicly readable folder and mask its location with the plug-in settings - however this does not make it impossible for a savvy user to find the file.
-
 = How do I embed a file in my page or post? =
 Use the custom shortcode `[gview]` to embed the file, as shown:
 
@@ -46,6 +43,9 @@ Optional attributes:
 * `save=` : Set to 0 if you wish to suppress the direct download link to the file under the embedded viewer (1 for on, by default)
 * `width=` : To override the default width of the viewer, enter a new width value - e.g., "400" (px) or "80%"
 * `height=` : To override the default height of the viewer, enter a new height value - e.g., "400" (px) or "80%"
+
+= Will it embed files that are password-protected  or stored in protected folders/sites? =
+Most likely, no. If your file requires a login to view - such as being saved to Google Docs without a public URL, in a password-protected directory, or behind a firewall (on your intranet, etc.), the viewer will probably not be able to access the file. This is what is meant above, that the document should be "publicly available." In low-security situations, you can upload the file to a "secret," publicly readable folder and mask its location with the plug-in settings - however this does not make it impossible for a savvy user to find the file.
 
 = Nothing is showing up! What do I do? =
 View the source on the web page where you've embedded the viewer. In order to degrade gracefully in case an error occurs, error messages will be inserted as HTML comments in these pages at the spot the viewer is called.
