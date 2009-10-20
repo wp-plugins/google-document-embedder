@@ -45,13 +45,13 @@ Optional attributes:
 * `height=` : To override the default height of the viewer, enter a new height value - e.g., "400" (px) or "80%"
 
 = Will it embed files that are password-protected  or stored in protected folders/sites? =
-Most likely, no. If your file requires a login to view - such as being saved to Google Docs without a public URL, in a password-protected directory, or behind a firewall (on your intranet, etc.), the viewer will probably not be able to access the file. This is what is meant above, that the document should be "publicly available." In low-security situations, you can upload the file to a "secret," publicly readable folder and mask its location with the plug-in settings - however this does not make it impossible for a savvy user to find the file.
+Most likely, no. If your file requires a login to view - such as being saved in a password-protected directory, or behind a firewall (on your intranet, etc.), the viewer will probably not be able to access the file. For files stored on Google Docs, the viewer will prompt you to log in first, which most users presumably couldn't do. This is what is meant above, that the document should be "publicly available." Please save the file in a publicly accessible location for best results.
 
 = Nothing is showing up! What do I do? =
 View the source on the web page where you've embedded the viewer. In order to degrade gracefully in case an error occurs, error messages will be inserted as HTML comments in these pages at the spot the viewer is called.
 
 = I wish the plug-in had feature XYZ... =
-That's not a question ;) but if you have any particular ideas on further development of this plug-in, please <a href="http://wordpress.org/tags/google-document-embedder?forum_id=10#postform">on the forum</a> or privately using the <a href="http://www.davismetro.com/gde/support/">support form</a> and I'll see what I can do.
+That's not a question ;) but if you have any particular ideas on further development of this plug-in, please post <a href="http://wordpress.org/tags/google-document-embedder?forum_id=10#postform">on the forum</a> or privately using the <a href="http://www.davismetro.com/gde/support/">support form</a> and I'll see what I can do.
 
 == Screenshots ==
 
