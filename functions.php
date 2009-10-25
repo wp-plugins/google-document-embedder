@@ -10,7 +10,9 @@ function getDefaults() {
 	"gde_show_dl" => 1,
 	"gde_link_text" => "Download (%FT, %FS)",
 	"gde_link_pos" => "below",
-	"gde_link_func" => "default"
+	"gde_link_func" => "default",
+	"gde_ie8_warn" => 0,
+	"gde_bypass_check" => 0
 	);
 	return $defaults;
 }

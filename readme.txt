@@ -60,6 +60,9 @@ That's not a question ;) but if you have any particular ideas on further develop
 
 == Changelog ==
 
+= 1.8.1 =
+* Added: Temporary (I hope) workaround option to insert help statement for users of IE8 - <a href="http://davismetro.com/gde/ie8" target="_blank">more info</a>
+
 = 1.8 =
 * Added: Ability to set height/width to percentage (thanks eturfboer)
 * Fixed: Compatibility with PHP 5.3+, various function tuning

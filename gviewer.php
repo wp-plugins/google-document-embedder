@@ -5,24 +5,34 @@ Plugin Name: Google Doc Embedder
 Plugin URI: http://davismetro.com/gde/
 Description: Lets you embed PDF files, PowerPoint presentations, and TIFF images in a web page using the Google Docs Viewer.
 Author: Kevin Davis
-Version: 1.8
+Version: 1.8.1
 */
 
-/*  Copyright 2009 Kevin Davis. E-mail: kev@tnw.org
-    This program is free software; you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation; either version 2 of the License, or
-    (at your option) any later version.
-
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
-
-    You should have received a copy of the GNU General Public License
-    along with this program; if not, write to the Free Software
-    Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
-*/
+/**
+ * LICENSE
+ * This file is part of Google Doc Embedder.
+ *
+ * Google Doc Embedder is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 2
+ * of the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ *
+ * @package    google-document-embedder
+ * @author     Kevin Davis <kev@tnw.org>
+ * @copyright  Copyright 2009 Kevin Davis
+ * @license    http://www.gnu.org/licenses/gpl.txt GPL 2.0
+ * @version    1.8.1
+ * @link       http://davismetro.com/gde/
+ */
 
 include_once('wpframe.php');
 include_once('functions.php');
@@ -33,12 +43,14 @@ function gviewer_func($atts) {
 	// current settings
 	$dl = get_option('gde_show_dl');
 	$txt = get_option('gde_link_text');
+	$ie8warn = get_option('gde_ie8_warn');
+	$bypass = get_option('gde_bypass_check');
 	extract(shortcode_atts(array(
 		'file' => '',
 		'save' => $dl,
 		'width' => '',
 		'height' => '',
-		'force' => ''
+		'force' => $bypass
 	), $atts));
 	$width = str_replace("px", "", trim($width));
 	if (!$width || !preg_match("/^\d+%?$/", $width)) {
@@ -75,10 +87,13 @@ function gviewer_func($atts) {
 		$fsize = formatBytes($fsize);
 		
 		$code=<<<HERE
+%A%
 <iframe src="%U%" width="%W%" height="%H%" frameborder="0" style="min-width:305px;" class="gde-frame"></iframe>\n
+%B%
 HERE;
 
 		$lnk = "http://docs.google.com/viewer?url=".urlencode($file)."&embedded=true";
+		$linkcode = "";
 
 		if ($save == "1") {
 		
@@ -105,15 +120,21 @@ HERE;
 				$dlFile = $file;
 				$target = "_self";
 			}
-			$linkcode = "<p class=\"gde-text\"><a href=\"$dlFile\" target=\"$target\" class=\"gde-link\">$txt</a></p>";
-			
-			if (get_option('gde_link_pos') == "above") {
-				$code = $linkcode . '' . $code;
-			} else {
-				$code = $code . '' . $linkcode;
-			}
+			$linkcode .= "<p class=\"gde-text\"><a href=\"$dlFile\" target=\"$target\" class=\"gde-link\">$txt</a></p>";
 		}
 
+		if ($ie8warn == "1") {
+			$warn = __("IE8 User: If you're having trouble viewing this document, go to Tools -> Internet Options -> Privacy -> Advanced -> Check &quot;Override automatic cookie handling&quot;.");
+			$linkcode .= "\n<!--[if gte IE 8]>\n<p class=\"gde-iewarn\">".$warn."</p>\n<![endif]-->\n";
+		}
+		
+		if (get_option('gde_link_pos') == "above") {
+			$code = str_replace("%A%", $linkcode, $code);
+			$code = str_replace("%B%", '', $code);
+		} else {
+			$code = str_replace("%A%", '', $code);
+			$code = str_replace("%B%", $linkcode, $code);
+		}
 		$code = str_replace("%U%", $lnk, $code);
 		$code = str_replace("%W%", $width, $code);
 		$code = str_replace("%H%", $height, $code);
@@ -157,13 +178,13 @@ function gde_options() {
 }
 
 // add additional settings link, for convenience
-$plugin = plugin_basename(__FILE__); 
-function my_plugin_actlinks( $links ) { 
+$plugin = plugin_basename(__FILE__);
+function gde_actlinks( $links ) { 
  $settings_link = '<a href="options-general.php?page=gviewer.php">Settings</a>'; 
  array_unshift($links, $settings_link); 
  return $links; 
 }
-add_filter("plugin_action_links_$plugin", 'my_plugin_actlinks' );
+add_filter("plugin_action_links_$plugin", 'gde_actlinks' );
 
 // activate shortcode
 add_shortcode('gview', 'gviewer_func');

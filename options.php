@@ -14,6 +14,8 @@ if(isset($_REQUEST['defaults'])) {
 	update_option('gde_link_text', $set['gde_link_text']);
 	update_option('gde_link_pos', $set['gde_link_pos']);
 	update_option('gde_link_func', $set['gde_link_func']);
+	update_option('gde_ie8_warn', $set['gde_ie8_warn']);
+	update_option('gde_bypass_check', $set['gde_bypass_check']);
 	
 	showMessage("Options reset to defaults");
 } elseif(isset($_REQUEST['submit'])) {
@@ -48,12 +50,23 @@ if(isset($_REQUEST['defaults'])) {
 	if(isset($_POST['gde_link_func'])) {
 		update_option('gde_link_func', $_POST['gde_link_func']);
 	}
-	
+	if(isset($_POST['gde_ie8_warn'])) {
+		update_option('gde_ie8_warn', 1);
+	} else {
+		update_option('gde_ie8_warn', 0);
+	}
+	if(isset($_POST['gde_bypass_check'])) {
+		update_option('gde_bypass_check', 1);
+	} else {
+		update_option('gde_bypass_check', 0);
+	}
 	showMessage("Options updated");
 }
 ?>
 <div class="wrap">
-<h2>Google Doc Embedder Settings</h2>
+<?php
+echo "<h2>".__('Google Doc Embedder Settings')."</h2>";
+?>
 
 <form action="" method="post">
 <?php wp_nonce_field('update-options'); ?>
@@ -76,6 +89,9 @@ To override size on individual posts, manually set in the post shortcode using (
 <?php showOption('px', 'gde_height_type', t('px')); ?>
 <?php showOption('pc', 'gde_height_type', t('%')); ?>
 </select></td>
+</tr>
+<tr valign="top">
+<td colspan="2"><?php showCheck('gde_ie8_warn', t('Show help message to IE8 users (<a href="http://davismetro.com/gde/ie8/" target="_blank">more info</a>)')); ?></td>
 </tr>
 <tr valign="top">
 <td colspan="2"><strong>Download Link Options</strong><br/>
