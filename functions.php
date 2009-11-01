@@ -51,24 +51,28 @@ function validType($link, $exts) {
 function validUrl($url) {
 
 	// checks for existence and returns filesize
-    $handle = curl_init($url);
-    if (false === $handle) {
-        return false;
-    }
-    curl_setopt($handle, CURLOPT_HEADER, true);
-    curl_setopt($handle, CURLOPT_FAILONERROR, true); 
-    curl_setopt($handle, CURLOPT_HTTPHEADER, Array("User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.9.1.3) Gecko/20090824 Firefox/3.5.3") ); // needed for some sites (such as digg.com)
-    curl_setopt($handle, CURLOPT_NOBODY, true);
-	curl_setopt($handle, CURLOPT_FOLLOWLOCATION, true); // only useful in case of redirects
-    curl_setopt($handle, CURLOPT_RETURNTRANSFER, true);
-    $data = curl_exec($handle);
-    curl_close($handle);
+    if (function_exists('curl_init')) {
+		$handle = curl_init($url);
+		if (false === $handle) {
+			return false;
+		}
+		curl_setopt($handle, CURLOPT_HEADER, true);
+		curl_setopt($handle, CURLOPT_FAILONERROR, true); 
+		curl_setopt($handle, CURLOPT_HTTPHEADER, Array("User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.9.1.3) Gecko/20090824 Firefox/3.5.3") ); // needed for some sites (such as digg.com)
+		curl_setopt($handle, CURLOPT_NOBODY, true);
+		curl_setopt($handle, CURLOPT_FOLLOWLOCATION, true); // only useful in case of redirects
+		curl_setopt($handle, CURLOPT_RETURNTRANSFER, true);
+		$data = curl_exec($handle);
+		curl_close($handle);
 	
-	$contentLength = 0;
-	if (preg_match('/Content-Length: (\d+)/i', $data, $matches)) {
-		$contentLength = (int)$matches[1];
+		$contentLength = 0;
+		if (preg_match('/Content-Length: (\d+)/i', $data, $matches)) {
+			$contentLength = (int)$matches[1];
+		}
+		return $contentLength;
+	} else {
+		return "nocurl";
 	}
-    return $contentLength;
 }
 
 function splitFilename($filename) {

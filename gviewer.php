@@ -5,7 +5,7 @@ Plugin Name: Google Doc Embedder
 Plugin URI: http://davismetro.com/gde/
 Description: Lets you embed PDF files, PowerPoint presentations, and TIFF images in a web page using the Google Docs Viewer.
 Author: Kevin Davis
-Version: 1.8.1
+Version: 1.8.2
 */
 
 /**
@@ -80,13 +80,18 @@ function gviewer_func($atts) {
 	} elseif ((!$fsize = validUrl($file)) && ($force !== "1")) {
 		$code = "\n<!-- GDE EMBED ERROR: file not found -->\n";
 	} else {
+		if ($fsize == "nocurl") {
+			$code = "\n<!-- GDE EMBED ERROR: cURL not installed, bypassing checks -->";
+		} else {
+			$code = "";
+		}
 		$pUrl = getPluginUrl();
 	
 		$fn = basename($file);
 		$fnp = splitFilename($fn);
 		$fsize = formatBytes($fsize);
 		
-		$code=<<<HERE
+		$code .=<<<HERE
 %A%
 <iframe src="%U%" width="%W%" height="%H%" frameborder="0" style="min-width:305px;" class="gde-frame"></iframe>\n
 %B%

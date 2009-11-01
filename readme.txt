@@ -60,6 +60,9 @@ That's not a question ;) but if you have any particular ideas on further develop
 
 == Changelog ==
 
+= 1.8.2 = 
+* Fixed: Fatal PHP error if cURL library not active (WAMPServer, etc.)
+
 = 1.8.1 =
 * Added: Temporary (I hope) workaround option to insert help statement for users of IE8 - <a href="http://davismetro.com/gde/ie8" target="_blank">more info</a>
 
@@ -75,7 +78,7 @@ That's not a question ;) but if you have any particular ideas on further develop
 
 = 1.7.1 =
 * Fixed: Misleading error message if file= attribute not used (thanks ersavla)
-* Fixed: Bug in curl header may cause false "not found" error
+* Fixed: Bug in cURL header may cause false "not found" error
 
 = 1.7 =
 * Added: Ability to hide selected viewer toolbar buttons
