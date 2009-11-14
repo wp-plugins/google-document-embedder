@@ -2,15 +2,15 @@
 Contributors: k3davis
 Donate link: http://pledgie.com/campaigns/6048
 Tags: pdf, ppt, tiff, powerpoint, google, embed, google docs, document
-Requires at least: 2.5
+Requires at least: 2.7
 Tested up to: 2.9-rare
 Stable tag: trunk
 
-Lets you embed PDF, PowerPoint presentations (PPT), and TIFF images in a web page using the Google Docs Viewer.
+Lets you embed PDF, PowerPoint presentations (PPT), and TIFF images in a web page using the Google Docs Viewer (no Flash or PDF browser plug-ins required).
 
 == Description ==
 
-Google Doc Embedder lets you embed PDF files, PowerPoint presentations, and TIFF images in a web page using the Google Docs Viewer.
+Google Doc Embedder lets you embed PDF files, PowerPoint presentations, and TIFF images in a web page using the Google Docs Viewer (no Flash or PDF browser plug-ins required).
 
 Similar to services like Scribd, Google Doc Embedder will allow you to embed a PDF, PowerPoint (PPT), or TIFF file directly into your page or post, not requiring the user to have Adobe Reader, PowerPoint, or other software installed to view the contents. Unlike Scribd, the files do not need to be uploaded to any service first - including Google Documents - but can exist anywhere accessible on your site or the internet.
 
@@ -59,6 +59,12 @@ That's not a question ;) but if you have any particular ideas on further develop
 2. Settings page
 
 == Changelog ==
+
+= 1.9 =
+* Added: Revealed more troubleshooting options (under "Advanced Options")
+* Fixed: No longer relies on cURL for any function
+* Changed: Function overhaul for general efficiency and reduced database calls
+* Removed: WP 2.5 compatibility. Now requires WordPress 2.7+.
 
 = 1.8.2 = 
 * Fixed: Fatal PHP error if cURL library not active (WAMPServer, etc.)

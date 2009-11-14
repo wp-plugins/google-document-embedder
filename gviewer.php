@@ -3,9 +3,9 @@
 /*
 Plugin Name: Google Doc Embedder
 Plugin URI: http://davismetro.com/gde/
-Description: Lets you embed PDF files, PowerPoint presentations, and TIFF images in a web page using the Google Docs Viewer.
+Description: Lets you embed PDF files, PowerPoint presentations, and TIFF images in a web page using the Google Docs Viewer (no Flash or PDF browser plug-ins required).
 Author: Kevin Davis
-Version: 1.8.2
+Version: 1.9
 */
 
 /**
@@ -30,39 +30,39 @@ Version: 1.8.2
  * @author     Kevin Davis <kev@tnw.org>
  * @copyright  Copyright 2009 Kevin Davis
  * @license    http://www.gnu.org/licenses/gpl.txt GPL 2.0
- * @version    1.8.1
+ * @version    1.9
  * @link       http://davismetro.com/gde/
  */
 
 include_once('wpframe.php');
 include_once('functions.php');
+$options = get_option('gde_options');
 
-// usage: [gview file="http://path.to/file.pdf" save="1" width="600" height="500"]
-function gviewer_func($atts) {
+// basic usage: [gview file="http://path.to/file.pdf"]
+function gde_gviewer_func($atts) {
 
 	// current settings
-	$dl = get_option('gde_show_dl');
-	$txt = get_option('gde_link_text');
-	$ie8warn = get_option('gde_ie8_warn');
-	$bypass = get_option('gde_bypass_check');
+	global $options, $exts;
+	
 	extract(shortcode_atts(array(
 		'file' => '',
-		'save' => $dl,
+		'save' => $options['show_dl'],
 		'width' => '',
 		'height' => '',
-		'force' => $bypass
+		'force' => $options['bypass_check']
 	), $atts));
+	
 	$width = str_replace("px", "", trim($width));
 	if (!$width || !preg_match("/^\d+%?$/", $width)) {
-	    $width = get_option('gde_default_width');
-		if (get_option('gde_width_type') == "pc") {
+	    $width = $options['default_width'];
+		if ($options['width_type'] == "pc") {
 			$width .= "%";
 		}
 	}
 	$height = str_replace("px", "", trim($height));
 	if (!$height || !preg_match("/^\d+%?$/", $height)) {
-		$height = get_option('gde_default_height');
-		if (get_option('gde_height_type') == "pc") {
+		$height = $options['default_height'];
+		if ($options['height_type'] == "pc") {
 			$height .= "%";
 		}
 	}
@@ -71,25 +71,17 @@ function gviewer_func($atts) {
 	$exts = "pdf|ppt|tif|tiff";
 	
 	// check link for validity
-	if (!$file) {
-		$code = "\n<!-- GDE EMBED ERROR: file attribute not found (check syntax) -->\n";
-	} elseif ((!validLink($file)) && ($force !== "1")) {
-		$code = "\n<!-- GDE EMBED ERROR: invalid URL, please use fully qualified URL -->\n";
-	} elseif ((!validType($file,$exts)) && ($force !== "1")) {
-		$code = "\n<!-- GDE EMBED ERROR: unsupported file type -->\n";
-	} elseif ((!$fsize = validUrl($file)) && ($force !== "1")) {
-		$code = "\n<!-- GDE EMBED ERROR: file not found -->\n";
+	$status = gde_validTests($file, $force);
+	if ($status && !is_array($status)) {
+		$code = "\n<!-- GDE EMBED ERROR: $status -->\n";
 	} else {
-		if ($fsize == "nocurl") {
-			$code = "\n<!-- GDE EMBED ERROR: cURL not installed, bypassing checks -->";
-		} else {
-			$code = "";
-		}
-		$pUrl = getPluginUrl();
+		$code = "";
+		$pUrl = plugins_url(plugin_basename(dirname(__FILE__)));
 	
 		$fn = basename($file);
-		$fnp = splitFilename($fn);
-		$fsize = formatBytes($fsize);
+		$fnp = gde_splitFilename($fn);
+		$fsize = $status['fsize'];
+		$fsize = gde_formatBytes($fsize);
 		
 		$code .=<<<HERE
 %A%
@@ -100,9 +92,9 @@ HERE;
 		$lnk = "http://docs.google.com/viewer?url=".urlencode($file)."&embedded=true";
 		$linkcode = "";
 
-		if ($save == "1") {
+		if ($save == "yes" || $save == "1") {
 		
-			$dlMethod = get_option('gde_link_func');
+			$dlMethod = $options['link_func'];
 			if ($fnp[1] == "PDF") {
 				if ($dlMethod == "force" or $dlMethod == "force-mask") {
 					$dlFile = $pUrl;
@@ -115,25 +107,26 @@ HERE;
 					$target = "_blank";
 				}
 				if ($dlMethod == "force-mask") {
-					$dlFile = shortUrl($dlFile);
+					$dlFile = gde_shortUrl($dlFile);
 				}
 				
 			} elseif ($dlMethod == "force-mask") {
-				$dlFile = shortUrl($file);
+				$dlFile = gde_shortUrl($file);
 				$target = "_self";
 			} else {
 				$dlFile = $file;
 				$target = "_self";
 			}
+			$txt = $options['link_text'];
 			$linkcode .= "<p class=\"gde-text\"><a href=\"$dlFile\" target=\"$target\" class=\"gde-link\">$txt</a></p>";
 		}
 
-		if ($ie8warn == "1") {
-			$warn = __("IE8 User: If you're having trouble viewing this document, go to Tools -> Internet Options -> Privacy -> Advanced -> Check &quot;Override automatic cookie handling&quot;.");
-			$linkcode .= "\n<!--[if gte IE 8]>\n<p class=\"gde-iewarn\">".$warn."</p>\n<![endif]-->\n";
+		if ($options['ie8_warn'] == "yes") {
+			$warn = gde_warnText($pUrl);
+			$linkcode .= "\n<!--[if gte IE 7]>\n<p class=\"gde-iewarn\">".$warn."</p>\n<![endif]-->\n";
 		}
 		
-		if (get_option('gde_link_pos') == "above") {
+		if ($options['link_pos'] == "above") {
 			$code = str_replace("%A%", $linkcode, $code);
 			$code = str_replace("%B%", '', $code);
 		} else {
@@ -146,7 +139,6 @@ HERE;
 		$code = str_replace("%FN", $fn, $code);
 		$code = str_replace("%FT", $fnp[1], $code);
 		$code = str_replace("%FS", $fsize, $code);
-		
 	}
 	
 	return $code;
@@ -154,20 +146,12 @@ HERE;
 
 // activate plugin
 register_activation_hook( __FILE__, 'gde_activate');
+
 function gde_activate() {
 	global $wpdb;
 	
 	// initial options
-	$defaults = getDefaults();
-	foreach($defaults as $set => $val) {
-		add_option($set, $val);
-	}
-	
-	// remove deprecated options if present
-	$legacy_options = getObsolete();
-	foreach ($legacy_options as $lopt => $val) {
-		delete_option($lopt);
-	}
+	$init = gde_init();
 }
 
 // add an option page
@@ -180,18 +164,30 @@ function gde_options() {
 	if (! user_can_access_admin_page()) wp_die( t('You do not have sufficient permissions to access this page') );
 
 	require(ABSPATH. '/wp-content/plugins/google-document-embedder/options.php');
+	add_action('in_admin_footer', 'gde_admin_footer');
 }
 
 // add additional settings link, for convenience
 $plugin = plugin_basename(__FILE__);
 function gde_actlinks( $links ) { 
- $settings_link = '<a href="options-general.php?page=gviewer.php">Settings</a>'; 
- array_unshift($links, $settings_link); 
- return $links; 
+	$settings_link = '<a href="options-general.php?page=gviewer.php">Settings</a>'; 
+	array_unshift($links, $settings_link); 
+	return $links; 
 }
 add_filter("plugin_action_links_$plugin", 'gde_actlinks' );
 
 // activate shortcode
-add_shortcode('gview', 'gviewer_func');
+add_shortcode('gview', 'gde_gviewer_func');
+
+// display any conflict warnings (admin)
+if (($options['ignore_conflicts'] !== "yes") && (!isset($_REQUEST['submit']))) {
+	add_action('plugins_loaded', 'gde_conflict_check');
+}
+
+// footer credit
+function gde_admin_footer() {
+	$plugin_data = get_plugin_data( __FILE__ );
+	printf('%1$s plugin | Version %2$s<br />', $plugin_data['Title'], $plugin_data['Version']);
+}
 
 ?>
