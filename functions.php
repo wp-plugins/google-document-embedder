@@ -4,7 +4,7 @@
 @define('GDE_IE8_URL', 'http://davismetro.com/gde/ie8/');
 @define('GDE_CONFLICT_URL', 'http://davismetro.com/gde/conflicts/');
 @define('GDE_SUPPORT_URL', 'http://davismetro.com/gde/contact/');
-@define('GDE_BETA_URL', 'http://davismetro.com/gde/beta/');
+@define('GDE_BETA_URL', 'http://davismetro.com/gde/beta-program/');
 @define('GDE_BETA_CHKFILE', 'http://davismetro.com/gde/beta/gde-beta.chk');
 
 function gde_init($reset = NULL) {
