@@ -64,7 +64,7 @@ That's not a question ;) but if you have any particular ideas on further develop
 * Fixed: Options not saved in some instances due to variable collision (thanks gadgetto)
 * Fixed: Options not saved when plugin is reactivated
 * Changed: Default width now 100% (existing setting will be preserved)
-* Added: Notification of beta versions - <a href="http://davismetro.com/gde/beta" target="_blank">more info</a>
+* Added: Notification of beta versions - <a href="http://davismetro.com/gde/beta-program" target="_blank">more info</a>
 
 = 1.9 =
 * Added: Revealed more troubleshooting options (under "Advanced Options")
