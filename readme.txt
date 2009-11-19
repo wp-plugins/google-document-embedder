@@ -2,7 +2,7 @@
 Contributors: k3davis
 Donate link: http://pledgie.com/campaigns/6048
 Tags: pdf, ppt, tiff, powerpoint, google, embed, google docs, document
-Requires at least: 2.7
+Requires at least: 2.8
 Tested up to: 2.9-rare
 Stable tag: trunk
 
@@ -60,11 +60,17 @@ That's not a question ;) but if you have any particular ideas on further develop
 
 == Changelog ==
 
+= 1.9.1 =
+* Fixed: Options not saved in some instances due to variable collision (thanks gadgetto)
+* Fixed: Options not saved when plugin is reactivated
+* Changed: Default width now 100% (existing setting will be preserved)
+* Added: Notification of beta versions - <a href="http://davismetro.com/gde/beta" target="_blank">more info</a>
+
 = 1.9 =
 * Added: Revealed more troubleshooting options (under "Advanced Options")
 * Fixed: No longer relies on cURL for any function
 * Changed: Function overhaul for general efficiency and reduced database calls
-* Removed: WP 2.5 compatibility. Now requires WordPress 2.7+.
+* Removed: WP 2.5 compatibility. Now requires WordPress 2.8+.
 
 = 1.8.2 = 
 * Fixed: Fatal PHP error if cURL library not active (WAMPServer, etc.)

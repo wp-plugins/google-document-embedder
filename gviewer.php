@@ -5,8 +5,10 @@ Plugin Name: Google Doc Embedder
 Plugin URI: http://davismetro.com/gde/
 Description: Lets you embed PDF files, PowerPoint presentations, and TIFF images in a web page using the Google Docs Viewer (no Flash or PDF browser plug-ins required).
 Author: Kevin Davis
-Version: 1.9
+Version: 1.9.1
 */
+
+$gde_ver = "1.9.1.99";
 
 /**
  * LICENSE
@@ -30,39 +32,39 @@ Version: 1.9
  * @author     Kevin Davis <kev@tnw.org>
  * @copyright  Copyright 2009 Kevin Davis
  * @license    http://www.gnu.org/licenses/gpl.txt GPL 2.0
- * @version    1.9
  * @link       http://davismetro.com/gde/
  */
 
 include_once('wpframe.php');
 include_once('functions.php');
-$options = get_option('gde_options');
+$gdeoptions = get_option('gde_options');
+$pUrl = plugins_url(plugin_basename(dirname(__FILE__)));
 
 // basic usage: [gview file="http://path.to/file.pdf"]
 function gde_gviewer_func($atts) {
 
 	// current settings
-	global $options, $exts;
+	global $gdeoptions, $exts, $pUrl;
 	
 	extract(shortcode_atts(array(
 		'file' => '',
-		'save' => $options['show_dl'],
+		'save' => $gdeoptions['show_dl'],
 		'width' => '',
 		'height' => '',
-		'force' => $options['bypass_check']
+		'force' => $gdeoptions['bypass_check']
 	), $atts));
 	
 	$width = str_replace("px", "", trim($width));
 	if (!$width || !preg_match("/^\d+%?$/", $width)) {
-	    $width = $options['default_width'];
-		if ($options['width_type'] == "pc") {
+	    $width = $gdeoptions['default_width'];
+		if ($gdeoptions['width_type'] == "pc") {
 			$width .= "%";
 		}
 	}
 	$height = str_replace("px", "", trim($height));
 	if (!$height || !preg_match("/^\d+%?$/", $height)) {
-		$height = $options['default_height'];
-		if ($options['height_type'] == "pc") {
+		$height = $gdeoptions['default_height'];
+		if ($gdeoptions['height_type'] == "pc") {
 			$height .= "%";
 		}
 	}
@@ -76,7 +78,6 @@ function gde_gviewer_func($atts) {
 		$code = "\n<!-- GDE EMBED ERROR: $status -->\n";
 	} else {
 		$code = "";
-		$pUrl = plugins_url(plugin_basename(dirname(__FILE__)));
 	
 		$fn = basename($file);
 		$fnp = gde_splitFilename($fn);
@@ -94,7 +95,7 @@ HERE;
 
 		if ($save == "yes" || $save == "1") {
 		
-			$dlMethod = $options['link_func'];
+			$dlMethod = $gdeoptions['link_func'];
 			if ($fnp[1] == "PDF") {
 				if ($dlMethod == "force" or $dlMethod == "force-mask") {
 					$dlFile = $pUrl;
@@ -117,16 +118,16 @@ HERE;
 				$dlFile = $file;
 				$target = "_self";
 			}
-			$txt = $options['link_text'];
+			$txt = $gdeoptions['link_text'];
 			$linkcode .= "<p class=\"gde-text\"><a href=\"$dlFile\" target=\"$target\" class=\"gde-link\">$txt</a></p>";
 		}
 
-		if ($options['ie8_warn'] == "yes") {
+		if ($gdeoptions['ie8_warn'] == "yes") {
 			$warn = gde_warnText($pUrl);
 			$linkcode .= "\n<!--[if gte IE 7]>\n<p class=\"gde-iewarn\">".$warn."</p>\n<![endif]-->\n";
 		}
 		
-		if ($options['link_pos'] == "above") {
+		if ($gdeoptions['link_pos'] == "above") {
 			$code = str_replace("%A%", $linkcode, $code);
 			$code = str_replace("%B%", '', $code);
 		} else {
@@ -167,27 +168,81 @@ function gde_options() {
 	add_action('in_admin_footer', 'gde_admin_footer');
 }
 
-// add additional settings link, for convenience
+// add additional links, for convenience
 $plugin = plugin_basename(__FILE__);
-function gde_actlinks( $links ) { 
+function gde_actlinks($links) { 
 	$settings_link = '<a href="options-general.php?page=gviewer.php">Settings</a>'; 
 	array_unshift($links, $settings_link); 
 	return $links; 
 }
-add_filter("plugin_action_links_$plugin", 'gde_actlinks' );
+function gde_metalinks($links, $file) {
+	global $debug;
+	$plugin = plugin_basename(__FILE__);
+	if ($file == $plugin) {
+		$support_link = '<a href="'.GDE_SUPPORT_URL.'">Support</a>';
+		$links[] = $support_link;
+	}
+	return $links;
+}
+add_filter("plugin_action_links_$plugin", 'gde_actlinks');
+add_filter("plugin_row_meta", 'gde_metalinks', 10, 2);
+
+// check for beta, if enabled
+function gde_checkforBeta($plugin) {
+	global $gde_ver, $pUrl;
+	
+	$pdata = get_plugin_data(__FILE__);
+	if (preg_match('/-dev$/i', $pdata['Version'])) { $isbeta = 1; }
+	
+	if (strpos($pUrl.'/gviewer.php', $plugin) !== false) {
+		$vcheck = wp_remote_fopen(GDE_BETA_CHKFILE);
+		if ($vcheck) {
+			$lver = $gde_ver;
+			
+			$status = explode('@', $vcheck);
+			$rver = $status[1];
+			$message = $status[3];
+			
+			if ($isbeta) {
+				$titleStr = "Updated beta";
+				$msgStr = "A newer beta has been released. Please deactivate the plug-in and install the current version. Thanks for your help!";
+			} else {
+				$titleStr = "Beta";
+				$msgStr = "Please deactivate the plug-in and install the current version if you wish to participate. Otherwise, you can turn off beta version checking in GDE Settings. Testers appreciated!";
+			}
+			$message = str_replace("%msg", $msgStr, $message);
+			
+			if ((version_compare(strval($rver), strval($lver), '>') == 1)) {
+				$msg = __("$titleStr version available: ", "gde").'<strong>v'.$rver.'</strong> - '.$message;
+				echo '<td colspan="5" class="plugin-update" style="line-height:1.2em; font-size:11px; padding:1px;"><div style="background:#A2F099;border:1px solid #4FE23F; padding:2px; font-weight:bold;">'.__("$titleStr version available.", "gde").' <a href="javascript:void(0);" onclick="jQuery(\'#gde-beta-msg\').toggle();">'.__("(more info)", "gde").'</a></div><div id="gde-beta-msg" style="display:none; padding:10px; text-align:center;" >'.$msg.'</div></td>';
+			} elseif ($isbeta) {
+				$msg = __("Thank you for running a test version of Google Doc Embedder. You are running the most current beta version. Please give feedback on this version using the &quot;Support&quot; link above. Thanks for your help!", "gde");
+				echo '<td colspan="5" class="plugin-update" style="line-height:1.2em; font-size:11px; padding:1px;"><div style="border:1px solid; padding:2px; font-weight:bold;">'.__("You're running a beta version. Please give feedback.", "gde").' <a href="javascript:void(0);" onclick="jQuery(\'#gde-beta-msg\').toggle();">'.__("(more info)", "gde").'</a></div><div id="gde-beta-msg" style="display:none; padding:10px; text-align:center;" >'.$msg.'</div></td>';
+			} else {
+				return;
+			}
+		} elseif ($isbeta) {
+			$msg = __("Thank you for running a test version of Google Doc Embedder. You are running the most current beta version. Please give feedback on this version using the &quot;Support&quot; link above. Thanks for your help!", "gde");
+			echo '<td colspan="5" class="plugin-update" style="line-height:1.2em; font-size:11px; padding:1px;"><div style="border:1px solid; padding:2px; font-weight:bold;">'.__("You're running a beta version. Please give feedback.", "gde").' <a href="javascript:void(0);" onclick="jQuery(\'#gde-beta-msg\').toggle();">'.__("(more info)", "gde").'</a></div><div id="gde-beta-msg" style="display:none; padding:10px; text-align:center;" >'.$msg.'</div></td>';			
+		}
+	}
+}
+if ($gdeoptions['suppress_beta'] !== "yes") {
+	add_action('after_plugin_row', 'gde_checkforBeta');
+}
 
 // activate shortcode
 add_shortcode('gview', 'gde_gviewer_func');
 
 // display any conflict warnings (admin)
-if (($options['ignore_conflicts'] !== "yes") && (!isset($_REQUEST['submit']))) {
+if (($gdeoptions['ignore_conflicts'] !== "yes") && (!isset($_REQUEST['submit']))) {
 	add_action('plugins_loaded', 'gde_conflict_check');
 }
 
 // footer credit
 function gde_admin_footer() {
-	$plugin_data = get_plugin_data( __FILE__ );
-	printf('%1$s plugin | Version %2$s<br />', $plugin_data['Title'], $plugin_data['Version']);
+	$pdata = get_plugin_data(__FILE__);
+	printf('%1$s plugin | Version %2$s<br />', $pdata['Title'], $pdata['Version']);
 }
 
 ?>

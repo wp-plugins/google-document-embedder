@@ -3,12 +3,15 @@
 // external urls (help, etc.)
 @define('GDE_IE8_URL', 'http://davismetro.com/gde/ie8/');
 @define('GDE_CONFLICT_URL', 'http://davismetro.com/gde/conflicts/');
+@define('GDE_SUPPORT_URL', 'http://davismetro.com/gde/contact/');
+@define('GDE_BETA_URL', 'http://davismetro.com/gde/beta/');
+@define('GDE_BETA_CHKFILE', 'http://davismetro.com/gde/beta/gde-beta.chk');
 
 function gde_init($reset = NULL) {
 	// define global default settings
 	$defaults = array(
-		'default_width' => '600',
-		'width_type' => 'px',
+		'default_width' => '100',
+		'width_type' => 'pc',
 		'default_height' => '500',
 		'height_type' => 'px',
 		'show_dl' => 'yes',
@@ -17,11 +20,12 @@ function gde_init($reset = NULL) {
 		'link_func' => 'default',
 		'ie8_warn' => 'no',
 		'bypass_check' => 'no',
-		'ignore_conflicts' => 'no'
+		'ignore_conflicts' => 'no',
+		'suppress_beta' => 'no'
 	);
 	
 	if (!$exists = get_option('gde_options')) {
-		foreach($defaults as $key => $value) {
+		foreach ($defaults as $key => $value) {
 			// convert old settings if found
 			$currvalue = get_option('gde_' . $key);
 			if ($currvalue || $currvalue === "0" || $currvalue === "1") {
@@ -35,6 +39,15 @@ function gde_init($reset = NULL) {
 		}
 		add_option('gde_options', $defaults);
 	} else {
+		$gdeoptions = get_option('gde_options');
+		if ($reset !== "reset") {
+			// maintain existing settings
+			foreach ($defaults as $key => $value) {
+				if($gdeoptions[$key]) {
+					$defaults[$key] = $gdeoptions[$key];
+				}
+			}
+		}
 		update_option('gde_options', $defaults);
 	}
 	return $defaults;
@@ -152,11 +165,11 @@ function gde_sanitizeOpt($value, $type) {
 }
 
 function gde_shortUrl($u) {
-	return file_get_contents('http://tinyurl.com/api-create.php?url='.$u);
+	return wp_remote_fopen('http://tinyurl.com/api-create.php?url='.$u);
 }
 
 function gde_warnText($u) {
-	return file_get_contents($u."/ie-warn.txt");
+	return wp_remote_fopen($u."/ie-warn.txt");
 }
 
 function gde_conflict_check() {
