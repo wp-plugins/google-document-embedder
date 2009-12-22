@@ -3,7 +3,7 @@ Contributors: k3davis
 Donate link: http://pledgie.com/campaigns/6048
 Tags: pdf, ppt, tiff, powerpoint, google, embed, google docs, document
 Requires at least: 2.8
-Tested up to: 2.9-rare
+Tested up to: 2.9
 Stable tag: trunk
 
 Lets you embed PDF, PowerPoint presentations (PPT), and TIFF images in a web page using the Google Docs Viewer (no Flash or PDF browser plug-ins required).
@@ -60,6 +60,11 @@ That's not a question ;) but if you have any particular ideas on further develop
 
 == Changelog ==
 
+= 1.9.2 =
+* Fixed: "Turn off beta notifications" needlessly still checked for beta version
+* Confirmed WP 2.9 compatibility
+* Beta delivery test
+
 = 1.9.1 =
 * Fixed: Options not saved in some instances due to variable collision (thanks gadgetto)
 * Fixed: Options not saved when plugin is reactivated
@@ -82,50 +87,4 @@ That's not a question ;) but if you have any particular ideas on further develop
 * Added: Ability to set height/width to percentage (thanks eturfboer)
 * Fixed: Compatibility with PHP 5.3+, various function tuning
 
-= 1.7.3 =
-* Fixed: File URL containing tilde (~) considered invalid (thanks mjurek)
-
-= 1.7.2 =
-* Removed: toolbar button options (Google prevents this from working, sorry)
-
-= 1.7.1 =
-* Fixed: Misleading error message if file= attribute not used (thanks ersavla)
-* Fixed: Bug in cURL header may cause false "not found" error
-
-= 1.7 =
-* Added: Ability to hide selected viewer toolbar buttons
-* Fixed: Mask URL option ignored on non-PDF file types
-
-= 1.6 =
-* Added: Additional class names for optional stylesheet use
-* Added: Support to embed TIFF images
-* Fixed: Invalid settings link in plugin list (WordPress MU)
-* Changed: Embed path to conform to Google published guidelines
-
-= 1.5.1 =
-* Fixed: Viewer not hidden if linked file not found
-* Fixed: Divide by zero error if file size can't be determined
-* Fixed: PHP error if file not found (force download link)
-* Fixed: File not found falsely reported on some web servers
-
-= 1.5 =
-* Improved error checking.
-* Improved customization options for download text.
-* Added option to override default browser behavior for PDF links (force download).
-* Added option to reset options to defaults.
-
-= 1.0.3 =
-* Installation bug fix. If you installed 1.0, please completely delete and reinstall plugin. Sorry :(
-
-= 1.0 =
-* Added options page.
-
-= 0.3 =
-* Error checking added.
-
-= 0.2 =
-* Initial beta release. Fully functional, but no niceties...
-
-== License ==
-
-This plugin is free for everyone. Since it's released under the GPL, you can use it free of charge on your personal or commercial blog.
+<a href="http://davismetro.com/gde/changelog/" target="_blank">Full history...</a>
