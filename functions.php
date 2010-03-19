@@ -173,19 +173,19 @@ function gde_warnText($u) {
 }
 
 function gde_conflict_check() {
-	global $gde_conflict;
+	global $gde_conflict_list;
 	
 	// Markdown
 	if (function_exists('mdwp_add_p')) {
-		$gde_conflict = "markdown";
+		$gde_conflict_list = "markdown";
 		add_action('admin_notices', 'gde_admin_warning');
 	}
 	return;
 }
 
 function gde_admin_warning() {
-	global $gde_conflict;
-	$gde_link = GDE_CONFLICT_URL."#$gde_conflict";
+	global $gde_conflict_list;
+	$gde_link = GDE_CONFLICT_URL."#$gde_conflict_list";
 	
 	echo "
 		<div id='gde-warning' class='updated fade'><p><strong>".__('Google Doc Embedder Warning:')."</strong> ".sprintf(__('You have an active plugin that may conflict with GDE. See <a href="%1$s">more info</a> or <a href="%2$s">turn off this warning</a>.'), "$gde_link", "options-general.php?page=gviewer.php")."</p></div>

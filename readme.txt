@@ -1,18 +1,18 @@
 === Google Doc Embedder ===
 Contributors: k3davis
 Donate link: http://pledgie.com/campaigns/6048
-Tags: pdf, ppt, tiff, powerpoint, google, embed, google docs, document
+Tags: pdf, pps, ppt, tiff, powerpoint, google, embed, google docs, document
 Requires at least: 2.8
 Tested up to: 2.9
 Stable tag: trunk
 
-Lets you embed PDF, PowerPoint presentations (PPT), and TIFF images in a web page using the Google Docs Viewer (no Flash or PDF browser plug-ins required).
+Lets you embed PDF, PowerPoint presentations (PPT, PPS), and TIFF images in a web page using the Google Docs Viewer (no Flash or PDF browser plug-ins required).
 
 == Description ==
 
 Google Doc Embedder lets you embed PDF files, PowerPoint presentations, and TIFF images in a web page using the Google Docs Viewer (no Flash or PDF browser plug-ins required).
 
-Similar to services like Scribd, Google Doc Embedder will allow you to embed a PDF, PowerPoint (PPT), or TIFF file directly into your page or post, not requiring the user to have Adobe Reader, PowerPoint, or other software installed to view the contents. Unlike Scribd, the files do not need to be uploaded to any service first - including Google Documents - but can exist anywhere accessible on your site or the internet.
+Similar to services like Scribd, Google Doc Embedder will allow you to embed a PDF, PowerPoint (PPT, PPS), or TIFF file directly into your page or post, not requiring the user to have Adobe Reader, PowerPoint, or other software installed to view the contents. Unlike Scribd, the files do not need to be uploaded to any service first - including Google Documents - but can exist anywhere accessible on your site or the internet.
 
 Note: While previously the functionality of this plug-in relied upon an undocumented feature of the Google Docs Viewer, this feature is now "official" and presumably reliable in the long term. However, use of this plug-in now does imply your agreement with Google's published <a href="http://docs.google.com/viewer/TOS?hl=en" target="_blank">Terms of Service</a>.
 
@@ -59,6 +59,10 @@ That's not a question ;) but if you have any particular ideas on further develop
 2. Settings page
 
 == Changelog ==
+
+= 1.9.3 =
+* Added: Support for PPS files (thanks Dan)
+* Changed: Simplified default IE Warning text
 
 = 1.9.2 =
 * Fixed: "Turn off beta notifications" needlessly still checked for beta version

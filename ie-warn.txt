@@ -1,1 +1,1 @@
-IE User: If you're having trouble viewing this document, go to Tools &rarr; Internet Options &rarr; Privacy &rarr; Sites &rarr; Add "google.com" to allowed sites list.
+IE User: If you're having trouble viewing this document, click the right most button on the viewer toolbar ("Open in a New Window").
