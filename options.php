@@ -21,6 +21,11 @@ if(isset($_REQUEST['defaults'])) {
 	} else {
 		$gdeoptions['show_dl'] = "no";
 	}
+	if(isset($_POST['restrict_dl'])) {
+		$gdeoptions['restrict_dl'] = "yes";
+	} else {
+		$gdeoptions['restrict_dl'] = "no";
+	}
 	if(isset($_POST['default_width'])) {
 		$neww = $_POST['default_width'];
 		if (strlen($neww) > 0) $gdeoptions['default_width'] = gde_sanitizeOpt($neww, $_POST['width_type']);
@@ -102,7 +107,8 @@ To override size on individual posts, manually set in the post shortcode using (
 To override display setting on an individual post, use <code>save="1"</code> (show) or <code>save="0"</code> (hide) in the post shortcode.</em></td>
 </tr>
 <tr valign="top">
-<td colspan="2"><?php gde_showCheck('show_dl', t('Display the download link by default')); ?></td>
+<td colspan="2"><?php gde_showCheck('show_dl', t('Display the download link by default')); ?><br/>
+<?php gde_showCheck('restrict_dl', t('Only display download link to logged in users')); ?></td>
 </tr>
 <tr valign="top">
 <th scope="row">Link Text</th>

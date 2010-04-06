@@ -3,7 +3,7 @@ Contributors: k3davis
 Donate link: http://pledgie.com/campaigns/6048
 Tags: pdf, pps, ppt, tiff, powerpoint, google, embed, google docs, document
 Requires at least: 2.8
-Tested up to: 2.9
+Tested up to: 3.0
 Stable tag: trunk
 
 Lets you embed PDF, PowerPoint presentations (PPT, PPS), and TIFF images in a web page using the Google Docs Viewer (no Flash or PDF browser plug-ins required).
@@ -59,6 +59,10 @@ That's not a question ;) but if you have any particular ideas on further develop
 2. Settings page
 
 == Changelog ==
+
+= 1.9.4 =
+* Added: Option to restrict download link to logged in users (thanks kris)
+* Added: Compatibility with WP 3.0
 
 = 1.9.3 =
 * Added: Support for PPS files (thanks Dan)

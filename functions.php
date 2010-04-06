@@ -15,6 +15,7 @@ function gde_init($reset = NULL) {
 		'default_height' => '500',
 		'height_type' => 'px',
 		'show_dl' => 'yes',
+		'restrict_dl' => 'no',
 		'link_text' => 'Download (%FT, %FS)',
 		'link_pos' => 'below',
 		'link_func' => 'default',
@@ -106,7 +107,6 @@ function gde_validLink($link) {
 }
 
 function gde_validType($link, $exts) {
-
     if(preg_match("/($exts)$/i",$link)) {
         return true;
     } else {
@@ -115,6 +115,10 @@ function gde_validType($link, $exts) {
 }
 
 function gde_validUrl($url) {
+	if (!class_exists('WP_Http')) {
+		// wp3 compatibility
+		include_once( ABSPATH . WPINC. '/class-http.php' );
+	}
 	$request = new WP_Http;
 	$result = $request->request($url);
 	if (is_array($result)) {
