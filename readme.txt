@@ -19,7 +19,7 @@ Google Doc Embedder lets you embed several types of files into your WordPress pa
 
 Similar to services like Scribd, Google Doc Embedder will allow you to embed these files directly into your page or post, not requiring the user to have Microsoft Word, Adobe Reader, PowerPoint, or other software installed to view the contents. Unlike Scribd, the files do not need to be uploaded to any service first - including Google Documents - but can exist anywhere publicly accessible on your site or the internet.
 
-Note: Uuse of this plug-in now implies your agreement with Google's published <a href="http://docs.google.com/viewer/TOS?hl=en" target="_blank">Terms of Service</a>.
+Note: Uuse of this plug-in implies your agreement with Google's published <a href="http://docs.google.com/viewer/TOS?hl=en" target="_blank">Terms of Service</a>.
 
 == Installation ==
 
