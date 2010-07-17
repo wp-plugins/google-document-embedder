@@ -1,8 +1,9 @@
 <?php
 
 // external urls (help, etc.)
-@define('GDE_IE8_URL', 'http://davismetro.com/gde/ie8/');
-@define('GDE_CONFLICT_URL', 'http://davismetro.com/gde/conflicts/');
+@define('GDE_VIEWOPT_URL', 'http://davismetro.com/gde/settings/viewer-options/');
+@define('GDE_LINKOPT_URL', 'http://davismetro.com/gde/settings/download-link-options/');
+@define('GDE_ADVOPT_URL', 'http://davismetro.com/gde/settings/advanced-options/');
 @define('GDE_SUPPORT_URL', 'http://davismetro.com/gde/contact/');
 @define('GDE_BETA_URL', 'http://davismetro.com/gde/beta-program/');
 @define('GDE_BETA_CHKFILE', 'http://davismetro.com/gde/beta/gde-beta.chk');
@@ -14,12 +15,14 @@ function gde_init($reset = NULL) {
 		'width_type' => 'pc',
 		'default_height' => '500',
 		'height_type' => 'px',
+		'default_lang' => 'en_US',
+		'restrict_tb' => '',
 		'show_dl' => 'yes',
 		'restrict_dl' => 'no',
 		'link_text' => 'Download (%FT, %FS)',
 		'link_pos' => 'below',
 		'link_func' => 'default',
-		'ie8_warn' => 'no',
+		'disable_proxy' => 'no',
 		'bypass_check' => 'no',
 		'ignore_conflicts' => 'no',
 		'suppress_beta' => 'no'
@@ -172,10 +175,6 @@ function gde_shortUrl($u) {
 	return wp_remote_fopen('http://tinyurl.com/api-create.php?url='.$u);
 }
 
-function gde_warnText($u) {
-	return wp_remote_fopen($u."/ie-warn.txt");
-}
-
 function gde_conflict_check() {
 	global $gde_conflict_list;
 	
@@ -196,4 +195,11 @@ function gde_admin_warning() {
 	";
 }
 
+function gde_t($message) {
+	return __($message, basename(dirname(__FILE__)));
+}
+
+function gde_e($message) {
+	_e($message, basename(dirname(__FILE__)));
+}
 ?>

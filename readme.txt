@@ -1,20 +1,25 @@
 === Google Doc Embedder ===
 Contributors: k3davis
 Donate link: http://pledgie.com/campaigns/6048
-Tags: pdf, pps, ppt, tiff, powerpoint, google, embed, google docs, document
+Tags: doc, docx, pdf, pps, ppt, tiff, word, powerpoint, google, embed, google docs
 Requires at least: 2.8
 Tested up to: 3.0
 Stable tag: trunk
 
-Lets you embed PDF, PowerPoint presentations (PPT, PPS), and TIFF images in a web page using the Google Docs Viewer (no Flash or PDF browser plug-ins required).
+Lets you embed Word documents (DOC, DOCX), PDF files, PowerPoint presentations (PPT, PPS), and TIFF images in a web page using the Google Docs Viewer (no Flash or PDF browser plug-ins required).
 
 == Description ==
 
-Google Doc Embedder lets you embed PDF files, PowerPoint presentations, and TIFF images in a web page using the Google Docs Viewer (no Flash or PDF browser plug-ins required).
+Google Doc Embedder lets you embed several types of files into your WordPress pages using the Google Docs Viewer - allowing inline viewing (and optional downloading) of the following file types, with no Flash or PDF browser plug-ins required:
 
-Similar to services like Scribd, Google Doc Embedder will allow you to embed a PDF, PowerPoint (PPT, PPS), or TIFF file directly into your page or post, not requiring the user to have Adobe Reader, PowerPoint, or other software installed to view the contents. Unlike Scribd, the files do not need to be uploaded to any service first - including Google Documents - but can exist anywhere accessible on your site or the internet.
+* DOC/DOCX
+* PDF
+* PPT/PPS
+* TIFF
 
-Note: While previously the functionality of this plug-in relied upon an undocumented feature of the Google Docs Viewer, this feature is now "official" and presumably reliable in the long term. However, use of this plug-in now does imply your agreement with Google's published <a href="http://docs.google.com/viewer/TOS?hl=en" target="_blank">Terms of Service</a>.
+Similar to services like Scribd, Google Doc Embedder will allow you to embed these files directly into your page or post, not requiring the user to have Microsoft Word, Adobe Reader, PowerPoint, or other software installed to view the contents. Unlike Scribd, the files do not need to be uploaded to any service first - including Google Documents - but can exist anywhere publicly accessible on your site or the internet.
+
+Note: Uuse of this plug-in now implies your agreement with Google's published <a href="http://docs.google.com/viewer/TOS?hl=en" target="_blank">Terms of Service</a>.
 
 == Installation ==
 
@@ -29,7 +34,7 @@ Go to "GDE Settings" (under "Settings" in the admin panel) to change defaults, o
 == Frequently Asked Questions ==
 
 = What file types can be embedded? =
-This plug-in can embed PDF, PowerPoint (PPT), or TIFF files only. The file to embed must first be publicly available somewhere on the internet. You can upload it to your WordPress site using the standard techniques, or link to a file on another site.
+This plug-in currently can embed Microsoft Word (DOC/DOCX), PDF, PowerPoint (PPT/PPS), or TIFF files only. The file to embed must first be publicly available somewhere on the internet. You can upload it to your WordPress site using the standard techniques, or link to a file on another site.
 
 = How do I embed a file in my page or post? =
 Use the custom shortcode `[gview]` to embed the file, as shown:
@@ -44,6 +49,8 @@ Optional attributes:
 * `width=` : To override the default width of the viewer, enter a new width value - e.g., "400" (px) or "80%"
 * `height=` : To override the default height of the viewer, enter a new height value - e.g., "400" (px) or "80%"
 
+For a list of all available attributes, see <a href="http://www.davismetro.com/gde/usage/">Usage</a>.
+
 = Will it embed files that are password-protected  or stored in protected folders/sites? =
 Most likely, no. If your file requires a login to view - such as being saved in a password-protected directory, or behind a firewall (on your intranet, etc.), the viewer will probably not be able to access the file. For files stored on Google Docs, the viewer will prompt you to log in first, which most users presumably couldn't do. This is what is meant above, that the document should be "publicly available." Please save the file in a publicly accessible location for best results.
 
@@ -55,10 +62,19 @@ That's not a question ;) but if you have any particular ideas on further develop
 
 == Screenshots ==
 
-1. Appearance of embedded viewer
+1. Default appearance of embedded viewer
 2. Settings page
 
 == Changelog ==
+
+= 1.9.5 =
+* Added: Support for Word documents (DOC, DOCX)
+* Added: Default language option for viewer
+* Added: Revived ability to hide selected viewer toolbar buttons (from 1.7)
+* Changed: IE now supported by "enhanced viewer" proxy option (ie-warn removed)
+* Changed: Improved options organization
+* Fixed: Filenames with spaces wouldn't load
+* Fixed: Suppress beta notification option not honored
 
 = 1.9.4 =
 * Added: Option to restrict download link to logged in users (thanks kris)

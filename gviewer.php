@@ -3,12 +3,12 @@
 /*
 Plugin Name: Google Doc Embedder
 Plugin URI: http://davismetro.com/gde/
-Description: Lets you embed PDF files, PowerPoint presentations, and TIFF images in a web page using the Google Docs Viewer (no Flash or PDF browser plug-ins required).
+Description: Lets you embed Word Documents, PDF files, PowerPoint presentations, and TIFF images in a web page using the Google Docs Viewer (no Flash or PDF browser plug-ins required).
 Author: Kevin Davis
-Version: 1.9.4
+Version: 1.9.5
 */
 
-$gde_ver = "1.9.4.99";
+$gde_ver = "1.9.5.98";
 
 /**
  * LICENSE
@@ -30,12 +30,11 @@ $gde_ver = "1.9.4.99";
  *
  * @package    google-document-embedder
  * @author     Kevin Davis <kev@tnw.org>
- * @copyright  Copyright 2009 Kevin Davis
+ * @copyright  Copyright 2010 Kevin Davis
  * @license    http://www.gnu.org/licenses/gpl.txt GPL 2.0
  * @link       http://davismetro.com/gde/
  */
 
-include_once('wpframe.php');
 include_once('functions.php');
 $gdeoptions = get_option('gde_options');
 $pUrl = plugins_url(plugin_basename(dirname(__FILE__)));
@@ -51,8 +50,14 @@ function gde_gviewer_func($atts) {
 		'save' => $gdeoptions['show_dl'],
 		'width' => '',
 		'height' => '',
+		'lang' => $gdeoptions['default_lang'],
 		'force' => $gdeoptions['bypass_check']
 	), $atts));
+	
+	// translate nasty filenames with spaces
+	if (strpos($file, " ")) {
+		$file = str_replace(" ", "%20", $file);
+	}
 	
 	$width = str_replace("px", "", trim($width));
 	if (!$width || !preg_match("/^\d+%?$/", $width)) {
@@ -70,7 +75,7 @@ function gde_gviewer_func($atts) {
 	}
 	
 	// supported file types - list acceptable extensions separated by |
-	$exts = "pdf|ppt|pps|tif|tiff";
+	$exts = "doc|docx|pdf|ppt|pps|tif|tiff";
 	
 	// check link for validity
 	$status = gde_validTests($file, $force);
@@ -90,7 +95,12 @@ function gde_gviewer_func($atts) {
 %B%
 HERE;
 
-		$lnk = "http://docs.google.com/viewer?url=".urlencode($file)."&embedded=true";
+		if ($gdeoptions['disable_proxy'] == "no") {
+			$gdet = $gdeoptions['restrict_tb'];
+			$lnk = $pUrl."/proxy.php?url=".urlencode($file)."&hl=".$lang."&gdet=".$gdet."&embedded=true";
+		} else {
+			$lnk = "http://docs.google.com/viewer?url=".urlencode($file)."&hl=".$lang."&embedded=true";
+		}
 		$linkcode = "";
 		
 		get_currentuserinfo();
@@ -128,11 +138,6 @@ HERE;
 			$txt = $gdeoptions['link_text'];
 			$linkcode .= "<p class=\"gde-text\"><a href=\"$dlFile\" target=\"$target\" class=\"gde-link\">$txt</a></p>";
 		}
-
-		if ($gdeoptions['ie8_warn'] == "yes") {
-			$warn = gde_warnText($pUrl);
-			$linkcode .= "\n<!--[if gte IE 7]>\n<p class=\"gde-iewarn\">".$warn."</p>\n<![endif]-->\n";
-		}
 		
 		if ($gdeoptions['link_pos'] == "above") {
 			$code = str_replace("%A%", $linkcode, $code);
@@ -165,11 +170,11 @@ function gde_activate() {
 // add an option page
 add_action('admin_menu', 'gde_option_page');
 function gde_option_page() {
-	add_options_page(t('GDE Settings'), t('GDE Settings'), 'administrator', basename(__FILE__), 'gde_options');
+	add_options_page(gde_t('GDE Settings'), gde_t('GDE Settings'), 'administrator', basename(__FILE__), 'gde_options');
 }
 function gde_options() {
 	if ( function_exists('current_user_can') && !current_user_can('manage_options') ) die(t('An error occurred.'));
-	if (! user_can_access_admin_page()) wp_die( t('You do not have sufficient permissions to access this page') );
+	if (! user_can_access_admin_page()) wp_die( gde_t('You do not have sufficient permissions to access this page') );
 
 	require(ABSPATH. '/wp-content/plugins/google-document-embedder/options.php');
 	add_action('in_admin_footer', 'gde_admin_footer');
@@ -196,7 +201,7 @@ add_filter("plugin_row_meta", 'gde_metalinks', 10, 2);
 
 // check for beta, if enabled
 function gde_checkforBeta($plugin) {
-	global $gde_ver, $pUrl;
+	global $gde_ver, $pUrl, $gdeoptions;
 	
 	$pdata = get_plugin_data(__FILE__);
 	if (preg_match('/-dev$/i', $pdata['Version'])) { $isbeta = 1; }
