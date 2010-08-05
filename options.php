@@ -86,26 +86,11 @@ echo "<h2>".__('Google Doc Embedder Settings')."</h2>";
 <form action="" method="post">
 <?php wp_nonce_field('update-options'); ?>
 
-<div id="poststuff" class="metabox-holder has-right-sidebar">
-							<!--div class="inner-sidebar">
-								<div id="side-sortables" class="meta-box-sortabless ui-sortable" style="position:relative;">
-													
-									
-										<div id="sm_pnres" class="postbox">
-				<h3 class="hndle"><span>About Plugin</span></h3>
-
-				<div class="inside">
-Beta version
-</div>
-</div>
-</div>
-</div-->
-<div class="has-sidebar sm-padded" >
-					
-							<div id="post-body-content" class="has-sidebar-content">
-						
-								<div class="meta-box-sortabless">
-<div id="gde_vieweroptions" class="postbox">
+<div id="poststuff" class="metabox-holder">
+	<div class="sm-padded" >
+		<div id="post-body-content" class="has-sidebar-content">
+			<div class="meta-box-sortabless">
+				<div id="gde_vieweroptions" class="postbox">
 
 				<h3 class="hndle"><span>Viewer Options</span></h3>
 				<div class="inside">
@@ -196,7 +181,7 @@ if ($gdeoptions['disable_proxy'] == "no") {
 <?php gde_showCheckTb('gdet_n', gde_t('Open in New Window')); ?>
 </td>
 </tr>
-<? } ?>
+<?php } ?>
 </table>
 				
 				</div>

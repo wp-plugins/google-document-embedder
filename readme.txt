@@ -19,7 +19,7 @@ Google Doc Embedder lets you embed several types of files into your WordPress pa
 
 Similar to services like Scribd, Google Doc Embedder will allow you to embed these files directly into your page or post, not requiring the user to have Microsoft Word, Adobe Reader, PowerPoint, or other software installed to view the contents. Unlike Scribd, the files do not need to be uploaded to any service first - including Google Documents - but can exist anywhere publicly accessible on your site or the internet.
 
-Note: Uuse of this plug-in implies your agreement with Google's published <a href="http://docs.google.com/viewer/TOS?hl=en" target="_blank">Terms of Service</a>.
+Note: Use of this plug-in implies your agreement with Google's published <a href="http://docs.google.com/viewer/TOS?hl=en" target="_blank">Terms of Service</a>.
 
 == Installation ==
 
@@ -27,7 +27,7 @@ Note: Uuse of this plug-in implies your agreement with Google's published <a hre
 2. Activate the plugin through the 'Plugins' menu in WordPress.
 3. Done.
 
-For basic usage, please see the FAQ.
+For basic usage, please see the FAQ. For detailed usage, see the <a href="http://www.davismetro.com/gde/usage/">web site</a>.
 
 Go to "GDE Settings" (under "Settings" in the admin panel) to change defaults, or override individually using the shortcode syntax in the FAQ.
 
@@ -66,6 +66,13 @@ That's not a question ;) but if you have any particular ideas on further develop
 2. Settings page
 
 == Changelog ==
+
+= 1.9.6 =
+* Changed: Removed min-width restriction of viewer (thanks Amanda)
+* Fixed: Enhanced Viewer failed in hardened PHP configs (thanks Waseem)
+* Fixed: Force Download option failed in hardened PHP configs
+* Fixed: Options page layout quirks in lower resolutions
+* Fixed: Options page PHP parse error on XAMPP (thanks John)
 
 = 1.9.5 =
 * Added: Support for Word documents (DOC, DOCX)

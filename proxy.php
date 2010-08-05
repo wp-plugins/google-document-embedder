@@ -1,18 +1,39 @@
 <?php
 
 # This proxy code is a bypass for an existing flaw in Google Docs Viewer that breaks the functionality
-# for IE users. If you do not wish to use this code, you can disable it in GDE Advanced Options. Note
-# that viewer toolbar customization options depend on this proxy workaround remaining enabled.
+# for IE users. If you do not wish to use this code, select Google Standard Viewer rather than
+# Enhanced Viewer in GDE Settings. Note that viewer toolbar customization options depend on this
+# proxy workaround remaining enabled.
 # 
 # The problem this code addresses is discussed at length on Google's Help Forum:
 # http://www.google.com/support/forum/p/Google+Docs/thread?tid=22d92671afd5b9b7&hl=en
 # 
 # This code is based on the work of Peter Chen. For more information, see:
 # http://peterchenadded.herobo.com/gview/
+#
+# Peter's code is modified below to allow for cURL fallback and viewer toolbar customization.
 
-if (isset($_GET['embedded'])) {  
-  // get the src page, change relative to absolute and don't remove 'chan' param in get requests  
-  $code = file_get_contents("http://docs.google.com/gview?" . $_SERVER['QUERY_STRING']);  
+// test for allow_url_fopen in php config; try curl for function if disabled
+if (ini_get('allow_url_fopen') !== "1") {
+  if (function_exists('curl_version')) {
+    $curl = 1;
+  } else {
+	$err = "This function is not supported on your web server. Please add ";
+	$err .= "<code>allow_url_fopen = 1</code> to your php.ini or enable cURL library. ";
+	$err .= "If you are unable to do this, please switch to Google Standard ";
+	$err .= "Viewer in GDE Options.";
+	echo $err;
+	exit;
+  }
+}
+
+if (isset($_GET['embedded'])) { 
+  // get the src page, change relative path to absolute
+  if ($curl) {
+	$code = curl_get_contents("http://docs.google.com/gview?" . $_SERVER['QUERY_STRING']);
+  } else {
+    $code = file_get_contents("http://docs.google.com/gview?" . $_SERVER['QUERY_STRING']);
+  }
   
   $search = array("/gview/images", "gview/resources_gview/client/js");  
   $replace = array("http://docs.google.com/gview/images", "?jsfile=gview/resources_gview/client/js");  
@@ -52,8 +73,13 @@ if (isset($_GET['embedded'])) {
   echo $code;  
   
 } else if (isset($_GET['a']) && $_GET['a'] == 'gt') {  
-  // get text coordinates file, can not redirect because of same origin policy  
-  $code = file_get_contents("http://docs.google.com/gview?" . $_SERVER['QUERY_STRING']);  
+  // get text coordinates file, can not redirect because of same origin policy
+  if ($curl) {
+    $code = curl_get_contents("http://docs.google.com/gview?" . $_SERVER['QUERY_STRING']);
+  } else {
+    $code = file_get_contents("http://docs.google.com/gview?" . $_SERVER['QUERY_STRING']);
+  }
+  
   header('Content-type: text/xml; charset=UTF-8');  
   echo $code;  
   
@@ -63,8 +89,12 @@ if (isset($_GET['embedded'])) {
   header('Content-type: image/png');  
   
 } else if (isset($_GET['jsfile'])) {  
-  // proxy javascript files and replace navigator.cookieEnabled with false  
-  $code = file_get_contents("http://docs.google.com/" . $_GET['jsfile']);  
+  // proxy javascript files and replace navigator.cookieEnabled with false
+  if ($curl) {
+    $code = curl_get_contents("http://docs.google.com/" . $_GET['jsfile']);  
+  } else {
+    $code = file_get_contents("http://docs.google.com/" . $_GET['jsfile']); 
+  }
   
   $search = array("navigator.cookieEnabled");  
   $replace = array("false");  
@@ -77,4 +107,16 @@ if (isset($_GET['embedded'])) {
   // everything else, of which there isn't!  
   header("Location: http://docs.google.com/gview?" . $_SERVER['QUERY_STRING']);  
 } 
+
+function curl_get_contents($url) {
+  $ch = curl_init();
+  $timeout = 5; // set to zero for no timeout
+  curl_setopt ($ch, CURLOPT_URL, $url);
+  curl_setopt ($ch, CURLOPT_RETURNTRANSFER, 1);
+  curl_setopt ($ch, CURLOPT_CONNECTTIMEOUT, $timeout);
+  $file_contents = curl_exec($ch);
+  curl_close($ch); 
+  
+  return $file_contents;
+}
 ?>
