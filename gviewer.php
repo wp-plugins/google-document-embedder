@@ -5,10 +5,10 @@ Plugin Name: Google Doc Embedder
 Plugin URI: http://davismetro.com/gde/
 Description: Lets you embed Word Documents, PDF files, PowerPoint presentations, and TIFF images in a web page using the Google Docs Viewer (no Flash or PDF browser plug-ins required).
 Author: Kevin Davis
-Version: 1.9.6
+Version: 1.9.7
 */
 
-$gde_ver = "1.9.6.98";
+$gde_ver = "1.9.7.98";
 
 /**
  * LICENSE

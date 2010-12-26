@@ -3,7 +3,7 @@ Contributors: k3davis
 Donate link: http://pledgie.com/campaigns/6048
 Tags: doc, docx, pdf, pps, ppt, tiff, word, powerpoint, google, embed, google docs
 Requires at least: 2.8
-Tested up to: 3.0
+Tested up to: 3.1
 Stable tag: trunk
 
 Lets you embed Word documents (DOC, DOCX), PDF files, PowerPoint presentations (PPT, PPS), and TIFF images in a web page using the Google Docs Viewer (no Flash or PDF browser plug-ins required).
@@ -66,6 +66,10 @@ That's not a question ;) but if you have any particular ideas on further develop
 2. Settings page
 
 == Changelog ==
+
+= 1.9.7 =
+* Fixed: Minor compatibility issue with some PHP versions
+* Changed: Confirmed compatibility with WP 3.1
 
 = 1.9.6 =
 * Changed: Removed min-width restriction of viewer (thanks Amanda)

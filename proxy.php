@@ -29,7 +29,7 @@ if (ini_get('allow_url_fopen') !== "1") {
 
 if (isset($_GET['embedded'])) { 
   // get the src page, change relative path to absolute
-  if ($curl) {
+  if (isset($curl)) {
 	$code = curl_get_contents("http://docs.google.com/gview?" . $_SERVER['QUERY_STRING']);
   } else {
     $code = file_get_contents("http://docs.google.com/gview?" . $_SERVER['QUERY_STRING']);
@@ -74,7 +74,7 @@ if (isset($_GET['embedded'])) {
   
 } else if (isset($_GET['a']) && $_GET['a'] == 'gt') {  
   // get text coordinates file, can not redirect because of same origin policy
-  if ($curl) {
+  if (isset($curl)) {
     $code = curl_get_contents("http://docs.google.com/gview?" . $_SERVER['QUERY_STRING']);
   } else {
     $code = file_get_contents("http://docs.google.com/gview?" . $_SERVER['QUERY_STRING']);
@@ -90,7 +90,7 @@ if (isset($_GET['embedded'])) {
   
 } else if (isset($_GET['jsfile'])) {  
   // proxy javascript files and replace navigator.cookieEnabled with false
-  if ($curl) {
+  if (isset($curl)) {
     $code = curl_get_contents("http://docs.google.com/" . $_GET['jsfile']);  
   } else {
     $code = file_get_contents("http://docs.google.com/" . $_GET['jsfile']); 
