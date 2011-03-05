@@ -1,7 +1,7 @@
 === Google Doc Embedder ===
 Contributors: k3davis
 Donate link: http://pledgie.com/campaigns/6048
-Tags: doc, docx, pdf, pps, ppt, xls, psd, svg, tiff, office, powerpoint, google, google docs
+Tags: doc, docx, pdf, pps, ppt, xls, psd, svg, tiff, office, powerpoint, google docs, google
 Requires at least: 2.8
 Tested up to: 3.1
 Stable tag: trunk
@@ -62,7 +62,7 @@ This plug-in currently can embed the following:
 The file to embed must first be publicly available somewhere on the internet. You can upload it to your WordPress site using the standard techniques, or link to a file on another site.
 
 = How do I embed a file in my page or post? =
-Use the custom shortcode `[gview]` to embed the file, as shown:
+Type the custom shortcode `[gview]` into your page or post to embed the file, as shown (use of the HTML tab in the editor recommended):
 
 `[gview file="http://url.to/file.pdf"]`
 
@@ -112,9 +112,7 @@ That's not a question ;) but if you have any particular ideas on further develop
 * Added: Support for Word documents (DOC, DOCX)
 * Added: Default language option for viewer
 * Added: Revived ability to hide selected viewer toolbar buttons (from 1.7)
-* Changed: IE now supported by "enhanced viewer" proxy option (ie-warn 
-
-removed)
+* Changed: IE now supported by "enhanced viewer" proxy option (ie-warn removed)
 * Changed: Improved options organization
 * Fixed: Filenames with spaces wouldn't load
 * Fixed: Suppress beta notification option not honored
