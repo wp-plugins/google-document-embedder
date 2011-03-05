@@ -6,7 +6,7 @@ Requires at least: 2.8
 Tested up to: 3.1
 Stable tag: trunk
 
-Lets you embed MS Office, PDF, TIFF, and many other file types in a web page using the Google Docs Viewer (no Flash or PDF browser plug-ins required).
+Lets you embed MS Office, PDF, and many other file types in a web page using the Google Docs Viewer (no Flash or PDF browser plug-ins required).
 
 == Description ==
 
@@ -112,7 +112,9 @@ That's not a question ;) but if you have any particular ideas on further develop
 * Added: Support for Word documents (DOC, DOCX)
 * Added: Default language option for viewer
 * Added: Revived ability to hide selected viewer toolbar buttons (from 1.7)
-* Changed: IE now supported by "enhanced viewer" proxy option (ie-warn removed)
+* Changed: IE now supported by "enhanced viewer" proxy option (ie-warn 
+
+removed)
 * Changed: Improved options organization
 * Fixed: Filenames with spaces wouldn't load
 * Fixed: Suppress beta notification option not honored
@@ -153,3 +155,8 @@ That's not a question ;) but if you have any particular ideas on further develop
 * Fixed: Compatibility with PHP 5.3+, various function tuning
 
 <a href="http://davismetro.com/gde/changelog/" target="_blank">Full history...</a>
+
+== Upgrade Notice ==
+
+= 1.9.8 =
+Supports embedding of multiple new file types, and a fix for NextGEN Gallery compatibility.
