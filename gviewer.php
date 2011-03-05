@@ -3,12 +3,12 @@
 /*
 Plugin Name: Google Doc Embedder
 Plugin URI: http://davismetro.com/gde/
-Description: Lets you embed Word Documents, PDF files, PowerPoint presentations, and TIFF images in a web page using the Google Docs Viewer (no Flash or PDF browser plug-ins required).
+Description: Lets you embed MS Office, PDF, TIFF, and many other file types in a web page using the Google Docs Viewer (no Flash or PDF browser plug-ins required).
 Author: Kevin Davis
-Version: 1.9.7
+Version: 1.9.8
 */
 
-$gde_ver = "1.9.7.98";
+$gde_ver = "1.9.8.98";
 
 /**
  * LICENSE
@@ -30,12 +30,12 @@ $gde_ver = "1.9.7.98";
  *
  * @package    google-document-embedder
  * @author     Kevin Davis <kev@tnw.org>
- * @copyright  Copyright 2010 Kevin Davis
+ * @copyright  Copyright 2011 Kevin Davis
  * @license    http://www.gnu.org/licenses/gpl.txt GPL 2.0
  * @link       http://davismetro.com/gde/
  */
 
-include_once('functions.php');
+include_once('gde-functions.php');
 $gdeoptions = get_option('gde_options');
 $pUrl = plugins_url(plugin_basename(dirname(__FILE__)));
 
@@ -75,7 +75,7 @@ function gde_gviewer_func($atts) {
 	}
 	
 	// supported file types - list acceptable extensions separated by |
-	$exts = "doc|docx|pdf|ppt|pps|tif|tiff";
+	$exts = "doc|docx|pdf|ppt|pptx|pps|tif|tiff|xls|xlsx|pages|ai|psd|dxf|svg|eps|ps|ttf|xps";
 	
 	// check link for validity
 	$status = gde_validTests($file, $force);
@@ -255,6 +255,22 @@ if (($gdeoptions['ignore_conflicts'] !== "yes") && (!isset($_REQUEST['submit']))
 function gde_admin_footer() {
 	$pdata = get_plugin_data(__FILE__);
 	printf('%1$s plugin | Version %2$s<br />', $pdata['Title'], $pdata['Version']);
+}
+
+// temporarily move certain functions here to workaround NGG incompatibility
+function gde_t($message) {
+	return __($message, basename(dirname(__FILE__)));
+}
+
+function gde_conflict_check() {
+	global $gde_conflict_list;
+	
+	// Markdown
+	if (function_exists('mdwp_add_p')) {
+		$gde_conflict_list = "markdown";
+		add_action('admin_notices', 'gde_admin_warning');
+	}
+	return;
 }
 
 ?>

@@ -1,21 +1,30 @@
 === Google Doc Embedder ===
 Contributors: k3davis
 Donate link: http://pledgie.com/campaigns/6048
-Tags: doc, docx, pdf, pps, ppt, tiff, word, powerpoint, google, embed, google docs
+Tags: doc, docx, pdf, pps, ppt, xls, psd, svg, tiff, office, powerpoint, google, google docs
 Requires at least: 2.8
 Tested up to: 3.1
 Stable tag: trunk
 
-Lets you embed Word documents (DOC, DOCX), PDF files, PowerPoint presentations (PPT, PPS), and TIFF images in a web page using the Google Docs Viewer (no Flash or PDF browser plug-ins required).
+Lets you embed MS Office, PDF, TIFF, and many other file types in a web page using the Google Docs Viewer (no Flash or PDF browser plug-ins required).
 
 == Description ==
 
 Google Doc Embedder lets you embed several types of files into your WordPress pages using the Google Docs Viewer - allowing inline viewing (and optional downloading) of the following file types, with no Flash or PDF browser plug-ins required:
 
-* DOC/DOCX
-* PDF
-* PPT/PPS
-* TIFF
+* Adobe PDF
+* Microsoft Word (DOC/DOCX)
+* Microsoft PowerPoint (PPT/PPTX/PPS)
+* Microsoft Excel (XLS/XLSX)
+* TIFF Images
+* Apple Pages (PAGES)
+* Adobe Illustrator (AI)
+* Adobe Photoshop (PSD)
+* Autodesk AutoCad (DXF)
+* Scalable Vector Graphics (SVG)
+* PostScript (EPS/PS)
+* TrueType (TTF)
+* XML Paper Specification (XPS)
 
 Similar to services like Scribd, Google Doc Embedder will allow you to embed these files directly into your page or post, not requiring the user to have Microsoft Word, Adobe Reader, PowerPoint, or other software installed to view the contents. Unlike Scribd, the files do not need to be uploaded to any service first - including Google Documents - but can exist anywhere publicly accessible on your site or the internet.
 
@@ -34,7 +43,23 @@ Go to "GDE Settings" (under "Settings" in the admin panel) to change defaults, o
 == Frequently Asked Questions ==
 
 = What file types can be embedded? =
-This plug-in currently can embed Microsoft Word (DOC/DOCX), PDF, PowerPoint (PPT/PPS), or TIFF files only. The file to embed must first be publicly available somewhere on the internet. You can upload it to your WordPress site using the standard techniques, or link to a file on another site.
+This plug-in currently can embed the following:
+
+* Adobe PDF
+* Microsoft Word (DOC/DOCX)
+* Microsoft PowerPoint (PPT/PPTX/PPS)
+* Microsoft Excel (XLS/XLSX)
+* TIFF Images
+* Apple Pages (PAGES)
+* Adobe Illustrator (AI)
+* Adobe Photoshop (PSD)
+* Autodesk AutoCad (DXF)
+* Scalable Vector Graphics (SVG)
+* PostScript (EPS/PS)
+* TrueType (TTF)
+* XML Paper Specification (XPS)
+
+The file to embed must first be publicly available somewhere on the internet. You can upload it to your WordPress site using the standard techniques, or link to a file on another site.
 
 = How do I embed a file in my page or post? =
 Use the custom shortcode `[gview]` to embed the file, as shown:
@@ -66,6 +91,11 @@ That's not a question ;) but if you have any particular ideas on further develop
 2. Settings page
 
 == Changelog ==
+
+= 1.9.8 =
+* Added: Viewer support for multiple new file types
+* Changed: Workaround for NextGEN Gallery incompatibility (thanks alex)
+* Changed: Defaults to Standard Viewer (IE problem is fixed!)
 
 = 1.9.7 =
 * Fixed: Minor compatibility issue with some PHP versions

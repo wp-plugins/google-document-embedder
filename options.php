@@ -1,5 +1,5 @@
 ﻿<?php
-include_once('functions.php');
+include_once('gde-functions.php');
 
 global $gdeoptions;
 $himg = plugins_url(plugin_basename(dirname(__FILE__))).'/help.png';

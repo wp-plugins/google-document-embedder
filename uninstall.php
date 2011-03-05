@@ -1,5 +1,5 @@
 <?php
-include_once('functions.php');
+include_once('gde-functions.php');
 
 // perform cleanup, be a good citizen
 $init = gde_init();
