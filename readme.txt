@@ -3,12 +3,14 @@ Contributors: k3davis
 Donate link: http://pledgie.com/campaigns/6048
 Tags: doc, docx, pdf, pps, ppt, xls, psd, svg, tiff, office, powerpoint, google docs, google
 Requires at least: 2.8
-Tested up to: 3.1
+Tested up to: 3.2
 Stable tag: trunk
 
 Lets you embed MS Office, PDF, and many other file types in a web page using the Google Docs Viewer (no Flash or PDF browser plug-ins required).
 
 == Description ==
+
+An updated beta has been posted. <strong>Google Doc Embedder 2.0b3</strong><br/> (<a href="http://davismetro.com/gde/beta-program/" target="_blank">more info</a>)
 
 Google Doc Embedder lets you embed several types of files into your WordPress pages using the Google Docs Viewer - allowing inline viewing (and optional downloading) of the following file types, with no Flash or PDF browser plug-ins required:
 
