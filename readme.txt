@@ -10,7 +10,8 @@ Lets you embed MS Office, PDF, and many other file types in a web page using the
 
 == Description ==
 
-An updated beta has been posted. <strong>Google Doc Embedder 2.0b3</strong><br/> (<a href="http://davismetro.com/gde/beta-program/" target="_blank">more info</a>)
+An updated beta has been posted. <strong>Google Doc Embedder 2.0 beta 3</strong>
+(<a href="http://davismetro.com/gde/beta-program/" target="_blank">more info</a>)
 
 Google Doc Embedder lets you embed several types of files into your WordPress pages using the Google Docs Viewer - allowing inline viewing (and optional downloading) of the following file types, with no Flash or PDF browser plug-ins required:
 
