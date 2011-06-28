@@ -8,6 +8,8 @@
 @define('GDE_BETA_URL', 'http://davismetro.com/gde/beta-program/');
 @define('GDE_BETA_CHKFILE', 'http://davismetro.com/gde/beta/gde-beta.chk');
 
+if ( ! defined( 'GDE_PLUGIN_URL' ) )  define( 'GDE_PLUGIN_URL', WP_PLUGIN_URL . '/google-document-embedder');
+
 function gde_init($reset = NULL) {
 	// define global default settings
 	$defaults = array(
@@ -23,8 +25,9 @@ function gde_init($reset = NULL) {
 		'link_pos' => 'below',
 		'link_func' => 'default',
 		'disable_proxy' => 'yes',
+		'disable_editor' => 'yes',
+		'disable_caching' => 'no',
 		'bypass_check' => 'no',
-		'ignore_conflicts' => 'no',
 		'suppress_beta' => 'no'
 	);
 	
@@ -175,33 +178,36 @@ function gde_shortUrl($u) {
 	return wp_remote_fopen('http://tinyurl.com/api-create.php?url='.$u);
 }
 
-/*
-function gde_conflict_check() {
-	global $gde_conflict_list;
-	
-	// Markdown
-	if (function_exists('mdwp_add_p')) {
-		$gde_conflict_list = "markdown";
-		add_action('admin_notices', 'gde_admin_warning');
+function gde_admin_print_scripts( $arg ) {
+	global $pagenow;
+	if (is_admin() && ( $pagenow == 'post-new.php' || $pagenow == 'post.php' ) ) {
+		$js = GDE_PLUGIN_URL.'/js/gde-quicktags.js';
+		wp_enqueue_script("gdescript", $js, array('quicktags') );
 	}
-	return;
-}
-*/
-
-function gde_admin_warning() {
-	global $gde_conflict_list;
-	$gde_link = GDE_CONFLICT_URL."#$gde_conflict_list";
-	
-	echo "
-		<div id='gde-warning' class='updated fade'><p><strong>".__('Google Doc Embedder Warning:')."</strong> ".sprintf(__('You have an active plugin that may conflict with GDE. See <a href="%1$s">more info</a> or <a href="%2$s">turn off this warning</a>.'), "$gde_link", "options-general.php?page=gviewer.php")."</p></div>
-	";
 }
 
-/*
-function gde_t($message) {
-	return __($message, basename(dirname(__FILE__)));
+function gde_mce_addbuttons() {
+   // Don't bother doing this stuff if the current user lacks permissions
+   if ( ! current_user_can('edit_posts') && ! current_user_can('edit_pages') )
+     return;
+ 
+   // Add only in Rich Editor mode
+   if ( get_user_option('rich_editing') == 'true') {
+     add_filter("mce_external_plugins", "gde_add_tinymce_plugin");
+     add_filter('mce_buttons', 'gde_register_mce_button');
+   }
 }
-*/
+ 
+function gde_register_mce_button($buttons) {
+   array_push($buttons, "separator", "gde");
+   return $buttons;
+}
+
+function gde_add_tinymce_plugin($plugin_array) {
+	// Load the TinyMCE plugin
+   $plugin_array['gde'] = GDE_PLUGIN_URL.'/js/editor_plugin.js';
+   return $plugin_array;
+}
 
 function gde_e($message) {
 	_e($message, basename(dirname(__FILE__)));

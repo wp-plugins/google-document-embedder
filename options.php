@@ -2,7 +2,7 @@
 include_once('gde-functions.php');
 
 global $gdeoptions;
-$himg = plugins_url(plugin_basename(dirname(__FILE__))).'/help.png';
+$himg = plugins_url(plugin_basename(dirname(__FILE__))).'/img/help.png';
 
 if(isset($_REQUEST['defaults'])) {
 
@@ -58,15 +58,20 @@ if(isset($_REQUEST['defaults'])) {
 	if(isset($_POST['disable_proxy'])) {
 		$gdeoptions['disable_proxy'] = $_POST['disable_proxy'];
 	}
+	if(isset($_POST['disable_editor'])) {
+		$gdeoptions['disable_editor'] = "yes";
+	} else {
+		$gdeoptions['disable_editor'] = "no";
+	}
+	if(isset($_POST['disable_caching'])) {
+		$gdeoptions['disable_caching'] = "yes";
+	} else {
+		$gdeoptions['disable_caching'] = "no";
+	}
 	if(isset($_POST['bypass_check'])) {
 		$gdeoptions['bypass_check'] = "yes";
 	} else {
 		$gdeoptions['bypass_check'] = "no";
-	}
-	if(isset($_POST['ignore_conflicts'])) {
-		$gdeoptions['ignore_conflicts'] = "yes";
-	} else {
-		$gdeoptions['ignore_conflicts'] = "no";
 	}
 	if(isset($_POST['suppress_beta'])) {
 		$gdeoptions['suppress_beta'] = "yes";
@@ -98,10 +103,11 @@ echo "<h2>".__('Google Doc Embedder Settings')."</h2>";
 				<table class="form-table">
 <tr valign="top">
 <th scope="row">Viewer Selection</th>
-<td><div style="float:right;"><a href="<?php echo GDE_VIEWOPT_URL; ?>" target="_blank" title="Help"><img src="<?php echo $himg; ?>"></a></div><?php gde_showRadio('no', 'dp1', 'disable_proxy', gde_t('Enhanced Viewer')); ?><br />
-<em>Use this option to improve IE compatibility and enable toolbar customization.</em><br/>
+<td><div style="float:right;"><a href="<?php echo GDE_VIEWOPT_URL; ?>" target="_blank" title="Help"><img src="<?php echo $himg; ?>"></a></div>
 <?php gde_showRadio('yes', 'dp2', 'disable_proxy', gde_t('Google Standard Viewer')); ?><br />
-<em>Use this option if you experience problems with the Enhanced Viewer.</em>
+<em>Embed the standard Google Viewer.</em><br/>
+<?php gde_showRadio('no', 'dp1', 'disable_proxy', gde_t('Enhanced Viewer')); ?><br />
+<em>Use this option to enable toolbar customization and fix some display problems (experimental).</em><br/>
 </td>
 </tr>
 <tr valign="top">
@@ -239,8 +245,9 @@ if ($gdeoptions['disable_proxy'] == "no") {
 <div style="font-size:11px;margin-top:-40px;padding-bottom:20px;padding-left:5px;">
 <strong><a style="text-decoration:none;" href="javascript:;" onmousedown="if(document.getElementById('advopt').style.display == 'none'){ document.getElementById('advopt').style.display = 'block'; }else{ document.getElementById('advopt').style.display = 'none'; }">[ + ]</a> Advanced Options</strong> <a href="<?php echo GDE_ADVOPT_URL; ?>" target="_blank"><img src="<?php echo $himg; ?>"></a><br />
 <div id="advopt" style="display:none;">
+<?php gde_showCheck('disable_editor', gde_t('Disable editor integration')); ?><br />
 <?php gde_showCheck('bypass_check', gde_t('Disable internal error checking')); ?><br />
-<?php gde_showCheck('ignore_conflicts', gde_t('Disable plugin conflict warnings')); ?><br />
+<?php gde_showCheck('disable_caching', gde_t('Disable caching (frequently overwritten files)')); ?><br />
 <?php gde_showCheck('suppress_beta', gde_t('Disable beta version notifications')); ?>
 </div>
 </div>

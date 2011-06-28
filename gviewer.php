@@ -5,10 +5,10 @@ Plugin Name: Google Doc Embedder
 Plugin URI: http://davismetro.com/gde/
 Description: Lets you embed MS Office, PDF, TIFF, and many other file types in a web page using the Google Docs Viewer (no Flash or PDF browser plug-ins required).
 Author: Kevin Davis
-Version: 1.9.8
+Version: 2.0
 */
 
-$gde_ver = "1.9.8.98";
+$gde_ver = "2.0.0.98";
 
 /**
  * LICENSE
@@ -51,7 +51,10 @@ function gde_gviewer_func($atts) {
 		'width' => '',
 		'height' => '',
 		'lang' => $gdeoptions['default_lang'],
-		'force' => $gdeoptions['bypass_check']
+		'force' => $gdeoptions['bypass_check'],
+		'cache' => $gdeoptions['disable_cache'],
+		'authonly' => $gdeoptions['restrict_dl'],
+		'page' => ''
 	), $atts));
 	
 	// translate nasty filenames with spaces
@@ -64,6 +67,8 @@ function gde_gviewer_func($atts) {
 	    $width = $gdeoptions['default_width'];
 		if ($gdeoptions['width_type'] == "pc") {
 			$width .= "%";
+		} else {
+			$width .= "px";
 		}
 	}
 	$height = str_replace("px", "", trim($height));
@@ -71,6 +76,8 @@ function gde_gviewer_func($atts) {
 		$height = $gdeoptions['default_height'];
 		if ($gdeoptions['height_type'] == "pc") {
 			$height .= "%";
+		} else {
+			$height .= "px";
 		}
 	}
 	
@@ -91,23 +98,37 @@ function gde_gviewer_func($atts) {
 		
 		$code .=<<<HERE
 %A%
-<iframe src="%U%" width="%W%" height="%H%" frameborder="0" class="gde-frame"></iframe>\n
+<iframe src="%U%" class="gde-frame" style="width:%W%; height:%H%; border: none;"></iframe>\n
 %B%
 HERE;
 
+		// obfuscate filename if cache disabled
+		if ($gdeoptions['disable_caching'] == "yes" || $cache == "no" || $cache == "0") {
+			$uefile = urlencode($file)."%3F".time();
+		} else {
+			$uefile = urlencode($file);
+		}
 		if ($gdeoptions['disable_proxy'] == "no") {
 			$gdet = $gdeoptions['restrict_tb'];
-			$lnk = $pUrl."/proxy.php?url=".urlencode($file)."&hl=".$lang."&gdet=".$gdet."&embedded=true";
+			$lnk = $pUrl."/proxy.php?url=".$uefile."&hl=".$lang."&gdet=".$gdet."&embedded=true";
 		} else {
-			$lnk = "http://docs.google.com/viewer?url=".urlencode($file)."&hl=".$lang."&embedded=true";
+			$lnk = "http://docs.google.com/viewer?url=".$uefile."&hl=".$lang."&embedded=true";
+		}
+		if (is_numeric($page)) {
+			// jump to selected page
+			$page = (int) $page-1;
+			$lnk = $lnk."#:0.page.".$page;
 		}
 		$linkcode = "";
 		
+		// hide download link for anonymous users
 		get_currentuserinfo();
 		$dlRestrict = $gdeoptions['restrict_dl'];
-		if ($dlRestrict == "yes" && ($user_ID == '')) {
-			// no user logged in and restrict set; override link setting
-			$save = "no";
+		if ($user_ID == '') {
+			if ($dlRestrict == "yes" || $authonly == "yes" || $authonly == "1") {
+				// no user logged in and restrict set; override link setting
+				$save = "no";
+			}
 		}
 
 		if ($save == "yes" || $save == "1") {
@@ -246,9 +267,13 @@ add_action('after_plugin_row', 'gde_checkforBeta');
 // activate shortcode
 add_shortcode('gview', 'gde_gviewer_func');
 
-// display any conflict warnings (admin)
-if (($gdeoptions['ignore_conflicts'] !== "yes") && (!isset($_REQUEST['submit']))) {
-	add_action('plugins_loaded', 'gde_conflict_check');
+// editor integration (experimental)
+if ($gdeoptions['disable_editor'] !== "yes") {
+	// add quicktag
+	add_action( 'admin_print_scripts', 'gde_admin_print_scripts' );
+	
+	// add tinymce button
+	add_action('admin_init','gde_mce_addbuttons');
 }
 
 // footer credit
@@ -260,17 +285,6 @@ function gde_admin_footer() {
 // temporarily move certain functions here to workaround NGG incompatibility
 function gde_t($message) {
 	return __($message, basename(dirname(__FILE__)));
-}
-
-function gde_conflict_check() {
-	global $gde_conflict_list;
-	
-	// Markdown
-	if (function_exists('mdwp_add_p')) {
-		$gde_conflict_list = "markdown";
-		add_action('admin_notices', 'gde_admin_warning');
-	}
-	return;
 }
 
 ?>
