@@ -23,6 +23,11 @@ if(isset($_REQUEST['defaults'])) {
 	} else {
 		$gdeoptions['restrict_dl'] = "no";
 	}
+	if(isset($_POST['enable_ga'])) {
+		$gdeoptions['enable_ga'] = "yes";
+	} else {
+		$gdeoptions['enable_ga'] = "no";
+	}
 	if(isset($_POST['default_width'])) {
 		$neww = $_POST['default_width'];
 		if (strlen($neww) > 0) $gdeoptions['default_width'] = gde_sanitizeOpt($neww, $_POST['width_type']);
@@ -202,7 +207,8 @@ if ($gdeoptions['disable_proxy'] == "no") {
 <table class="form-table">
 <tr valign="top">
 <td colspan="2"><div style="float:right;"><a href="<?php echo GDE_LINKOPT_URL; ?>" target="_blank" title="Help"><img src="<?php echo $himg; ?>"></a></div><?php gde_showCheck('show_dl', gde_t('Display the download link by default')); ?><br/>
-<?php gde_showCheck('restrict_dl', gde_t('Only display download link to logged in users')); ?></td>
+<?php gde_showCheck('restrict_dl', gde_t('Only display download link to logged in users')); ?><br/>
+<?php gde_showCheck('enable_ga', gde_t('Track downloads in Google Analytics (requires tracking script on your site)')); ?></td>
 </tr>
 <tr valign="top">
 <th scope="row">Link Text</th>

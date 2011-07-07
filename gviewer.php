@@ -5,10 +5,10 @@ Plugin Name: Google Doc Embedder
 Plugin URI: http://davismetro.com/gde/
 Description: Lets you embed MS Office, PDF, TIFF, and many other file types in a web page using the Google Docs Viewer (no Flash or PDF browser plug-ins required).
 Author: Kevin Davis
-Version: 2.0
+Version: 2.1
 */
 
-$gde_ver = "2.0.0.98";
+$gde_ver = "2.1.0.98";
 
 /**
  * LICENSE
@@ -141,23 +141,31 @@ HERE;
 					$fileStr = str_replace($fileParts['scheme']."://","",$file);
 					$dlFile .= "/pdf.php?file=".$fileStr."&fn=".$fn;
 					$target = "_self";
+					$gaTag = 'onclick="var that=this;_gaq.push([\'_trackEvent,\'Download\',\'PDF\',this.href]);setTimeout(function(){location.href=that.href;},200);return false;"';
 				} elseif ($dlMethod == "default") {
 					$dlFile = $file;
 					$target = "_blank";
+					$gaTag = 'onclick="_gaq.push([\'_trackEvent\',\'Download\',\'PDF\',this.href]);"';
 				}
 				if ($dlMethod == "force-mask") {
 					$dlFile = gde_shortUrl($dlFile);
+					$gaTag = 'onclick="var that=this;_gaq.push([\'_trackEvent,\'Download\',\'PDF\',this.href]);setTimeout(function(){location.href=that.href;},200);return false;"';
 				}
 				
 			} elseif ($dlMethod == "force-mask") {
 				$dlFile = gde_shortUrl($file);
 				$target = "_self";
+				$gaTag = 'onclick="var that=this;_gaq.push([\'_trackEvent,\'Download\',\''.$fnp[1].'\',this.href]);setTimeout(function(){location.href=that.href;},200);return false;"';
 			} else {
 				$dlFile = $file;
 				$target = "_self";
+				$gaTag = 'onclick="var that=this;_gaq.push([\'_trackEvent,\'Download\',\''.$fnp[1].'\',this.href]);setTimeout(function(){location.href=that.href;},200);return false;"';
 			}
 			$txt = $gdeoptions['link_text'];
-			$linkcode .= "<p class=\"gde-text\"><a href=\"$dlFile\" target=\"$target\" class=\"gde-link\">$txt</a></p>";
+			if ($gdeoptions['enable_ga'] == "yes") {
+				$gaLink = " $gaTag";
+			}
+			$linkcode .= "<p class=\"gde-text\"><a href=\"$dlFile\" target=\"$target\" class=\"gde-link\"$gaLink>$txt</a></p>";
 		}
 		
 		if ($gdeoptions['link_pos'] == "above") {

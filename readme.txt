@@ -101,6 +101,10 @@ That's not a question ;) but if you have any particular ideas on further develop
 
 == Changelog ==
 
+= 2.1 =
+* Added: Ability to track downloads with Google Analytics (thanks omarigil)
+* Changed: New editor integration was disabled by default - oops! (thanks Brian)
+
 = 2.0 =
 * Added: TinyMCE and Quicktag editor integration (thanks cr.aguila)
 * Added: Option to override internal caching of viewer (thanks Brian)
@@ -163,4 +167,4 @@ That's not a question ;) but if you have any particular ideas on further develop
 == Upgrade Notice ==
 
 = 2.0 =
-Editor integration; caching disable option; other misc. fixes
+Editor integration fix; Google Analytics download tracking
