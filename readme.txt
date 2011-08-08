@@ -61,6 +61,7 @@ This plug-in currently can embed the following:
 * PostScript (EPS/PS)
 * TrueType (TTF)
 * XML Paper Specification (XPS)
+* Archive Files (ZIP/RAR)
 
 The file to embed must first be publicly available somewhere on the internet. You can upload it to your WordPress site using the standard techniques, or link to a file on another site.
 
