@@ -25,6 +25,7 @@ Google Doc Embedder lets you embed several types of files into your WordPress pa
 * PostScript (EPS/PS)
 * TrueType (TTF)
 * XML Paper Specification (XPS)
+* Archive Files (ZIP/RAR)
 
 Similar to services like Scribd, Google Doc Embedder will allow you to embed these files directly into your page or post, not requiring the user to have Microsoft Word, Adobe Reader, PowerPoint, or other software installed to view the contents. Unlike Scribd, the files do not need to be uploaded to any service first - including Google Documents - but can exist anywhere publicly accessible on your site or the internet.
 
@@ -101,6 +102,9 @@ That's not a question ;) but if you have any particular ideas on further develop
 
 == Changelog ==
 
+= 2.2 =
+* Added: ZIP/RAR Archive support (thanks enkerli)
+
 = 2.1 =
 * Added: Ability to track downloads with Google Analytics (thanks omarigil)
 * Changed: New editor integration was disabled by default - oops! (thanks Brian)
@@ -167,4 +171,4 @@ That's not a question ;) but if you have any particular ideas on further develop
 == Upgrade Notice ==
 
 = 2.0 =
-Editor integration fix; Google Analytics download tracking
+ZIP/RAR Archive Support
