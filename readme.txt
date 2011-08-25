@@ -103,6 +103,9 @@ That's not a question ;) but if you have any particular ideas on further develop
 
 == Changelog ==
 
+= 2.2.1 =
+* Fixed: HTML syntax bug when custom dimensions provided
+
 = 2.2 =
 * Added: ZIP/RAR Archive support (thanks enkerli)
 
@@ -171,5 +174,5 @@ That's not a question ;) but if you have any particular ideas on further develop
 
 == Upgrade Notice ==
 
-= 2.0 =
-ZIP/RAR Archive Support
+= 2.2.1 =
+Minor bug fix release

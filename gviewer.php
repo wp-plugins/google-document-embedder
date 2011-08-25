@@ -5,10 +5,10 @@ Plugin Name: Google Doc Embedder
 Plugin URI: http://davismetro.com/gde/
 Description: Lets you embed MS Office, PDF, TIFF, and many other file types in a web page using the Google Docs Viewer (no Flash or PDF browser plug-ins required).
 Author: Kevin Davis
-Version: 2.2
+Version: 2.2.1
 */
 
-$gde_ver = "2.2.0.98";
+$gde_ver = "2.2.1.98";
 
 /**
  * LICENSE
@@ -62,23 +62,27 @@ function gde_gviewer_func($atts) {
 		$file = str_replace(" ", "%20", $file);
 	}
 	
+	// set or clean up dimension values
 	$width = str_replace("px", "", trim($width));
 	if (!$width || !preg_match("/^\d+%?$/", $width)) {
-	    $width = $gdeoptions['default_width'];
+		$width = $gdeoptions['default_width'];
 		if ($gdeoptions['width_type'] == "pc") {
 			$width .= "%";
-		} else {
-			$width .= "px";
 		}
 	}
+	if (!strpos($width, "%")) {
+		$width .= "px";
+	}
+	
 	$height = str_replace("px", "", trim($height));
 	if (!$height || !preg_match("/^\d+%?$/", $height)) {
 		$height = $gdeoptions['default_height'];
 		if ($gdeoptions['height_type'] == "pc") {
 			$height .= "%";
-		} else {
-			$height .= "px";
 		}
+	}
+	if (!strpos($height, "%")) {
+		$height .= "px";
 	}
 	
 	// supported file types - list acceptable extensions separated by |
