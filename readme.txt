@@ -1,7 +1,7 @@
 === Google Doc Embedder ===
 Contributors: k3davis
 Donate link: http://pledgie.com/campaigns/6048
-Tags: doc, docx, pdf, pps, ppt, xls, psd, svg, tiff, office, powerpoint, google docs, google
+Tags: doc, docx, pdf, ppt, pptx, xls, psd, svg, tiff, office, powerpoint, google docs, google
 Requires at least: 2.8
 Tested up to: 3.2
 Stable tag: trunk
