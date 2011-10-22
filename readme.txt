@@ -14,7 +14,7 @@ Google Doc Embedder lets you embed several types of files into your WordPress pa
 
 * Adobe PDF
 * Microsoft Word (DOC/DOCX)
-* Microsoft PowerPoint (PPT/PPTX/PPS)
+* Microsoft PowerPoint (PPT/PPTX)
 * Microsoft Excel (XLS/XLSX)
 * TIFF Images
 * Apple Pages (PAGES)
@@ -50,7 +50,7 @@ This plug-in currently can embed the following:
 
 * Adobe PDF
 * Microsoft Word (DOC/DOCX)
-* Microsoft PowerPoint (PPT/PPTX/PPS)
+* Microsoft PowerPoint (PPT/PPTX)
 * Microsoft Excel (XLS/XLSX)
 * TIFF Images
 * Apple Pages (PAGES)

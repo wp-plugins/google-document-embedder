@@ -8,7 +8,7 @@ Author: Kevin Davis
 Version: 2.2.1
 */
 
-$gde_ver = "2.2.1.98";
+$gde_ver = "2.2.1.99";
 
 /**
  * LICENSE
@@ -86,7 +86,7 @@ function gde_gviewer_func($atts) {
 	}
 	
 	// supported file types - list acceptable extensions separated by |
-	$exts = "doc|docx|pdf|ppt|pptx|pps|tif|tiff|xls|xlsx|pages|ai|psd|dxf|svg|eps|ps|ttf|xps|zip|rar";
+	$exts = "doc|docx|pdf|ppt|pptx|tif|tiff|xls|xlsx|pages|ai|psd|dxf|svg|eps|ps|ttf|xps|zip|rar";
 	
 	// check link for validity
 	$status = gde_validTests($file, $force);
