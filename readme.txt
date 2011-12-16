@@ -3,7 +3,7 @@ Contributors: k3davis
 Donate link: http://pledgie.com/campaigns/6048
 Tags: doc, docx, pdf, ppt, pptx, xls, psd, svg, tiff, office, powerpoint, google docs, google
 Requires at least: 2.8
-Tested up to: 3.2
+Tested up to: 3.3
 Stable tag: trunk
 
 Lets you embed MS Office, PDF, and many other file types in a web page using the Google Docs Viewer (no Flash or PDF browser plug-ins required).
@@ -102,6 +102,11 @@ That's not a question ;) but if you have any particular ideas on further develop
 3. TinyMCE Editor integration
 
 == Changelog ==
+
+= 2.2.2 =
+* Fixed: Toolbar customizations in Enhanced Viewer
+* Fixed: iPhone scrolling bug (thanks Vayu)
+* Changed: Confirmed compatibility with WP 3.3
 
 = 2.2.1 =
 * Fixed: HTML syntax bug when custom dimensions provided

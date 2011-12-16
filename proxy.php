@@ -42,29 +42,35 @@ if (isset($_GET['embedded'])) {
 	$gdet = $_GET['gdet'];
 
 	# hide google icon (i)
+	/* This is no longer visible by default - not necessary
 	if (strstr($gdet, 'i') !== false) { 
 		$search[] = ".goog-logo-small {";
 		$replace[] = ".goog-logo-small { display: none !important;";
-	}
+	} */
 	# hide single/double page view (p)
+	/* no longer visible by default
 	if (strstr($gdet, 'p') !== false) { 
 		$search[] = ".controlbar-two-up-image {";
 		$replace[] = ".controlbar-two-up-image { display: none !important;";
 		$search[] = ".controlbar-one-up-image {";
 		$replace[] = ".controlbar-one-up-image { display: none !important;";
 	}
+	*/
 	# hide zoom in/out (z)
 	if (strstr($gdet, 'z') !== false) { 
-		$search[] = ".controlbar-minus-image {";
-		$replace[] = ".controlbar-minus-image { display: none !important;";
-		$search[] = ".controlbar-plus-image {";
-		$replace[] = ".controlbar-plus-image { display: none !important;";
+		$search[] = "#zoomOutToolbarButtonIcon {";
+		$replace[] = "#zoomOutToolbarButtonIcon { display: none !important;";
+		$search[] = "#zoomInToolbarButtonIcon {";
+		$replace[] = "#zoomInToolbarButtonIcon { display: none !important;";
 	}
 	# hide open in new window (n)
 	if (strstr($gdet, 'n') !== false) { 
-		$search[] = ".controlbar-open-in-viewer-image {";
-		$replace[] = ".controlbar-open-in-viewer-image { display: none !important;";
+		$search[] = "#openInViewerButtonIcon {";
+		$replace[] = "#openInViewerButtonIcon { display: none !important;";
 	}
+	# fix remaining toolbar images
+		$search[] = "/viewer/images/icon_sprites_6.png";
+		$replace[] = "http://docs.google.com/viewer/images/icon_sprites_6.png";
   }
   
   $code = str_replace($search, $replace, $code);  

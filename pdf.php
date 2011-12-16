@@ -26,9 +26,9 @@ if ((isset($_GET['fn'])) && (isset($_GET['file']))) {
   
   // get file
   if ($curl) {
-    $code = curl_get_contents("http://". $_GET['file']);  
+    $code = @curl_get_contents("http://". $_GET['file']);  
   } else {
-    $code = file_get_contents("http://". $_GET['file']); 
+    $code = @file_get_contents("http://". $_GET['file']); 
   }
   
   // output file

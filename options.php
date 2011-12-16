@@ -45,7 +45,7 @@ if(isset($_REQUEST['defaults'])) {
 	if(isset($_POST['default_lang'])) {
 		$gdeoptions['default_lang'] = $_POST['default_lang'];
 	}
-	if(isset($_POST['gdet_i'])) { $newgdet .= "i"; }
+	//if(isset($_POST['gdet_i'])) { $newgdet .= "i"; } // no longer visible in standard viewer
 	if(isset($_POST['gdet_p'])) { $newgdet .= "p"; }
 	if(isset($_POST['gdet_z'])) { $newgdet .= "z"; }
 	if(isset($_POST['gdet_n'])) { $newgdet .= "n"; }
@@ -186,8 +186,8 @@ if ($gdeoptions['disable_proxy'] == "no") {
 ?>
 <tr valign="top">
 <th scope="row">Hide Toolbar Buttons</th>
-<td><?php gde_showCheckTb('gdet_i', gde_t('Google Logo')); ?>
-<?php gde_showCheckTb('gdet_p', gde_t('Single/Double Page View')); ?>
+<td><?php //gde_showCheckTb('gdet_i', gde_t('Google Logo')); ?>
+<?php //gde_showCheckTb('gdet_p', gde_t('Single/Double Page View')); ?>
 <?php gde_showCheckTb('gdet_z', gde_t('Zoom In/Out')); ?>
 <?php gde_showCheckTb('gdet_n', gde_t('Open in New Window')); ?>
 </td>
