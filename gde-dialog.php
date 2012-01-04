@@ -7,7 +7,7 @@
 	<title>Google Doc Embedder</title>
 	<script type="text/javascript" src="js/tiny_mce_popup.js"></script>
 	<script type="text/javascript" src="js/dialog.js"></script>
-    <script type="text/javascript" src="js/jquery-1.3.2.min.js"></script>    
+	<script type="text/javascript" src="js/jquery-1.3.2.min.js"></script>    
 
     <style type="text/css">
 	h2 {
@@ -38,7 +38,7 @@
   <table width="100%" border="0" cellspacing="0" cellpadding="5">
   <tr>
     <td align="right" class="gray dwl_gray"><strong>File URL</strong><br />Paste <em>complete URL</em> of a supported file type</td>
-    <td valign="top"><input name="url" type="text" class="opt dwl" id="url"  style="width:200px;" /></td>
+    <td valign="top"><input name="url" type="text" class="opt dwl" id="url" style="width:200px;" /></td>
   </tr>  
   </table>
   </fieldset>
@@ -91,7 +91,6 @@
   </tr> 
     
 </table>
-
 
 	<div class="mceActionPanel">
 		<div style="float: left">

@@ -46,7 +46,7 @@ if(isset($_REQUEST['defaults'])) {
 		$gdeoptions['default_lang'] = $_POST['default_lang'];
 	}
 	//if(isset($_POST['gdet_i'])) { $newgdet .= "i"; } // no longer visible in standard viewer
-	if(isset($_POST['gdet_p'])) { $newgdet .= "p"; }
+	//if(isset($_POST['gdet_p'])) { $newgdet .= "p"; }
 	if(isset($_POST['gdet_z'])) { $newgdet .= "z"; }
 	if(isset($_POST['gdet_n'])) { $newgdet .= "n"; }
 	$gdeoptions['restrict_tb'] = $newgdet;
@@ -109,9 +109,11 @@ echo "<h2>".__('Google Doc Embedder Settings')."</h2>";
 <tr valign="top">
 <th scope="row">Viewer Selection</th>
 <td><div style="float:right;"><a href="<?php echo GDE_VIEWOPT_URL; ?>" target="_blank" title="Help"><img src="<?php echo $himg; ?>"></a></div>
-<?php gde_showRadio('yes', 'dp2', 'disable_proxy', gde_t('Google Standard Viewer')); ?><br />
+<?php
+	$event = " onclick=\"if(document.getElementById('tbedit').style.display == 'none'){ document.getElementById('tbedit').style.display = 'block'; }else{ document.getElementById('tbedit').style.display = 'none'; }\"";
+	gde_showRadio('yes', 'dp2', 'disable_proxy', gde_t('Google Standard Viewer'), $event); ?><br />
 <em>Embed the standard Google Viewer.</em><br/>
-<?php gde_showRadio('no', 'dp1', 'disable_proxy', gde_t('Enhanced Viewer')); ?><br />
+<?php gde_showRadio('no', 'dp1', 'disable_proxy', gde_t('Enhanced Viewer'), $event); unset($event); ?><br />
 <em>Use this option to enable toolbar customization and fix some display problems (experimental).</em><br/>
 </td>
 </tr>
@@ -181,20 +183,29 @@ echo "<h2>".__('Google Doc Embedder Settings')."</h2>";
 
 </select></td>
 </tr>
+</table>
 <?php
 if ($gdeoptions['disable_proxy'] == "no") {
+	// enhanced viewer is selected, show opts by default
+	$display = "block";
+} else {
+	// hide opts by default
+	$display = "none";
+}
 ?>
+<div id="tbedit" style="display:<?php echo $display; ?>">
+<table class="form-table">
 <tr valign="top">
 <th scope="row">Hide Toolbar Buttons</th>
 <td><?php //gde_showCheckTb('gdet_i', gde_t('Google Logo')); ?>
 <?php //gde_showCheckTb('gdet_p', gde_t('Single/Double Page View')); ?>
-<?php gde_showCheckTb('gdet_z', gde_t('Zoom In/Out')); ?>
+<?php gde_showCheckTb('gdet_z', gde_t('Zoom In/Out')); ?> &nbsp;&nbsp;
 <?php gde_showCheckTb('gdet_n', gde_t('Open in New Window')); ?>
 </td>
 </tr>
-<?php } ?>
 </table>
-				
+</div>
+		
 				</div>
 				</div>
 				</div>
@@ -208,7 +219,7 @@ if ($gdeoptions['disable_proxy'] == "no") {
 <tr valign="top">
 <td colspan="2"><div style="float:right;"><a href="<?php echo GDE_LINKOPT_URL; ?>" target="_blank" title="Help"><img src="<?php echo $himg; ?>"></a></div><?php gde_showCheck('show_dl', gde_t('Display the download link by default')); ?><br/>
 <?php gde_showCheck('restrict_dl', gde_t('Only display download link to logged in users')); ?><br/>
-<?php gde_showCheck('enable_ga', gde_t('Track downloads in Google Analytics (requires tracking script on your site)')); ?></td>
+<?php gde_showCheck('enable_ga', gde_t('Track downloads in Google Analytics (tracking script must be installed on your site)')); ?></td>
 </tr>
 <tr valign="top">
 <th scope="row">Link Text</th>
@@ -226,7 +237,7 @@ if ($gdeoptions['disable_proxy'] == "no") {
 </select>
 </td>
 </tr>
-<r valign="top">
+<tr valign="top">
 <th scope="row">Link Behavior</th>
 <td><select name="link_func">
 <?php gde_showOption('default', 'link_func', gde_t('Browser Default')); ?>
@@ -271,11 +282,11 @@ if ($gdeoptions['disable_proxy'] == "no") {
 
 <?php
 
-function gde_showRadio($value, $id, $option, $title) {
+function gde_showRadio($value, $id, $option, $title, $event = NULL) {
 	global $gdeoptions;
 	if ($gdeoptions[$option] == $value) { $chk = ' checked="checked"'; }
 ?>
-<input type="radio" name="<?php echo $option; ?>" value="<?php echo $value; ?>" id="<?php echo $id; ?>"<?php echo $chk; ?> />
+<input type="radio" name="<?php echo $option; ?>" value="<?php echo $value; ?>" id="<?php echo $id; ?>"<?php echo $chk; echo $event; ?> />
 <label for="<?php echo $id; ?>"><strong><?php gde_e($title) ?></strong></label>
 <?php
 }

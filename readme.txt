@@ -1,7 +1,8 @@
 === Google Doc Embedder ===
 Contributors: k3davis
-Donate link: http://pledgie.com/campaigns/6048
 Tags: doc, docx, pdf, ppt, pptx, xls, psd, svg, tiff, office, powerpoint, google docs, google
+Author URI: http://www.davismetro.com/code/
+Donate link: http://pledgie.com/campaigns/6048
 Requires at least: 2.8
 Tested up to: 3.3
 Stable tag: trunk
@@ -103,6 +104,10 @@ That's not a question ;) but if you have any particular ideas on further develop
 
 == Changelog ==
 
+= 2.2.3 =
+* Fixed: Additional Enhanced Viewer fixes
+* Fixed: jquery error in editor integration
+
 = 2.2.2 =
 * Fixed: Toolbar customizations in Enhanced Viewer
 * Fixed: iPhone scrolling bug (thanks Vayu)
@@ -179,5 +184,5 @@ That's not a question ;) but if you have any particular ideas on further develop
 
 == Upgrade Notice ==
 
-= 2.2.1 =
-Minor bug fix release
+= 2.2.3 =
+Bug fix release
