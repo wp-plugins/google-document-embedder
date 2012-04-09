@@ -6,7 +6,7 @@ Plugin URI: http://www.davismetro.com/gde/
 Description: Lets you embed MS Office, PDF, TIFF, and many other file types in a web page using the Google Docs Viewer (no Flash or PDF browser plug-ins required).
 Author: Kevin Davis
 Author URI: http://www.davismetro.com/
-Version: 2.3.0
+Version: 2.3
 License: GPLv2
 */
 

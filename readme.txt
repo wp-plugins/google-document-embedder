@@ -88,7 +88,7 @@ For a list of all available attributes, see <a href="http://www.davismetro.com/g
 Most likely, no. If your file requires a login to view - such as being saved in a password-protected directory, or behind a firewall (on your intranet, etc.), the viewer will probably not be able to access the file. This is what is meant above, that the document should be "publicly available." Please save the file in a publicly accessible location for best results.
 
 = Nothing is showing up! What do I do? =
-View the source on the web page where you've embedded the viewer. In order to degrade gracefully in case an error occurs, error messages will be inserted as HTML comments in these pages at the spot the viewer is called. If you don't like/can't cope with this behavior, it can be changed in GDE Settings > Advanced Options > Pligin Behavior.
+View the source on the web page where you've embedded the viewer. In order to degrade gracefully in case an error occurs, error messages will be inserted as HTML comments in these pages at the spot the viewer is called. If you don't like/can't cope with this behavior, it can be changed in GDE Settings > Advanced Options > Plugin Behavior.
 
 = Does it work with files saved in Google Docs? =
 This plug-in utilizes the viewer from Google Docs in a standalone fashion. There is no direct integration with Google Docs and even those documents stored there and shared publicly do not embed reliably with their viewer (ironically), so at this time that use is not supported by the plug-in. Please store your original documents somewhere on your web site in their native supported formats.
@@ -104,7 +104,7 @@ That's not a question ;) but if you have any particular ideas on further develop
 
 == Changelog ==
 
-= 2.3.0 =
+= 2.3 =
 * Added: Option to set base URL for embedded files (thanks KevEd)
 * Added: Option to show error messages inline instead of as HTML comments
 * Added: File type check in editor dialog
