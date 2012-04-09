@@ -30,9 +30,9 @@
 			return { 
 				longname : 'Google Doc Embedder',
 				author : 'Kevin Davis',
-				authorurl : 'http://davismetro.com/gde',
-				infourl : 'http://davismetro.com/gde',
-				version : "1.0"}
+				authorurl : 'http://www.davismetro.com/gde',
+				infourl : 'http://www.davismetro.com/gde',
+				version : "1.1"}
 		}
 	});
 	tinymce.PluginManager.add('gde',tinymce.plugins.GDEPlugin)

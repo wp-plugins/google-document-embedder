@@ -4,6 +4,15 @@ include_once('gde-functions.php');
 global $gdeoptions;
 $himg = plugins_url(plugin_basename(dirname(__FILE__))).'/img/help.png';
 
+// get initial tbedit status (prevents FOUC)
+if ($gdeoptions['disable_proxy'] == "no") {
+	// enhanced viewer is selected, show opts by default
+	$tbdisplay = "";
+} else {
+	// hide opts by default
+	$tbdisplay = "display:none;";
+}
+
 if(isset($_REQUEST['defaults'])) {
 
 	$set = gde_init('reset');
@@ -45,11 +54,17 @@ if(isset($_REQUEST['defaults'])) {
 	if(isset($_POST['default_lang'])) {
 		$gdeoptions['default_lang'] = $_POST['default_lang'];
 	}
+	//if(isset($_POST['default_display'])) {
+	//	$gdeoptions['default_display'] = $_POST['default_display'];
+	//}
 	//if(isset($_POST['gdet_i'])) { $newgdet .= "i"; } // no longer visible in standard viewer
 	//if(isset($_POST['gdet_p'])) { $newgdet .= "p"; }
 	if(isset($_POST['gdet_z'])) { $newgdet .= "z"; }
 	if(isset($_POST['gdet_n'])) { $newgdet .= "n"; }
 	$gdeoptions['restrict_tb'] = $newgdet;
+	if(isset($_POST['base_url'])) {
+		$gdeoptions['base_url'] = $_POST['base_url'];
+	}
 	if(isset($_POST['link_text'])) {
 		$newt = $_POST['link_text'];
 		if (strlen(utf8_decode($newt))) $gdeoptions['link_text'] = $newt;
@@ -62,6 +77,11 @@ if(isset($_REQUEST['defaults'])) {
 	}
 	if(isset($_POST['disable_proxy'])) {
 		$gdeoptions['disable_proxy'] = $_POST['disable_proxy'];
+	}
+	if(isset($_POST['disable_hideerrors'])) {
+		$gdeoptions['disable_hideerrors'] = "yes";
+	} else {
+		$gdeoptions['disable_hideerrors'] = "no";
 	}
 	if(isset($_POST['disable_editor'])) {
 		$gdeoptions['disable_editor'] = "yes";
@@ -110,20 +130,28 @@ echo "<h2>".__('Google Doc Embedder Settings')."</h2>";
 <th scope="row">Viewer Selection</th>
 <td><div style="float:right;"><a href="<?php echo GDE_VIEWOPT_URL; ?>" target="_blank" title="Help"><img src="<?php echo $himg; ?>"></a></div>
 <?php
-	$event = " onclick=\"if(document.getElementById('tbedit').style.display == 'none'){ document.getElementById('tbedit').style.display = 'block'; }else{ document.getElementById('tbedit').style.display = 'none'; }\"";
-	gde_showRadio('yes', 'dp2', 'disable_proxy', gde_t('Google Standard Viewer'), $event); ?><br />
+	gde_showRadio('yes', 'std-view', 'disable_proxy', gde_t('Google Standard Viewer'), $event); ?><br />
 <em>Embed the standard Google Viewer.</em><br/>
-<?php gde_showRadio('no', 'dp1', 'disable_proxy', gde_t('Enhanced Viewer'), $event); unset($event); ?><br />
+<?php gde_showRadio('no', 'enh-view', 'disable_proxy', gde_t('Enhanced Viewer'), $event); ?><br />
 <em>Use this option to enable toolbar customization and fix some display problems (experimental).</em><br/>
+</td>
+</tr>
+<tr valign="top" id="tbedit" style="<?php echo $tbdisplay; ?>">
+<th scope="row">Hide Toolbar Buttons</th>
+<td>
+<?php //gde_showCheckTb('gdet_i', gde_t('Google Logo')); ?>
+<?php //gde_showCheckTb('gdet_p', gde_t('Single/Double Page View')); ?>
+<?php gde_showCheckTb('gdet_z', gde_t('Zoom In/Out')); ?> &nbsp;&nbsp;
+<?php gde_showCheckTb('gdet_n', gde_t('Open in New Window')); ?>
 </td>
 </tr>
 <tr valign="top">
 <th scope="row">Default Size</th>
-<td><strong>Width </strong><input type="text" size="5" name="default_width" value="<?php echo $gdeoptions['default_width']; ?>" />  <select name="width_type">
+<td><strong>Width </strong><input type="text" size="5" name="default_width" value="<?php echo $gdeoptions['default_width']; ?>" />  <select name="width_type" style="padding-right:2px;">
 <?php gde_showOption('px', 'width_type', gde_t('px')); ?>
 <?php gde_showOption('pc', 'width_type', gde_t('%')); ?>
 </select> &nbsp;&nbsp;&nbsp;&nbsp;
-<strong>Height </strong><input type="text" size="5" name="default_height" value="<?php echo $gdeoptions['default_height']; ?>" /> <select name="height_type">
+<strong>Height </strong><input type="text" size="5" name="default_height" value="<?php echo $gdeoptions['default_height']; ?>" /> <select name="height_type" style="padding-right:2px;">
 <?php gde_showOption('px', 'height_type', gde_t('px')); ?>
 <?php gde_showOption('pc', 'height_type', gde_t('%')); ?>
 </select></td>
@@ -183,29 +211,17 @@ echo "<h2>".__('Google Doc Embedder Settings')."</h2>";
 
 </select></td>
 </tr>
+<!--tr valign="top">
+<th scope="row">Default Viewer Display</th>
+<td><select name="default_display">
+
+<?php gde_showOption('inline', 'default_display', gde_t('Inline (Default)')); ?>
+<?php gde_showOption('inline-open', 'default_display', gde_t('Collapsible (Open)')); ?>
+<?php gde_showOption('inline-close', 'default_display', gde_t('Collapsible (Closed)')); ?>
+
+</select></td>
+</tr-->
 </table>
-<?php
-if ($gdeoptions['disable_proxy'] == "no") {
-	// enhanced viewer is selected, show opts by default
-	$display = "block";
-} else {
-	// hide opts by default
-	$display = "none";
-}
-?>
-<div id="tbedit" style="display:<?php echo $display; ?>">
-<table class="form-table">
-<tr valign="top">
-<th scope="row">Hide Toolbar Buttons</th>
-<td><?php //gde_showCheckTb('gdet_i', gde_t('Google Logo')); ?>
-<?php //gde_showCheckTb('gdet_p', gde_t('Single/Double Page View')); ?>
-<?php gde_showCheckTb('gdet_z', gde_t('Zoom In/Out')); ?> &nbsp;&nbsp;
-<?php gde_showCheckTb('gdet_n', gde_t('Open in New Window')); ?>
-</td>
-</tr>
-</table>
-</div>
-		
 				</div>
 				</div>
 				</div>
@@ -220,6 +236,11 @@ if ($gdeoptions['disable_proxy'] == "no") {
 <td colspan="2"><div style="float:right;"><a href="<?php echo GDE_LINKOPT_URL; ?>" target="_blank" title="Help"><img src="<?php echo $himg; ?>"></a></div><?php gde_showCheck('show_dl', gde_t('Display the download link by default')); ?><br/>
 <?php gde_showCheck('restrict_dl', gde_t('Only display download link to logged in users')); ?><br/>
 <?php gde_showCheck('enable_ga', gde_t('Track downloads in Google Analytics (tracking script must be installed on your site)')); ?></td>
+</tr>
+<tr valign="top">
+<th scope="row">File Base URL</th>
+<td><input type="text" size="50" name="base_url" value="<?php echo $gdeoptions['base_url']; ?>" /><br/>
+Any file not starting with <em>http</em> will be prefixed by this value</td>
 </tr>
 <tr valign="top">
 <th scope="row">Link Text</th>
@@ -253,24 +274,31 @@ if ($gdeoptions['disable_proxy'] == "no") {
 </tr>
 </table>
 				</div>
+			</div>
+
+		<div id="gde_linkoptions" class="postbox">
+			<h3 class="hndle"><span>Advanced Options</span></h3>
+			<div class="inside">
+				<div style="float:right;"><a href="<?php echo GDE_ADVOPT_URL; ?>" target="_blank" title="Help"><img src="<?php echo $himg; ?>"></a></div>
+				<a href="javascript:void(0);" id="advopt-plugin">Plugin Behavior</a> | 
+				<a href="javascript:void(0);" id="advopt-editor">Editor Integration</a>
+				<div id="adv-plugin" style="display:none;padding-left:235px;margin-top:-16px;">
+					<?php gde_showCheck('disable_hideerrors', gde_t('Display error messages inline (not hidden)')); ?><br />
+					<?php gde_showCheck('bypass_check', gde_t('Disable internal error checking')); ?><br />
+					<?php gde_showCheck('disable_caching', gde_t('Disable document caching')); ?><br />
+					<?php gde_showCheck('suppress_beta', gde_t('Disable beta version notifications')); ?>
+				</div>
+				<div id="adv-editor" style="display:none;padding-left:235px;margin-top:-16px;">
+					<?php gde_showCheck('disable_editor', gde_t('Disable all editor integration')); ?><br />
 				</div>
 			</div>
 		</div>
+			</div>
+		</div>
 	</div>
-				
-<p class="submit" style="padding-bottom:10px;">
-<div style="font-size:11px;margin-top:-40px;padding-bottom:20px;padding-left:5px;">
-<strong><a style="text-decoration:none;" href="javascript:;" onmousedown="if(document.getElementById('advopt').style.display == 'none'){ document.getElementById('advopt').style.display = 'block'; }else{ document.getElementById('advopt').style.display = 'none'; }">[ + ]</a> Advanced Options</strong> <a href="<?php echo GDE_ADVOPT_URL; ?>" target="_blank"><img src="<?php echo $himg; ?>"></a><br />
-<div id="advopt" style="display:none;">
-<?php gde_showCheck('disable_editor', gde_t('Disable editor integration')); ?><br />
-<?php gde_showCheck('bypass_check', gde_t('Disable internal error checking')); ?><br />
-<?php gde_showCheck('disable_caching', gde_t('Disable caching (frequently overwritten files)')); ?><br />
-<?php gde_showCheck('suppress_beta', gde_t('Disable beta version notifications')); ?>
-</div>
-</div>
 
+<p class="submit" style="padding:0 10px;">
 <input type="hidden" id="user-id" name="user_ID" value="<?php echo (int) $user_ID ?>" />
-<span id="autosave"></span>
 <input class="button-primary" type="submit" name="submit" value="<?php gde_e('Save Options') ?>" />
 &nbsp;&nbsp;&nbsp;
 <input class="button-secondary" type="submit" name="defaults" value="<?php gde_e('Reset to Defaults') ?>" onClick="javascript:return confirm('Are you sure you want to reset all settings to defaults?')" />
@@ -320,7 +348,7 @@ function gde_showOption($value, $option, $title) {
 	global $gdeoptions;
 	if ($gdeoptions[$option] == $value) { $chk = ' selected="yes"'; }
 ?>
-<option value="<?php echo $value; ?>"<?php echo $chk; ?>><?php echo $title; ?></option>
+<option style="padding-right:5px;" value="<?php echo $value; ?>"<?php echo $chk; ?>><?php echo $title; ?></option>
 <?php
 }
 

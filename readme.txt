@@ -1,10 +1,10 @@
 === Google Doc Embedder ===
 Contributors: k3davis
-Tags: doc, docx, pdf, ppt, pptx, xls, psd, svg, tiff, office, powerpoint, google docs, google
+Tags: doc, docx, pdf, ppt, pptx, xls, psd, zip, rar, tiff, office, powerpoint, google docs, google
 Author URI: http://www.davismetro.com/code/
 Donate link: http://pledgie.com/campaigns/6048
 Requires at least: 2.8
-Tested up to: 3.3
+Tested up to: 3.4
 Stable tag: trunk
 
 Lets you embed MS Office, PDF, and many other file types in a web page using the Google Docs Viewer (no Flash or PDF browser plug-ins required).
@@ -73,14 +73,14 @@ To manually insert the `[gview]` shortcode into your page or post to embed the f
 
 `[gview file="http://url.to/file.pdf"]`
 
-Note: the `file=` attribute (pointing to the full URL of the file) is **required**.
+Note: the `file=` attribute (generally pointing to the full URL of the file) is **required**. If the majority of your files are referenced from the same directory, you can set a File Base URL in GDE Settings and only put the changing portion in the `file=` attribute (or a full URL for a file outside of that base URL). File Base URL will be prepended to the value of `file=` unless `file=` starts with `http`.
 
-Optional attributes:
+Common optional attributes:
 
 * `save=` : Set to 0 if you wish to suppress the direct download link to the file under the embedded viewer (1 for on, by default)
 * `width=` : To override the default width of the viewer, enter a new width value - e.g., "400" (px) or "80%"
 * `height=` : To override the default height of the viewer, enter a new height value - e.g., "400" (px) or "80%"
-* `cache=` : Set to 0 to bypass the viewer's internal caching (useful only for frequently updated files)
+* `cache=` : Set to 0 to bypass the viewer's internal caching (useful only for frequently updated files with the same name)
 
 For a list of all available attributes, see <a href="http://www.davismetro.com/gde/usage/">Usage</a>.
 
@@ -88,7 +88,7 @@ For a list of all available attributes, see <a href="http://www.davismetro.com/g
 Most likely, no. If your file requires a login to view - such as being saved in a password-protected directory, or behind a firewall (on your intranet, etc.), the viewer will probably not be able to access the file. This is what is meant above, that the document should be "publicly available." Please save the file in a publicly accessible location for best results.
 
 = Nothing is showing up! What do I do? =
-View the source on the web page where you've embedded the viewer. In order to degrade gracefully in case an error occurs, error messages will be inserted as HTML comments in these pages at the spot the viewer is called.
+View the source on the web page where you've embedded the viewer. In order to degrade gracefully in case an error occurs, error messages will be inserted as HTML comments in these pages at the spot the viewer is called. If you don't like/can't cope with this behavior, it can be changed in GDE Settings > Advanced Options > Pligin Behavior.
 
 = Does it work with files saved in Google Docs? =
 This plug-in utilizes the viewer from Google Docs in a standalone fashion. There is no direct integration with Google Docs and even those documents stored there and shared publicly do not embed reliably with their viewer (ironically), so at this time that use is not supported by the plug-in. Please store your original documents somewhere on your web site in their native supported formats.
@@ -104,9 +104,15 @@ That's not a question ;) but if you have any particular ideas on further develop
 
 == Changelog ==
 
+= 2.3.0 =
+* Added: Option to set base URL for embedded files (thanks KevEd)
+* Added: Option to show error messages inline instead of as HTML comments
+* Added: File type check in editor dialog
+* Fixed: Download Link setting didn't update shortcode in editor dialog
+
 = 2.2.3 =
 * Fixed: Additional Enhanced Viewer fixes
-* Fixed: jquery error in editor integration
+* Fixed: jQuery error in editor integration
 
 = 2.2.2 =
 * Fixed: Toolbar customizations in Enhanced Viewer
@@ -155,34 +161,9 @@ That's not a question ;) but if you have any particular ideas on further develop
 * Fixed: Filenames with spaces wouldn't load
 * Fixed: Suppress beta notification option not honored
 
-= 1.9.4 =
-* Added: Option to restrict download link to logged in users (thanks kris)
-* Added: Compatibility with WP 3.0
-
-= 1.9.3 =
-* Added: Support for PPS files (thanks Dan)
-* Changed: Simplified default IE Warning text
-
-= 1.9.2 =
-* Fixed: "Turn off beta notifications" needlessly still checked for beta version
-* Confirmed WP 2.9 compatibility
-* Beta delivery test
-
-= 1.9.1 =
-* Fixed: Options not saved in some instances due to variable collision (thanks gadgetto)
-* Fixed: Options not saved when plugin is reactivated
-* Changed: Default width now 100% (existing setting will be preserved)
-* Added: Notification of beta versions - <a href="http://davismetro.com/gde/beta-program" target="_blank">more info</a>
-
-= 1.9 =
-* Added: Revealed more troubleshooting options (under "Advanced Options")
-* Fixed: No longer relies on cURL for any function
-* Changed: Function overhaul for general efficiency and reduced database calls
-* Removed: WP 2.5 compatibility. Now requires WordPress 2.8+.
-
 <a href="http://davismetro.com/gde/changelog/" target="_blank">Full history...</a>
 
 == Upgrade Notice ==
 
-= 2.2.3 =
-Bug fix release
+= 2.3.0 =
+New options and editor bug fix.

@@ -19,7 +19,7 @@
 		margin-top:20px;
 	}
 	.diy{
-		margin:5px 5px 0 10px;
+		margin:5px 5px -5px 10px;
 	}
     </style>
     
@@ -37,8 +37,9 @@
   <legend class="gray dwl_gray">Required</legend>
   <table width="100%" border="0" cellspacing="0" cellpadding="5">
   <tr>
-    <td align="right" class="gray dwl_gray"><strong>File URL</strong><br />Paste <em>complete URL</em> of a supported file type</td>
-    <td valign="top"><input name="url" type="text" class="opt dwl" id="url" style="width:200px;" /></td>
+    <td align="right" class="gray dwl_gray"><strong>URL or Filename</strong><br />Full URL or filename to append to File Base URL</td>
+    <td valign="top"><input name="url" type="text" class="opt dwl" id="url" style="width:200px;" /><br/>
+	<span id="uri-note"></span></td>
   </tr>  
   </table>
   </fieldset>
@@ -57,7 +58,7 @@
   </tr>
   <tr>
     <td align="right" class="gray dwl_gray"><strong>Show Download Link</strong></td>
-    <td valign="top" class="gray dwl_gray"><input name="save" type="radio" class="opt dwl" id="save" value="1" /> Yes <input name="save" type="radio" class="opt dwl" id="save" value="0" /> No</td>
+    <td valign="top" class="gray dwl_gray"><input name="save" type="radio" class="opt dwl save" value="1" /> Yes <input name="save" type="radio" class="opt dwl save" value="0" /> No</td>
   </tr>
   <tr>
     <td colspan="2" class="gray dwl_gray">

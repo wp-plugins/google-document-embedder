@@ -6,11 +6,11 @@ Plugin URI: http://www.davismetro.com/gde/
 Description: Lets you embed MS Office, PDF, TIFF, and many other file types in a web page using the Google Docs Viewer (no Flash or PDF browser plug-ins required).
 Author: Kevin Davis
 Author URI: http://www.davismetro.com/
-Version: 2.2.3
+Version: 2.3.0
 License: GPLv2
 */
 
-$gde_ver = "2.2.3.98";
+$gde_ver = "2.3.0.98";
 
 /**
  * LICENSE
@@ -41,14 +41,42 @@ include_once('gde-functions.php');
 $gdeoptions = get_option('gde_options');
 $pUrl = plugins_url(plugin_basename(dirname(__FILE__)));
 
+// supported file types
+// note: updates here should also be added to js/dialog.js
+$exts = array(
+		// ext	=>	mime_type
+		"ai"	=>	"application/postscript",				// upload not supported
+		"doc"	=>	"application/msword",
+		"docx"	=>	"application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+		"dxf"	=>	"application/dxf",						// upload not supported
+		"eps"	=>	"application/postscript",				// upload not supported
+		"pdf"	=>	"application/pdf",
+		"pages"	=>	"application/x-iwork-pages-sffpages",	// upload not supported
+		"ppt"	=>	"application/vnd.ms-powerpoint",
+		"pptx"	=>	"application/vnd.openxmlformats-officedocument.presentationml.presentation",
+		"ps"	=>	"application/postscript",				// upload not supported
+		"psd"	=>	"image/photoshop",						// upload not supported
+		"rar"	=>	"application/x-rar-compressed",
+		"svg"	=>	"image/svg+xml",						// upload not supported
+		"tif"	=>	"image/tiff",							// upload not supported
+		"tiff"	=>	"image/tiff",							// upload not supported
+		"ttf"	=>	"application/x-font-ttf",				// upload not supported
+		"xls"	=>	"application/vnd.ms-excel",
+		"xlsx"	=>	"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+		"xps"	=>	"application/vnd.ms-xpsdocument",		// upload not supported
+		"zip"	=>	"application/zip"
+);
+$allowed_exts = implode("|",array_keys($exts));
+
 // basic usage: [gview file="http://path.to/file.pdf"]
 function gde_gviewer_func($atts) {
-
+	
 	// current settings
-	global $gdeoptions, $exts, $pUrl, $user_ID;
+	global $gdeoptions, $pUrl, $user_ID;
 	
 	extract(shortcode_atts(array(
 		'file' => '',
+		'display' => $gdeoptions['default_display'],
 		'save' => $gdeoptions['show_dl'],
 		'width' => '',
 		'height' => '',
@@ -59,9 +87,16 @@ function gde_gviewer_func($atts) {
 		'page' => ''
 	), $atts));
 	
-	// translate nasty filenames with spaces
-	if (strpos($file, " ")) {
-		$file = str_replace(" ", "%20", $file);
+	// add base url if needed
+	if (!preg_match("/^http/i",$file) && $gdeoptions['base_url']) {
+		// deal with potential slash issues
+		if (!preg_match("/\/$/", $gdeoptions['base_url'])) {
+			$gdeoptions['base_url'] = $gdeoptions['base_url']."/";
+		}
+		if (preg_match("/^\//", $file)) {
+			$file = $file = substr($file, 1);
+		}
+		$file = $gdeoptions['base_url'].$file;
 	}
 	
 	// set or clean up dimension values
@@ -87,20 +122,23 @@ function gde_gviewer_func($atts) {
 		$height .= "px";
 	}
 	
-	// supported file types - list acceptable extensions separated by |
-	$exts = "doc|docx|pdf|ppt|pptx|tif|tiff|xls|xlsx|pages|ai|psd|dxf|svg|eps|ps|ttf|xps|zip|rar";
-	
 	// check link for validity
 	$status = gde_validTests($file, $force);
 	if ($status && !is_array($status)) {
-		$code = "\n<!-- GDE EMBED ERROR: $status -->\n";
+		if (($gdeoptions['disable_hideerrors'] == "no") || !$gdeoptions['disable_hideerrors']) {
+			$code = "\n<!-- GDE EMBED ERROR: $status -->\n";
+		} else {
+			$code = "\n".'<div class="gde-error">Google Doc Embedder Error: '.$status."</div>\n";
+		}
 	} else {
 		$code = "";
-	
+		
 		$fn = basename($file);
 		$fnp = gde_splitFilename($fn);
-		$fsize = $status['fsize'];
-		$fsize = gde_formatBytes($fsize);
+		$fsize = gde_formatBytes($status['fsize']);
+		
+		// translate filenames with spaces and other forms of wickedness
+		$fn = rawurlencode($fn);
 		
 		$code .=<<<HERE
 %A%
@@ -110,9 +148,9 @@ HERE;
 
 		// obfuscate filename if cache disabled
 		if ($gdeoptions['disable_caching'] == "yes" || $cache == "no" || $cache == "0") {
-			$uefile = urlencode($file)."%3F".time();
+			$uefile = $file."%3F".time();
 		} else {
-			$uefile = urlencode($file);
+			$uefile = $file;
 		}
 		if ($gdeoptions['disable_proxy'] == "no") {
 			$gdet = $gdeoptions['restrict_tb'];
@@ -121,7 +159,7 @@ HERE;
 			$lnk = "http://docs.google.com/viewer?url=".$uefile."&hl=".$lang."&embedded=true";
 		}
 		if (is_numeric($page)) {
-			// jump to selected page
+			// jump to selected page - experimental (works on refresh but not initial page load)
 			$page = (int) $page-1;
 			$lnk = $lnk."#:0.page.".$page;
 		}
@@ -136,7 +174,7 @@ HERE;
 				$save = "no";
 			}
 		}
-
+		
 		if ($save == "yes" || $save == "1") {
 			
 			$dlMethod = $gdeoptions['link_func'];
@@ -205,12 +243,17 @@ function gde_activate() {
 // add an option page
 add_action('admin_menu', 'gde_option_page');
 function gde_option_page() {
-	add_options_page(gde_t('GDE Settings'), gde_t('GDE Settings'), 'administrator', basename(__FILE__), 'gde_options');
+	global $gde_settings_page;
+	
+	$gde_settings_page = add_options_page(gde_t('GDE Settings'), gde_t('GDE Settings'), 'manage_options', basename(__FILE__), 'gde_options');
+
+	// enable settings jQuery
+	add_action( 'admin_enqueue_scripts', 'gde_admin_custom_js' );
 }
 function gde_options() {
 	if ( function_exists('current_user_can') && !current_user_can('manage_options') ) die(t('An error occurred.'));
 	if (! user_can_access_admin_page()) wp_die( gde_t('You do not have sufficient permissions to access this page') );
-
+	
 	require(ABSPATH. '/wp-content/plugins/google-document-embedder/options.php');
 	add_action('in_admin_footer', 'gde_admin_footer');
 }
@@ -281,7 +324,7 @@ add_action('after_plugin_row', 'gde_checkforBeta');
 // activate shortcode
 add_shortcode('gview', 'gde_gviewer_func');
 
-// editor integration (experimental)
+// editor integration
 if ($gdeoptions['disable_editor'] !== "yes") {
 	// add quicktag
 	add_action( 'admin_print_scripts', 'gde_admin_print_scripts' );
@@ -296,7 +339,7 @@ function gde_admin_footer() {
 	printf('%1$s plugin | Version %2$s<br />', $pdata['Title'], $pdata['Version']);
 }
 
-// temporarily move certain functions here to workaround NGG incompatibility
+// leave this function here to workaround NGG incompatibility
 function gde_t($message) {
 	return __($message, basename(dirname(__FILE__)));
 }

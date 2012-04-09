@@ -11,6 +11,8 @@
 if ( ! defined( 'GDE_PLUGIN_URL' ) )  define( 'GDE_PLUGIN_URL', WP_PLUGIN_URL . '/google-document-embedder');
 
 function gde_init($reset = NULL) {
+	$baseurl = get_bloginfo('url')."/wp-content/uploads/";
+	
 	// define global default settings
 	$defaults = array(
 		'default_width' => '100',
@@ -18,7 +20,9 @@ function gde_init($reset = NULL) {
 		'default_height' => '500',
 		'height_type' => 'px',
 		'default_lang' => 'en_US',
+		//'default_display' => 'inline',
 		'restrict_tb' => '',
+		'base_url' => $baseurl,
 		'show_dl' => 'yes',
 		'restrict_dl' => 'no',
 		'enable_ga' => 'no',
@@ -28,6 +32,7 @@ function gde_init($reset = NULL) {
 		'disable_proxy' => 'yes',
 		'disable_editor' => 'no',
 		'disable_caching' => 'no',
+		'disable_hideerrors' => 'no',
 		'bypass_check' => 'no',
 		'suppress_beta' => 'no'
 	);
@@ -62,7 +67,7 @@ function gde_init($reset = NULL) {
 }
 
 function gde_validTests($file = NULL, $force) {
-	global $exts;
+	global $allowed_exts, $gdeoptions;
 	
 	// error messages
 	$nofile = 'file attribute not found (check syntax)';
@@ -88,7 +93,7 @@ function gde_validTests($file = NULL, $force) {
 				return $notfound;
 			}
 		} else {
-			if (!gde_validType($file,$exts)) {
+			if (!gde_validType($file,$allowed_exts)) {
 				$fn = basename($file);
 				$fnp = gde_splitFilename($fn);
 				$type = $fnp[1];
@@ -113,8 +118,8 @@ function gde_validLink($link) {
     }
 }
 
-function gde_validType($link, $exts) {
-    if(preg_match("/($exts)$/i",$link)) {
+function gde_validType($link, $allowed_exts) {
+    if (preg_match("/($allowed_exts)$/i",$link)) {
         return true;
     } else {
         return false;
@@ -124,7 +129,7 @@ function gde_validType($link, $exts) {
 function gde_validUrl($url) {
 	if (!class_exists('WP_Http')) {
 		// wp3 compatibility
-		include_once( ABSPATH . WPINC. '/class-http.php' );
+		include_once( ABSPATH . WPINC . '/class-http.php' );
 	}
 	$request = new WP_Http;
 	$result = $request->request($url);
@@ -183,7 +188,15 @@ function gde_admin_print_scripts( $arg ) {
 	global $pagenow;
 	if (is_admin() && ( $pagenow == 'post-new.php' || $pagenow == 'post.php' ) ) {
 		$js = GDE_PLUGIN_URL.'/js/gde-quicktags.js';
-		wp_enqueue_script("gdescript", $js, array('quicktags') );
+		wp_enqueue_script("gde_qts", $js, array('quicktags') );
+	}
+}
+
+function gde_admin_custom_js( $hook ) {
+	global $gde_settings_page;
+	
+	if ( $gde_settings_page == $hook ) {
+		wp_enqueue_script( 'gde_jqs', plugins_url('/js/gde-jquery.js', __FILE__) );
 	}
 }
 
