@@ -61,6 +61,8 @@ function gde_init($reset = NULL) {
 			foreach ($defaults as $key => $value) {
 				if($gdeoptions[$key]) {
 					$defaults[$key] = $gdeoptions[$key];
+				} else {
+					$gdeoptions[$key] = $defaults[$key];
 				}
 			}
 		}
