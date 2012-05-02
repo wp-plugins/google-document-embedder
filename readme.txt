@@ -1,7 +1,7 @@
 === Google Doc Embedder ===
 Contributors: k3davis
 Tags: doc, docx, pdf, ppt, pptx, xls, psd, zip, rar, tiff, office, powerpoint, google docs, google
-Author URI: http://www.davismetro.com/code/
+Author URI: http://www.davistribe.org/code/
 Donate link: http://pledgie.com/campaigns/6048
 Requires at least: 2.8
 Tested up to: 3.4
@@ -28,7 +28,7 @@ Google Doc Embedder lets you embed several types of files into your WordPress pa
 * XML Paper Specification (XPS)
 * Archive Files (ZIP/RAR)
 
-Similar to services like Scribd, Google Doc Embedder will allow you to embed these files directly into your page or post, not requiring the user to have Microsoft Word, Adobe Reader, PowerPoint, or other software installed to view the contents. Unlike Scribd, the files do not need to be uploaded to any service first - including Google Documents - but can exist anywhere publicly accessible on your site or the internet.
+Similar to services like Scribd, Google Doc Embedder will allow you to embed these files directly into your page or post, not requiring the user to have Microsoft Word, Adobe Reader, PowerPoint, or other software installed to view the contents. Unlike Scribd, the files do not need to be uploaded to any service first - including Google Docs - but can exist anywhere publicly accessible on your site or the internet.
 
 Note: Use of this plug-in implies your agreement with Google's published <a href="http://docs.google.com/viewer/TOS?hl=en" target="_blank">Terms of Service</a>.
 
@@ -40,7 +40,7 @@ Note: Use of this plug-in implies your agreement with Google's published <a href
 
 Upload the documents to your site using the media upload facility built into WordPress, via FTP, or link to documents on another (public) site. Use the Google Doc Embedder button in the Visual editor to build the appropriate shortcode.
 
-For basic manual instructions, please see the FAQ. For advanced usage (including codes not exposed in the editor), see the <a href="http://www.davismetro.com/gde/usage/">web site</a>.
+For basic manual instructions, please see the FAQ. For advanced usage (including codes not exposed in the editor), see the <a href="http://www.davistribe.org/gde/usage/">web site</a>.
 
 Go to "GDE Settings" (under "Settings" in the admin panel) to change defaults, or override individually using the shortcode syntax in the FAQ.
 
@@ -67,7 +67,12 @@ This plug-in currently can embed the following:
 The file to embed must first be publicly available somewhere on the internet. You can upload it to your WordPress site using the standard techniques, or link to a file on another site.
 
 = How do I embed a file in my page or post? =
-Use the Google Doc Embedder button in the Visual editor to insert the `[gview]` shortcode as described below. Alternately, you can paste the URL into the HTML editor, select it, and click the "GDE" quicktag button.
+There are several ways you can insert a supported document, depending on your preference:
+
+* Manually enter the shortcode (explained below).
+* Upload a supported file type from a page or post, and from the Media Library, click the "Insert" button.
+* Use the Google Doc Embedder button in the Visual editor to insert the `[gview]` shortcode.
+* Paste the URL into the HTML editor, select it, and click the "GDE" quicktag button (HTML editor).
 
 To manually insert the `[gview]` shortcode into your page or post to embed the file, use the syntax below (use of the HTML tab in the editor recommended):
 
@@ -82,7 +87,7 @@ Common optional attributes:
 * `height=` : To override the default height of the viewer, enter a new height value - e.g., "400" (px) or "80%"
 * `cache=` : Set to 0 to bypass the viewer's internal caching (useful only for frequently updated files with the same name)
 
-For a list of all available attributes, see <a href="http://www.davismetro.com/gde/usage/">Usage</a>.
+For a list of all available attributes, see <a href="http://www.davistribe.org/gde/usage/">Usage</a>.
 
 = Will it embed files that are password-protected  or stored in protected folders/sites? =
 Most likely, no. If your file requires a login to view - such as being saved in a password-protected directory, or behind a firewall (on your intranet, etc.), the viewer will probably not be able to access the file. This is what is meant above, that the document should be "publicly available." Please save the file in a publicly accessible location for best results.
@@ -94,7 +99,7 @@ View the source on the web page where you've embedded the viewer. In order to de
 This plug-in utilizes the viewer from Google Docs in a standalone fashion. There is no direct integration with Google Docs and even those documents stored there and shared publicly do not embed reliably with their viewer (ironically), so at this time that use is not supported by the plug-in. Please store your original documents somewhere on your web site in their native supported formats.
 
 = I wish the plug-in had feature XYZ... =
-That's not a question ;) but if you have any particular ideas on further development of this plug-in, please post <a href="http://wordpress.org/tags/google-document-embedder?forum_id=10#postform">on the forum</a> or privately using the <a href="http://www.davismetro.com/gde/support/">support form</a> and I'll see what I can do.
+That's not a question ;) but if you have any particular ideas on further development of this plug-in, please post <a href="http://wordpress.org/tags/google-document-embedder?forum_id=10#postform">on the forum</a> and I'll see what I can do.
 
 == Screenshots ==
 
@@ -103,6 +108,16 @@ That's not a question ;) but if you have any particular ideas on further develop
 3. TinyMCE Editor integration
 
 == Changelog ==
+
+= 2.4 =
+* Added: Allow native upload/insert of all supported file types
+* Added: Shortcode inserted from Media Library for supported files
+* Added: Localization support (translations welcome)
+* Added: Ability to use mobile theme with Enhanced Viewer
+* Fixed: Toolbar customization on mobile with Enhanced Viewer
+* Fixed: Editor integration No longer loads its own TinyMCE/jquery libs
+* Fixed: URL changes for plugin, help links, beta checking
+* Fixed: "Moved Temporarily" error in Enhanced Viewer (thanks webmonkeywatts)
 
 = 2.3 =
 * Added: Option to set base URL for embedded files (thanks KevEd)
@@ -161,9 +176,9 @@ That's not a question ;) but if you have any particular ideas on further develop
 * Fixed: Filenames with spaces wouldn't load
 * Fixed: Suppress beta notification option not honored
 
-<a href="http://davismetro.com/gde/changelog/" target="_blank">Full history...</a>
+<a href="http://www.davistribe.org/gde/changelog/" target="_blank">Full history...</a>
 
 == Upgrade Notice ==
 
-= 2.3 =
-New options and editor bug fix.
+= 2.4 =
+Localization, deeper Media Library and editor integration, and more

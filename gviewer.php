@@ -2,15 +2,17 @@
 
 /*
 Plugin Name: Google Doc Embedder
-Plugin URI: http://www.davismetro.com/gde/
+Plugin URI: http://www.davistribe.org/gde/
 Description: Lets you embed MS Office, PDF, TIFF, and many other file types in a web page using the Google Docs Viewer (no Flash or PDF browser plug-ins required).
 Author: Kevin Davis
-Author URI: http://www.davismetro.com/
-Version: 2.3
+Author URI: http://www.davistribe.org/
+Text Domain: gde
+Domain Path: /languages/
+Version: 2.4
 License: GPLv2
 */
 
-$gde_ver = "2.3.0.98";
+$gde_ver = "2.4.0.98";
 
 /**
  * LICENSE
@@ -34,39 +36,43 @@ $gde_ver = "2.3.0.98";
  * @author     Kevin Davis <kev@tnw.org>
  * @copyright  Copyright 2012 Kevin Davis
  * @license    http://www.gnu.org/licenses/gpl.txt GPL 2.0
- * @link       http://davismetro.com/gde/
+ * @link       http://www.davistribe.org/gde/
  */
 
+if ( ! defined( 'GDE_PLUGIN_DIR' ) )
+    define( 'GDE_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
+if ( ! defined( 'GDE_PLUGIN_URL' ) )
+    define( 'GDE_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
+	
 include_once('gde-functions.php');
 $gdeoptions = get_option('gde_options');
 $pUrl = plugins_url(plugin_basename(dirname(__FILE__)));
 
-// supported file types
-// note: updates here should also be added to js/dialog.js
-$exts = array(
-		// ext	=>	mime_type
-		"ai"	=>	"application/postscript",				// upload not supported
-		"doc"	=>	"application/msword",
-		"docx"	=>	"application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-		"dxf"	=>	"application/dxf",						// upload not supported
-		"eps"	=>	"application/postscript",				// upload not supported
-		"pdf"	=>	"application/pdf",
-		"pages"	=>	"application/x-iwork-pages-sffpages",	// upload not supported
-		"ppt"	=>	"application/vnd.ms-powerpoint",
-		"pptx"	=>	"application/vnd.openxmlformats-officedocument.presentationml.presentation",
-		"ps"	=>	"application/postscript",				// upload not supported
-		"psd"	=>	"image/photoshop",						// upload not supported
-		"rar"	=>	"application/x-rar-compressed",
-		"svg"	=>	"image/svg+xml",						// upload not supported
-		"tif"	=>	"image/tiff",							// upload not supported
-		"tiff"	=>	"image/tiff",							// upload not supported
-		"ttf"	=>	"application/x-font-ttf",				// upload not supported
-		"xls"	=>	"application/vnd.ms-excel",
-		"xlsx"	=>	"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-		"xps"	=>	"application/vnd.ms-xpsdocument",		// upload not supported
-		"zip"	=>	"application/zip"
+// note: updates here should also be reflected in js/dialog.js
+$supported_exts = array(
+	// ext		=>	mime_type
+	"ai"		=>	"application/postscript",
+	"doc"		=>	"application/msword",
+	"docx"		=>	"application/vnd.openxmlformats-officedocument.wordprocessingml",
+	"dxf"		=>	"application/dxf",
+	"eps"		=>	"application/postscript",
+	"pages"		=>	"application/x-iwork-pages-sffpages",
+	"pdf"		=>	"application/pdf",
+	"ppt"		=>	"application/vnd.ms-powerpoint",
+	"pptx"		=>	"application/vnd.openxmlformats-officedocument.presentationml",
+	"ps"		=>	"application/postscript",
+	"psd"		=>	"image/photoshop",
+	"rar"		=>	"application/rar",
+	"svg"		=>	"image/svg+xml",
+	"tif"		=>	"image/tiff",
+	"tiff"		=>	"image/tiff",
+	"ttf"		=>	"application/x-font-ttf",
+	"xls"		=>	"application/vnd.ms-excel",
+	"xlsx"		=>	"application/vnd.openxmlformats-officedocument.spreadsheetml",
+	"xps"		=>	"application/vnd.ms-xpsdocument",
+	"zip"		=>	"application/zip"
 );
-$allowed_exts = implode("|",array_keys($exts));
+$allowed_exts = implode("|",array_keys($supported_exts));
 
 // basic usage: [gview file="http://path.to/file.pdf"]
 function gde_gviewer_func($atts) {
@@ -128,7 +134,7 @@ function gde_gviewer_func($atts) {
 		if (($gdeoptions['disable_hideerrors'] == "no") || !$gdeoptions['disable_hideerrors']) {
 			$code = "\n<!-- GDE EMBED ERROR: $status -->\n";
 		} else {
-			$code = "\n".'<div class="gde-error">Google Doc Embedder Error: '.$status."</div>\n";
+			$code = "\n".'<div class="gde-error">Google Doc Embedder '.__('Error', 'gde').": ".$status."</div>\n";
 		}
 	} else {
 		$code = "";
@@ -152,19 +158,24 @@ HERE;
 		} else {
 			$uefile = $file;
 		}
+		// check for proxy
 		if ($gdeoptions['disable_proxy'] == "no") {
-			$gdet = $gdeoptions['restrict_tb'];
-			$lnk = $pUrl."/proxy.php?url=".$uefile."&hl=".$lang."&gdet=".$gdet."&embedded=true";
+			$lnk = $pUrl."/proxy.php?url=".$uefile."&hl=".$lang;
 		} else {
-			$lnk = "http://docs.google.com/viewer?url=".$uefile."&hl=".$lang."&embedded=true";
+			$lnk = "http://docs.google.com/viewer?url=".$uefile."&hl=".$lang;
 		}
+		// check for mobile
+		if (strstr($gdeoptions['gdet'], 'm') !== false) {
+			$lnk .= "&mobile=true";
+		} else {
+			$lnk .= "&embedded=true";
+		}
+		// check for page
 		if (is_numeric($page)) {
 			// jump to selected page - experimental (works on refresh but not initial page load)
 			$page = (int) $page-1;
 			$lnk = $lnk."#:0.page.".$page;
 		}
-		$linkcode = "";
-		
 		// hide download link for anonymous users
 		get_currentuserinfo();
 		$dlRestrict = $gdeoptions['restrict_dl'];
@@ -175,6 +186,7 @@ HERE;
 			}
 		}
 		
+		$linkcode = "";
 		if ($save == "yes" || $save == "1") {
 			
 			$dlMethod = $gdeoptions['link_func'];
@@ -232,6 +244,8 @@ HERE;
 
 // activate plugin
 register_activation_hook( __FILE__, 'gde_activate');
+// allow localisation
+load_plugin_textdomain('gde', false, basename( dirname( __FILE__ ) ) . '/languages' );
 
 function gde_activate() {
 	global $wpdb;
@@ -245,23 +259,23 @@ add_action('admin_menu', 'gde_option_page');
 function gde_option_page() {
 	global $gde_settings_page;
 	
-	$gde_settings_page = add_options_page(gde_t('GDE Settings'), gde_t('GDE Settings'), 'manage_options', basename(__FILE__), 'gde_options');
+	$gde_settings_page = add_options_page('GDE '.__('Settings', 'gde'), 'GDE '.__('Settings', 'gde'), 'manage_options', basename(__FILE__), 'gde_options');
 
 	// enable settings jQuery
 	add_action( 'admin_enqueue_scripts', 'gde_admin_custom_js' );
 }
 function gde_options() {
-	if ( function_exists('current_user_can') && !current_user_can('manage_options') ) die(t('An error occurred.'));
-	if (! user_can_access_admin_page()) wp_die( gde_t('You do not have sufficient permissions to access this page') );
+	if ( function_exists('current_user_can') && !current_user_can('manage_options') ) wp_die('You don\'t have access to this page.');
+	if (! user_can_access_admin_page()) wp_die( __('You do not have sufficient permissions to access this page', 'gde') );
 	
-	require(ABSPATH. '/wp-content/plugins/google-document-embedder/options.php');
+	require(plugin_dir_path(__FILE__).'/options.php');
 	add_action('in_admin_footer', 'gde_admin_footer');
 }
 
 // add additional links, for convenience
 $plugin = plugin_basename(__FILE__);
 function gde_actlinks($links) { 
-	$settings_link = '<a href="options-general.php?page=gviewer.php">Settings</a>'; 
+	$settings_link = '<a href="options-general.php?page=gviewer.php">'.__('Settings', 'gde').'</a>'; 
 	array_unshift($links, $settings_link); 
 	return $links; 
 }
@@ -269,7 +283,7 @@ function gde_metalinks($links, $file) {
 	global $debug;
 	$plugin = plugin_basename(__FILE__);
 	if ($file == $plugin) {
-		$support_link = '<a href="'.GDE_SUPPORT_URL.'">Support</a>';
+		$support_link = '<a href="'.GDE_SUPPORT_URL.'">'.__('Support', 'gde').'</a>';
 		$links[] = $support_link;
 	}
 	return $links;
@@ -280,6 +294,12 @@ add_filter("plugin_row_meta", 'gde_metalinks', 10, 2);
 // check for beta, if enabled
 function gde_checkforBeta($plugin) {
 	global $gde_ver, $pUrl, $gdeoptions;
+	
+	// beta messages
+	$beta_msg['avail'] = array(__('Beta version available', 'gde'), __('Please deactivate the plug-in and install the current version if you wish to participate. Otherwise, you can turn off beta version checking in GDE Settings. Testers appreciated!', 'gde'));
+	$beta_msg['newer'] = array(__('Updated beta version available', 'gde'), __('A newer beta has been released. Please deactivate the plug-in and install the current version. Thanks for your help!', 'gde'));
+	$beta_msg['current'] = array(__('You\'re running a beta version. Please give feedback.', 'gde'), __('Thank you for running a test version of Google Doc Embedder. You are running the most current beta version. Please give feedback on this version using the &quot;Support&quot; link above. Thanks for your help!', 'gde'));
+	$beta_msg['link'] = __('more info', 'gde');
 	
 	$pdata = get_plugin_data(__FILE__);
 	if (preg_match('/-dev$/i', $pdata['Version'])) { $isbeta = 1; }
@@ -296,26 +316,26 @@ function gde_checkforBeta($plugin) {
 			$message = $status[3];
 			
 			if ($isbeta) {
-				$titleStr = "Updated beta";
-				$msgStr = "A newer beta has been released. Please deactivate the plug-in and install the current version. Thanks for your help!";
+				$titleStr = $beta_msg['newer'][0];
+				$msgStr = $beta_msg['newer'][1];
 			} else {
-				$titleStr = "Beta";
-				$msgStr = "Please deactivate the plug-in and install the current version if you wish to participate. Otherwise, you can turn off beta version checking in GDE Settings. Testers appreciated!";
+				$titleStr = $beta_msg['avail'][0];
+				$msgStr = $beta_msg['avail'][1];
 			}
 			$message = str_replace("%msg", $msgStr, $message);
 			
 			if ((version_compare(strval($rver), strval($lver), '>') == 1)) {
-				$msg = __("$titleStr version available: ", "gde").'<strong>v'.$rver.'</strong> - '.$message;
-				echo '<td colspan="5" class="plugin-update" style="line-height:1.2em; font-size:11px; padding:1px;"><div style="background:#A2F099;border:1px solid #4FE23F; padding:2px; font-weight:bold;">'.__("$titleStr version available.", "gde").' <a href="javascript:void(0);" onclick="jQuery(\'#gde-beta-msg\').toggle();">'.__("(more info)", "gde").'</a></div><div id="gde-beta-msg" style="display:none; padding:10px; text-align:center;" >'.$msg.'</div></td>';
+				$msg = "$titleStr: <strong>v".$rver."</strong> - ".$message;
+				echo '<td colspan="5" class="plugin-update" style="line-height:1.2em; font-size:11px; padding:1px;"><div style="background:#A2F099;border:1px solid #4FE23F; padding:2px; font-weight:bold;">'.$titleStr.'. <a href="javascript:void(0);" onclick="jQuery(\'#gde-beta-msg\').toggle();">('.$beta_msg['link'].')</a></div><div id="gde-beta-msg" style="display:none; padding:10px; text-align:center;">'.$msg.'</div></td>';
 			} elseif ($isbeta) {
-				$msg = __("Thank you for running a test version of Google Doc Embedder. You are running the most current beta version. Please give feedback on this version using the &quot;Support&quot; link above. Thanks for your help!", "gde");
-				echo '<td colspan="5" class="plugin-update" style="line-height:1.2em; font-size:11px; padding:1px;"><div style="border:1px solid; padding:2px; font-weight:bold;">'.__("You're running a beta version. Please give feedback.", "gde").' <a href="javascript:void(0);" onclick="jQuery(\'#gde-beta-msg\').toggle();">'.__("(more info)", "gde").'</a></div><div id="gde-beta-msg" style="display:none; padding:10px; text-align:center;" >'.$msg.'</div></td>';
+				$msg = $beta_msg['current'][0];
+				echo '<td colspan="5" class="plugin-update" style="line-height:1.2em; font-size:11px; padding:1px;"><div style="border:1px solid; padding:2px; font-weight:bold;">'.$beta_msg['current'][1].' <a href="javascript:void(0);" onclick="jQuery(\'#gde-beta-msg\').toggle();">('.$beta_msg['link'].')</a></div><div id="gde-beta-msg" style="display:none; padding:10px; text-align:center;" >'.$msg.'</div></td>';
 			} else {
 				return;
 			}
 		} elseif ($isbeta) {
-			$msg = __("Thank you for running a test version of Google Doc Embedder. You are running the most current beta version. Please give feedback on this version using the &quot;Support&quot; link above. Thanks for your help!", "gde");
-			echo '<td colspan="5" class="plugin-update" style="line-height:1.2em; font-size:11px; padding:1px;"><div style="border:1px solid; padding:2px; font-weight:bold;">'.__("You're running a beta version. Please give feedback.", "gde").' <a href="javascript:void(0);" onclick="jQuery(\'#gde-beta-msg\').toggle();">'.__("(more info)", "gde").'</a></div><div id="gde-beta-msg" style="display:none; padding:10px; text-align:center;" >'.$msg.'</div></td>';			
+			$msg = $beta_msg['current'][1];
+			echo '<td colspan="5" class="plugin-update" style="line-height:1.2em; font-size:11px; padding:1px;"><div style="border:1px solid; padding:2px; font-weight:bold;">'.$beta_msg['current'][0].' <a href="javascript:void(0);" onclick="jQuery(\'#gde-beta-msg\').toggle();">('.$beta_msg['link'].')</a></div><div id="gde-beta-msg" style="display:none; padding:10px; text-align:center;" >'.$msg.'</div></td>';			
 		}
 	}
 }
@@ -331,17 +351,24 @@ if ($gdeoptions['disable_editor'] !== "yes") {
 	
 	// add tinymce button
 	add_action('admin_init','gde_mce_addbuttons');
+	
+	// extend media upload support to natively unsupported mime types
+	if ($gdeoptions['ed_extend_upload'] == "yes") {
+		add_filter('upload_mimes', 'gde_upload_mimes');
+	}
+	
+	// embed shortcode instead of link from media library for supported types
+	if ($gdeoptions['ed_embed_sc'] == "yes") {
+		add_filter('media_send_to_editor', 'gde_media_insert', 20, 3);
+	}
 }
 
 // footer credit
 function gde_admin_footer() {
 	$pdata = get_plugin_data(__FILE__);
-	printf('%1$s plugin | Version %2$s<br />', $pdata['Title'], $pdata['Version']);
-}
-
-// leave this function here to workaround NGG incompatibility
-function gde_t($message) {
-	return __($message, basename(dirname(__FILE__)));
+	$plugin_str = __('plugin', 'gde');
+	$version_str = __('Version', 'gde');
+	printf('%1$s %2$s | %3$s %4$s<br />', $pdata['Title'], $plugin_str, $version_str, $pdata['Version']);
 }
 
 ?>

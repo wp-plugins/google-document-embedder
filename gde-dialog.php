@@ -1,13 +1,16 @@
 <?php
-//require_once("../../../wp-config.php");
+
+// access wp functions externally
+require_once('bootstrap.php');
+
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 	<title>Google Doc Embedder</title>
-	<script type="text/javascript" src="js/tiny_mce_popup.js"></script>
+	<script language="javascript" type="text/javascript" src="<?php echo get_option('siteurl'); ?>/wp-includes/js/tinymce/tiny_mce_popup.js"></script>
+	<script language="javascript" type="text/javascript" src="<?php echo get_option('siteurl'); ?>/wp-includes/js/jquery/jquery.js"></script> 
 	<script type="text/javascript" src="js/dialog.js"></script>
-	<script type="text/javascript" src="js/jquery-1.3.2.min.js"></script>    
 
     <style type="text/css">
 	h2 {
@@ -28,55 +31,57 @@
 <form onsubmit="GDEInsertDialog.insert();return false;" action="#">
     <p>
     <input name="diy" type="checkbox" value="1" class="diy"/>
-    I'll insert the shortcode myself
+    <?php _e('I\'ll insert the shortcode myself', 'gde'); ?>
     </p>
-  <h2 class="gray">GDE Shortcode Options</h2></td>
+  <h2 class="gray"><?php _e('GDE Shortcode Options', 'gde'); ?></h2></td>
   </tr>
   
   <fieldset>
-  <legend class="gray dwl_gray">Required</legend>
+  <legend class="gray dwl_gray"><?php _e('Required', 'gde'); ?></legend>
   <table width="100%" border="0" cellspacing="0" cellpadding="5">
   <tr>
-    <td align="right" class="gray dwl_gray"><strong>URL or Filename</strong><br />Full URL or filename to append to File Base URL</td>
+    <td align="right" class="gray dwl_gray"><strong><?php _e('URL or Filename', 'gde'); ?></strong><br /><?php _e('Full URL or filename to append to File Base URL', 'gde'); ?></td>
     <td valign="top"><input name="url" type="text" class="opt dwl" id="url" style="width:200px;" /><br/>
-	<span id="uri-note"></span></td>
+	<span id="uri-note-base" style="display:none;color:#2B6FB6;"><?php _e('File Base URL will be prefixed', 'gde'); ?></span>
+	<span id="uri-note-file" style="display:none;color:red;"><?php _e('Unsupported file type', 'gde'); ?></span>
+	</td>
   </tr>  
   </table>
   </fieldset>
 
   <br/>
   <fieldset>
-  <legend class="gray dwl_gray">Optional (Override Global Settings)</legend>
+  <legend class="gray dwl_gray"><?php _e('Optional (Override Global Settings)', 'gde'); ?></legend>
   <table width="100%" border="0" cellspacing="0" cellpadding="5">
   <tr>
-    <td align="right" class="gray dwl_gray"><strong>Height</strong><br/>(format: 40% or 300px)</td>
+    <td align="right" class="gray dwl_gray"><strong><?php _e('Height', 'gde'); ?></strong><br/>(<?php _e('format:', 'gde'); ?> 40% <?php _e('or', 'gde'); ?> 300px)</td>
     <td valign="top" style="width:200px;"><input name="height" type="text" class="opt dwl" id="height" size="6" /></td>
   </tr>
   <tr>
-    <td align="right" class="gray dwl_gray"><strong>Width</strong><br/>(format: 40% or 300px)</td>
+    <td align="right" class="gray dwl_gray"><strong><?php _e('Width', 'gde'); ?></strong><br/>(<?php _e('format:', 'gde'); ?> 40% <?php _e('or', 'gde'); ?> 300px)</td>
     <td valign="top"><input name="width" type="text" class="opt dwl" id="width" size="6" /></td>
   </tr>
   <tr>
-    <td align="right" class="gray dwl_gray"><strong>Show Download Link</strong></td>
-    <td valign="top" class="gray dwl_gray"><input name="save" type="radio" class="opt dwl save" value="1" /> Yes <input name="save" type="radio" class="opt dwl save" value="0" /> No</td>
+    <td align="right" class="gray dwl_gray"><strong><?php _e('Show Download Link', 'gde'); ?></strong></td>
+    <td valign="top" class="gray dwl_gray"><input name="save" type="radio" class="opt dwl save" value="1" /> <?php _e('Yes', 'gde'); ?> <input name="save" type="radio" class="opt dwl save" value="0" /> <?php _e('No', 'gde'); ?></td>
   </tr>
   <tr>
     <td colspan="2" class="gray dwl_gray">
       <input name="restrict_dl" type="checkbox" value="-1" class="restrict_dl dwl opt" />
-      Show download link only if user is logged in
+      <?php _e('Show download link only if user is logged in', 'gde'); ?>
    </td>
    </tr>
   <tr>
     <td colspan="2" class="gray dwl_gray">
       <input name="disable_cache" type="checkbox" value="-1" class="disable_cache dwl opt" />
-      Disable caching (this document is frequently overwritten)
+      <?php _e('Disable caching (this document is frequently overwritten)', 'gde'); ?>
    </td>
    </tr>
      <tr>
     <tr>
     <td colspan="2" class="gray dwl_gray">
       <input name="bypass_error" type="checkbox" value="-1" class="bypass_error opt" />
-      Disable internal error checking (try if URL is confirmed good but document doesn't display)
+      <?php _e('Disable internal error checking (try if URL is confirmed good but document doesn\'t display)', 'gde'); ?>
    </td>
    </tr> 
    </table>
@@ -86,8 +91,8 @@
     <tr>
     <td colspan="2">
     <br />
-    Shortcode Preview
-    <textarea name="shortcode" cols="72" rows="2" id="shortcode"></textarea>
+    <?php _e('Shortcode Preview', 'gde'); ?>
+    <textarea name="shortcode" cols="72" rows="2" id="shortcode"readonly="readonly"></textarea>
     </td>
   </tr> 
     
@@ -95,11 +100,11 @@
 
 	<div class="mceActionPanel">
 		<div style="float: left">
-			<input type="button" id="insert" name="insert" value="{#insert}" onclick="GDEInsertDialog.insert();" />
+			<input type="button" id="insert" name="insert" value="<?php _e('Insert', 'gde'); ?>" onclick="GDEInsertDialog.insert();" />
 		</div>
 
 		<div style="float: right">
-			<input type="button" id="cancel" name="cancel" value="{#cancel}" onclick="tinyMCEPopup.close();" />
+			<input type="button" id="cancel" name="cancel" value="<?php _e('Cancel', 'gde'); ?>" onclick="tinyMCEPopup.close();" />
 		</div>
 	</div>
 </form>

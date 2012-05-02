@@ -6,11 +6,11 @@ var GDEInsertDialog = {
         var shortcode;
 		
 				jQuery('.diy').click(function(){
-				// diy option selected
-					var dis = jQuery('.opt').attr('disabled');
+					// diy option selected
+					var dis = jQuery(this).prop("checked");
 					
-					if (dis) {					
-						jQuery('.opt').attr('disabled', ''); 
+					if (dis == false) {					
+						jQuery('.opt').removeAttr('disabled'); 
 						jQuery('.gray').css('color','black');					
 						jQuery('#shortcode').val('');
 						check_uri();
@@ -44,6 +44,7 @@ var GDEInsertDialog = {
 				});	
 				jQuery('#url').blur(function(){
 					update_sc();
+					check_uri();
 				});
 		
 		function check_uri() {
@@ -51,14 +52,17 @@ var GDEInsertDialog = {
 			var path_regex = /^http/i;
 			
 			if(!(type_regex.test( jQuery('#url').val() )) & ( jQuery('#url').val() !=0 )) {
-				jQuery('#uri-note').attr('style', 'color:red;');
-				jQuery('#uri-note').html('Unsupported file type');
+				// unsupported file type
+				jQuery('#uri-note-file').show();
+				jQuery('#uri-note-base').hide();
 			} else {
 				if(!(path_regex.test( jQuery('#url').val() )) & ( jQuery('#url').val() !=0 )) {
-					jQuery('#uri-note').attr('style', 'color:#2B6FB6;');
-					jQuery('#uri-note').html('File Base URL will be prefixed');
+					// file base url appended
+					jQuery('#uri-note-file').hide();
+					jQuery('#uri-note-base').show();
 				} else {
-					jQuery('#uri-note').html('');
+					jQuery('#uri-note-file').hide();
+					jQuery('#uri-note-base').hide();
 				}
 			}
 		}

@@ -1,16 +1,17 @@
 <?php
 
 // external urls (help, etc.)
-@define('GDE_VIEWOPT_URL', 'http://davismetro.com/gde/settings/viewer-options/');
-@define('GDE_LINKOPT_URL', 'http://davismetro.com/gde/settings/download-link-options/');
-@define('GDE_ADVOPT_URL', 'http://davismetro.com/gde/settings/advanced-options/');
-@define('GDE_SUPPORT_URL', 'http://davismetro.com/gde/contact/');
-@define('GDE_BETA_URL', 'http://davismetro.com/gde/beta-program/');
-@define('GDE_BETA_CHKFILE', 'http://davismetro.com/gde/beta/gde-beta.chk');
+@define('GDE_VIEWOPT_URL', 'http://www.davistribe.org/gde/settings/viewer-options/');
+@define('GDE_LINKOPT_URL', 'http://www.davistribe.org/gde/settings/download-link-options/');
+@define('GDE_ADVOPT_URL', 'http://www.davistribe.org/gde/settings/advanced-options/');
+@define('GDE_SUPPORT_URL', 'http://wordpress.org/tags/google-document-embedder?forum_id=10');
+@define('GDE_BETA_URL', 'http://www.davistribe.org/gde/beta-program/');
+@define('GDE_BETA_CHKFILE', 'http://dev.davismetro.com/beta/gde/beta.chk');
 
-if ( ! defined( 'GDE_PLUGIN_URL' ) )  define( 'GDE_PLUGIN_URL', WP_PLUGIN_URL . '/google-document-embedder');
+//if ( ! defined( 'GDE_PLUGIN_URL' ) )  define( 'GDE_PLUGIN_URL', WP_PLUGIN_URL . '/google-document-embedder');
 
 function gde_init($reset = NULL) {
+	// set default base url
 	$baseurl = get_bloginfo('url')."/wp-content/uploads/";
 	
 	// define global default settings
@@ -26,10 +27,12 @@ function gde_init($reset = NULL) {
 		'show_dl' => 'yes',
 		'restrict_dl' => 'no',
 		'enable_ga' => 'no',
-		'link_text' => 'Download (%FT, %FS)',
+		'link_text' => __('Download', 'gde').' (%FT, %FS)',
 		'link_pos' => 'below',
 		'link_func' => 'default',
 		'disable_proxy' => 'yes',
+		'ed_extend_upload' => 'yes',
+		'ed_embed_sc' => 'yes',
 		'disable_editor' => 'no',
 		'disable_caching' => 'no',
 		'disable_hideerrors' => 'no',
@@ -223,7 +226,79 @@ function gde_add_tinymce_plugin($plugin_array) {
    return $plugin_array;
 }
 
-function gde_e($message) {
-	_e($message, basename(dirname(__FILE__)));
+// modify the media insertion if requested
+function gde_media_insert($html, $id, $attachment) {
+	global $supported_exts;
+	
+	//get the mime-type
+	$mime_type = get_post_mime_type($id);
+
+	if (in_array($mime_type, $supported_exts)) {
+		// insert shortcode instead of link
+		$output = '[gview file="'.$attachment['url'].'"]';
+		return $output;
+	} else {
+		// default behavior
+		//return $html;
+		$output = "$mime_type not a value in supported_exts";
+		return $output;
+	}
 }
+
+function gde_upload_mimes ( $existing_mimes=array() ) {
+	global $supported_exts;
+	
+	// add upload support for natively unsupported mimetypes used by this plugin
+	foreach ($supported_exts as $ext => $mimetype) {
+		if (!array_key_exists($ext, gde_mimes_expanded($existing_mimes))) {
+			$existing_mimes[$ext] = $mimetype;
+		}
+	}
+	return gde_mimes_collapsed($existing_mimes);
+}
+
+function gde_mimes_expanded(array $types) {
+	// expand the supported mime types so that every ext is its own key
+	foreach ($types as $k => $v) {
+		if (substr("|", $k)) {
+			$subtypes = explode("|", $k);
+			foreach ($subtypes as $type) {
+				$newtypes[$type] = $v;
+				unset($types[$k]);
+			}
+			$types = array_merge($types, $newtypes);
+		}
+	}
+	return $types;
+}
+
+function gde_mimes_collapsed($types) {
+	// collapes the supported mime types so that each mime is listed once with combined key (default)
+	$newtypes = array();
+	
+	foreach ($types as $k => $v) {
+		if (isset($newtypes[$v])) {
+			$newtypes[$v] .= '|' . $k;
+		} else {
+            $newtypes[$v] = $k;
+		}
+	}
+	return array_flip($newtypes);
+}
+
+/**
+ * Get plugin data
+ *
+ * @since   2.4.0.1
+ * @return  array Array of plugin data parsed from main plugin file
+ */
+function gde_get_plugin_data() {
+	if ( ! function_exists( 'get_plugin_data' ) ) {
+		require_once( ABSPATH . '/wp-admin/includes/plugin.php' );
+	}
+	$plugin_data  = get_plugin_data( GDE_PLUGIN_DIR . 'gviewer.php' );
+	
+	return $plugin_data;
+}
+
 ?>
