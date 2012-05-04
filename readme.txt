@@ -44,7 +44,7 @@ Translations are welcome; see [the FAQ](http://wordpress.org/extend/plugins/goog
 2. Activate the plugin through the 'Plugins' menu in WordPress.
 3. Done.
 
-Upload the documents to your site using the media upload facility built into WordPress, via FTP, or link to documents on another (public) site. Use the Google Doc Embedder button in the Visual editor to build the appropriate shortcode.
+Upload the documents to your site using the media upload facility built into WordPress, via FTP, or link to documents on another (public) site. Use the Google Doc Embedder button in the Visual editor to build the appropriate shortcode, or see the FAQ for other methods.
 
 For basic manual instructions, please see the FAQ. For advanced usage (including codes not exposed in the editor), see the [web site](http://www.davistribe.org/gde/usage/ "web site").
 
@@ -110,7 +110,7 @@ You can use the [English translation](http://plugins.svn.wordpress.org/google-do
 Please email your translation, along with your name and link for credit, to <em>translation @ tnw . org</em> for inclusion in the plugin.
 
 = Where can I ask questions, report bug and request features? =
-You can open a topic [on the forum](http://wordpress.org/tags/google-document-embedder?forum_id=10#postform) and I'll see what I can do. I review all messages posted here regularly.
+You can open a topic [on the forum](http://wordpress.org/tags/google-document-embedder?forum_id=10#postform "forum") and I'll see what I can do. I review all messages posted here regularly.
 
 == Screenshots ==
 
@@ -167,32 +167,7 @@ You can open a topic [on the forum](http://wordpress.org/tags/google-document-em
 * Fixed: Deprecated HTML output that interfered with some browsers
 * Removed: Plugin conflict code and setting; not particularly useful
 
-= 1.9.8 =
-* Added: Viewer support for multiple new file types
-* Changed: Workaround for NextGEN Gallery incompatibility (thanks alex)
-* Changed: Defaults to Standard Viewer (IE problem is fixed!)
-
-= 1.9.7 =
-* Fixed: Minor compatibility issue with some PHP versions
-* Changed: Confirmed compatibility with WP 3.1
-
-= 1.9.6 =
-* Changed: Removed min-width restriction of viewer (thanks Amanda)
-* Fixed: Enhanced Viewer failed in hardened PHP configs (thanks Waseem)
-* Fixed: Force Download option failed in hardened PHP configs
-* Fixed: Options page layout quirks in lower resolutions
-* Fixed: Options page PHP parse error on XAMPP (thanks John)
-
-= 1.9.5 =
-* Added: Support for Word documents (DOC, DOCX)
-* Added: Default language option for viewer
-* Added: Revived ability to hide selected viewer toolbar buttons (from 1.7)
-* Changed: IE now supported by "enhanced viewer" proxy option (ie-warn removed)
-* Changed: Improved options organization
-* Fixed: Filenames with spaces wouldn't load
-* Fixed: Suppress beta notification option not honored
-
-[Full history...](http://www.davistribe.org/gde/changelog/ "Full History")
+[Full history...](http://www.davistribe.org/gde/changelog/ "Full history")
 
 == Upgrade Notice ==
 
