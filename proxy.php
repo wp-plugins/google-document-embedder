@@ -45,7 +45,7 @@ if (isset($_GET['embedded']) || $_GET['mobile']) {
 	
 	// get the src page, change relative path to absolute
 	if (isset($curl)) {
-		$code = curl_get_contents("https://docs.google.com/viewer?" . $_SERVER['QUERY_STRING']);
+		$code = gde_curl_get_contents("https://docs.google.com/viewer?" . $_SERVER['QUERY_STRING']);
 	} else {
 		$code = file_get_contents("https://docs.google.com/viewer?" . $_SERVER['QUERY_STRING']);
 	}
@@ -97,7 +97,7 @@ if (isset($_GET['embedded']) || $_GET['mobile']) {
 } elseif (isset($_GET['a']) && $_GET['a'] == 'gt') {
 	// get text coordinates file, can not redirect because of same origin policy
 	if (isset($curl)) {
-		$code = curl_get_contents("https://docs.google.com/viewer?" . $_SERVER['QUERY_STRING']);
+		$code = gde_curl_get_contents("https://docs.google.com/viewer?" . $_SERVER['QUERY_STRING']);
 	} else {
 		$code = file_get_contents("https://docs.google.com/viewer?" . $_SERVER['QUERY_STRING']);
 	}
@@ -113,7 +113,7 @@ if (isset($_GET['embedded']) || $_GET['mobile']) {
 } elseif (isset($_GET['jsfile'])) {
 	// proxy javascript files and replace navigator.cookieEnabled with false
 	if (isset($curl)) {
-		$code = curl_get_contents("https://docs.google.com/" . $_GET['jsfile']);  
+		$code = gde_curl_get_contents("https://docs.google.com/" . $_GET['jsfile']);  
 	} else {
 		$code = file_get_contents("https://docs.google.com/" . $_GET['jsfile']); 
 	}
@@ -130,7 +130,7 @@ if (isset($_GET['embedded']) || $_GET['mobile']) {
 	header("Location: https://docs.google.com/viewer?" . $_SERVER['QUERY_STRING']);  
 } 
 
-function curl_get_contents($url) {
+function gde_curl_get_contents($url) {
 	$ch = curl_init();
 	$timeout = 5; // set to zero for no timeout
 	curl_setopt ($ch, CURLOPT_URL, $url);

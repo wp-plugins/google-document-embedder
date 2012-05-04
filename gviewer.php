@@ -8,11 +8,11 @@ Author: Kevin Davis
 Author URI: http://www.davistribe.org/
 Text Domain: gde
 Domain Path: /languages/
-Version: 2.4
+Version: 2.4.1
 License: GPLv2
 */
 
-$gde_ver = "2.4.0.98";
+$gde_ver = "2.4.1.98";
 
 /**
  * LICENSE
@@ -350,7 +350,7 @@ if ($gdeoptions['disable_editor'] !== "yes") {
 	add_action( 'admin_print_scripts', 'gde_admin_print_scripts' );
 	
 	// add tinymce button
-	add_action('admin_init','gde_mce_addbuttons');
+	add_action( 'admin_init','gde_mce_addbuttons' );
 	
 	// extend media upload support to natively unsupported mime types
 	if ($gdeoptions['ed_extend_upload'] == "yes") {

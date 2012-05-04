@@ -5,7 +5,7 @@
 			ed.addCommand('gde_cmd', function() {
 				ed.windowManager.open( {
 					file : url + '/../gde-dialog.php',
-					width : 420 + parseInt(ed.getLang('gde.delta_width',0)),
+					width : 460 + parseInt(ed.getLang('gde.delta_width',0)),
 					height : 540 + parseInt(ed.getLang('gde.delta_height',0)),
 					inline : 1}, {
 						plugin_url : url

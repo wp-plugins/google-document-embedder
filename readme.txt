@@ -32,6 +32,11 @@ Similar to services like Scribd, Google Doc Embedder will allow you to embed the
 
 Note: Use of this plug-in implies your agreement with Google's published <a href="http://docs.google.com/viewer/TOS?hl=en" target="_blank">Terms of Service</a>.
 
+Translations are welcome; see [the FAQ](http://wordpress.org/extend/plugins/google-document-embedder/faq/ "FAQ") for instructions.
+
+* English (en\_US), built-in
+* Spanish (es\_ES) by <a href="http://elarequi.com/propuestastic/">elarequi</a>, thanks!
+
 == Installation ==
 
 1. Upload the entire `google-document-embedder` folder to the `/wp-content/plugins/` directory.
@@ -98,8 +103,13 @@ View the source on the web page where you've embedded the viewer. In order to de
 = Does it work with files saved in Google Docs? =
 This plug-in utilizes the viewer from Google Docs in a standalone fashion. There is no direct integration with Google Docs and even those documents stored there and shared publicly do not embed reliably with their viewer (ironically), so at this time that use is not supported by the plug-in. Please store your original documents somewhere on your web site in their native supported formats.
 
-= I wish the plug-in had feature XYZ... =
-That's not a question ;) but if you have any particular ideas on further development of this plug-in, please post <a href="http://wordpress.org/tags/google-document-embedder?forum_id=10#postform">on the forum</a> and I'll see what I can do.
+= How can I translate the plugin? =
+You can use the [English translation](http://plugins.svn.wordpress.org/google-document-embedder/trunk/language/gde-en_US.po "English") as a start. After saving the file, you can translate it by using a text editor or [Poedit](http://www.poedit.net/ "Poedit"). Or, you may install and use the [Codestyling Localization](http://wordpress.org/extend/plugins/codestyling-localization/ "Codestyling Localization") plugin.
+
+Please email your translation, along with your name and link for credit, to <em>translation @ tnw . org</em> for inclusion in the plugin.
+
+= Where can I ask questions, report bug and request features? =
+You can open a topic <a href="http://wordpress.org/tags/google-document-embedder?forum_id=10#postform">on the forum</a> and I'll see what I can do. I review all messages posted here regularly.
 
 == Screenshots ==
 
@@ -108,6 +118,11 @@ That's not a question ;) but if you have any particular ideas on further develop
 3. TinyMCE Editor integration
 
 == Changelog ==
+
+= 2.4.1 =
+* Added: Spanish translation (thanks elarequi)
+* Added: Method to obtain debug information
+* Fixed: Insertion of non-GDE file types from Media Library
 
 = 2.4 =
 * Added: Allow native upload/insert of all supported file types
@@ -180,5 +195,5 @@ That's not a question ;) but if you have any particular ideas on further develop
 
 == Upgrade Notice ==
 
-= 2.4 =
-Localization, deeper Media Library and editor integration, and more
+= 2.4.1 =
+Localization improvements, bug fix

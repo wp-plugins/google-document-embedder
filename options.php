@@ -4,6 +4,12 @@ include_once('gde-functions.php');
 global $gdeoptions;
 $himg = plugins_url(plugin_basename(dirname(__FILE__))).'/img/help.png';
 
+// check for debug
+if ($_GET['debug']) {
+	$debug = true;
+	echo gde_debug();
+}
+
 // get initial tbedit status (prevents FOUC)
 if ($gdeoptions['disable_proxy'] == "no") {
 	// enhanced viewer is selected, show opts by default
@@ -116,6 +122,8 @@ if(isset($_REQUEST['defaults'])) {
 	update_option('gde_options', $gdeoptions);
 	gde_showMessage(__('Options updated', 'gde'));
 }
+
+if (!$debug) {
 ?>
 
 <div class="wrap">
@@ -288,17 +296,19 @@ if(isset($_REQUEST['defaults'])) {
 
 		<div id="gde_linkoptions" class="postbox">
 			<h3 class="hndle"><span><?php _e('Advanced Options', 'gde'); ?></span></h3>
-			<div class="inside">
-				<div style="float:right;"><a href="<?php echo GDE_ADVOPT_URL; ?>" target="_blank" title="<?php echo __('Help', 'gde'); ?>"><img src="<?php echo $himg; ?>"></a></div>
-				<a href="javascript:void(0);" id="advopt-plugin"><?php echo __('Plugin Behavior', 'gde'); ?></a> | 
+			<div class="inside" style="min-height:30px;">
+				<div style="float:left;"><a href="javascript:void(0);" id="advopt-plugin"><?php echo __('Plugin Behavior', 'gde'); ?></a><br/> 
 				<a href="javascript:void(0);" id="advopt-editor"><?php echo __('Editor Behavior', 'gde'); ?></a>
-				<div id="adv-plugin" style="display:none;padding-left:235px;margin-top:-16px;">
+				</div>
+				<div style="float:right;"><a href="<?php echo GDE_ADVOPT_URL; ?>" target="_blank" title="<?php echo __('Help', 'gde'); ?>"><img src="<?php echo $himg; ?>"></a></div>
+				<div id="adv-plugin" style="display:none;padding-left: 250px;">
 					<?php gde_showCheck('disable_hideerrors', __('Display error messages inline (not hidden)', 'gde')); ?><br />
 					<?php gde_showCheck('bypass_check', __('Disable internal error checking', 'gde')); ?><br />
 					<?php gde_showCheck('disable_caching', __('Disable document caching', 'gde')); ?><br />
-					<?php gde_showCheck('suppress_beta', __('Disable beta version notifications', 'gde')); ?>
+					<?php gde_showCheck('suppress_beta', __('Disable beta version notifications', 'gde')); ?><br/>
+				<a href="<?php echo gde_this_url(); ?>&debug=1"><?php _e('View Debug Information', 'gde'); ?></a>
 				</div>
-				<div id="adv-editor" style="display:none;padding-left:235px;margin-top:-16px;">
+				<div id="adv-editor" style="display:none;padding-left:250px;">
 					<?php gde_showCheck('disable_editor', __('Disable all editor integration', 'gde')); ?><br />
 					<?php
 						if ($gdeoptions['disable_editor'] == "yes") {
@@ -326,6 +336,7 @@ if(isset($_REQUEST['defaults'])) {
 </div>
 
 <?php
+} // end if not debug
 
 function gde_showRadio($value, $id, $option, $title, $event = NULL) {
 	global $gdeoptions;
@@ -377,5 +388,14 @@ function gde_showMessage($message, $type='updated') {
 	
 	print '<div id="message" class="'.$class.'"><p>' . $message . '</p></div>';
 }
+
+function gde_this_url() { 
+    $s = empty($_SERVER["HTTPS"]) ? '' : ($_SERVER["HTTPS"] == "on") ? "s" : ""; 
+    $protocol = gde_strleft(strtolower($_SERVER["SERVER_PROTOCOL"]), "/").$s; 
+    $port = ($_SERVER["SERVER_PORT"] == "80") ? "" : (":".$_SERVER["SERVER_PORT"]); 
+    return $protocol."://".$_SERVER['SERVER_NAME'].$port.$_SERVER['REQUEST_URI']; 
+} 
+
+function gde_strleft($s1, $s2) { return substr($s1, 0, strpos($s1, $s2)); }
 
 ?>

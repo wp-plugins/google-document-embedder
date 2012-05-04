@@ -2,17 +2,17 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Google Doc Embedder\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-05-02 14:16-0600\n"
-"PO-Revision-Date: 2012-05-02 14:19-0600\n"
+"POT-Creation-Date: 2012-05-03 12:40-0600\n"
+"PO-Revision-Date: 2012-05-03 12:45-0600\n"
 "Last-Translator: Kevin Davis <kev@tnw.org>\n"
 "Language-Team: Kevin Davis <kev@tnw.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-KeywordsList: _e;__\n"
-"X-Poedit-Basepath: C:\\Projects\\SVN\\Personal\\gde-dev\\trunk\n"
 "X-Poedit-Language: English\n"
 "X-Poedit-Country: UNITED STATES\n"
+"X-Poedit-Basepath: .\n"
 "X-Poedit-SearchPath-0: .\n"
 
 #: bootstrap.php:12
@@ -52,7 +52,7 @@ msgid "Optional (Override Global Settings)"
 msgstr ""
 
 #: gde-dialog.php:57
-#: options.php:163
+#: options.php:171
 msgid "Height"
 msgstr ""
 
@@ -67,7 +67,7 @@ msgid "or"
 msgstr ""
 
 #: gde-dialog.php:61
-#: options.php:159
+#: options.php:167
 msgid "Width"
 msgstr ""
 
@@ -107,8 +107,18 @@ msgstr ""
 msgid "Cancel"
 msgstr ""
 
-#: gde-functions.php:30
+#: gde-functions.php:31
 msgid "Download"
+msgstr ""
+
+#: gde-functions.php:338
+msgid "Debug Information"
+msgstr ""
+
+#: gde-functions.php:365
+msgid ""
+"Copy and paste this information into an email to <a href=\"mailto:kev@tnw.org\">the author</a> to\n"
+"assist in troubleshooting problems. Remove or anonymize any information you do not wish to share."
 msgstr ""
 
 #: gviewer.php:137
@@ -117,7 +127,7 @@ msgstr ""
 
 #: gviewer.php:262
 #: gviewer.php:278
-#: options.php:122
+#: options.php:130
 msgid "Settings"
 msgstr ""
 
@@ -165,201 +175,205 @@ msgstr ""
 msgid "Version"
 msgstr ""
 
-#: options.php:20
+#: options.php:26
 msgid "Options reset to defaults"
 msgstr ""
 
-#: options.php:117
+#: options.php:123
 msgid "Options updated"
 msgstr ""
 
-#: options.php:133
+#: options.php:141
 msgid "Viewer Options"
 msgstr ""
 
-#: options.php:138
+#: options.php:146
 msgid "Viewer Selection"
 msgstr ""
 
-#: options.php:139
-#: options.php:245
-#: options.php:292
+#: options.php:147
+#: options.php:253
+#: options.php:303
 msgid "Help"
 msgstr ""
 
-#: options.php:141
+#: options.php:149
 msgid "Google Standard Viewer"
 msgstr ""
 
-#: options.php:142
+#: options.php:150
 msgid "Embed the standard Google Viewer."
 msgstr ""
 
-#: options.php:143
+#: options.php:151
 msgid "Enhanced Viewer"
 msgstr ""
 
-#: options.php:144
+#: options.php:152
 msgid "Use this option to enable toolbar customization and fix some display problems (experimental)."
 msgstr ""
 
-#: options.php:148
+#: options.php:156
 msgid "Customize Toolbar"
 msgstr ""
 
-#: options.php:152
+#: options.php:160
 msgid "Hide Zoom In/Out"
 msgstr ""
 
-#: options.php:153
+#: options.php:161
 msgid "Hide Open in New Window"
 msgstr ""
 
-#: options.php:154
+#: options.php:162
 msgid "Always Use Mobile Theme"
 msgstr ""
 
-#: options.php:158
+#: options.php:166
 msgid "Default Size"
 msgstr ""
 
-#: options.php:169
+#: options.php:177
 msgid "Default Language"
 msgstr ""
 
-#: options.php:227
+#: options.php:235
 msgid "Inline (Default)"
 msgstr ""
 
-#: options.php:228
+#: options.php:236
 msgid "Collapsible (Open)"
 msgstr ""
 
-#: options.php:229
+#: options.php:237
 msgid "Collapsible (Closed)"
 msgstr ""
 
-#: options.php:241
+#: options.php:249
 msgid "Download Link Options"
 msgstr ""
 
-#: options.php:246
+#: options.php:254
 msgid "Display the download link by default"
 msgstr ""
 
-#: options.php:247
+#: options.php:255
 msgid "Only display download link to logged in users"
 msgstr ""
 
-#: options.php:248
+#: options.php:256
 msgid "Track downloads in Google Analytics (tracking script must be installed on your site)"
 msgstr ""
 
-#: options.php:251
+#: options.php:259
 msgid "File Base URL"
 msgstr ""
 
-#: options.php:253
+#: options.php:261
 msgid "Any file not starting with <em>http</em> will be prefixed by this value"
 msgstr ""
 
-#: options.php:256
+#: options.php:264
 msgid "Link Text"
 msgstr ""
 
-#: options.php:258
+#: options.php:266
 msgid "You can further customize text using these dynamic replacements:"
 msgstr ""
 
-#: options.php:259
+#: options.php:267
 msgid "filename"
 msgstr ""
 
-#: options.php:260
+#: options.php:268
 msgid "file type"
 msgstr ""
 
-#: options.php:261
+#: options.php:269
 msgid "file size"
 msgstr ""
 
-#: options.php:264
+#: options.php:272
 msgid "Link Position"
 msgstr ""
 
-#: options.php:266
+#: options.php:274
 msgid "Above Viewer"
 msgstr ""
 
-#: options.php:267
+#: options.php:275
 msgid "Below Viewer"
 msgstr ""
 
-#: options.php:272
+#: options.php:280
 msgid "Link Behavior"
 msgstr ""
 
-#: options.php:274
+#: options.php:282
 msgid "Browser Default"
 msgstr ""
 
-#: options.php:275
+#: options.php:283
 msgid "Force Download"
 msgstr ""
 
-#: options.php:276
+#: options.php:284
 msgid "Force Download (Mask URL)"
 msgstr ""
 
-#: options.php:290
+#: options.php:298
 msgid "Advanced Options"
 msgstr ""
 
-#: options.php:293
+#: options.php:300
 msgid "Plugin Behavior"
 msgstr ""
 
-#: options.php:294
+#: options.php:301
 msgid "Editor Behavior"
 msgstr ""
 
-#: options.php:296
+#: options.php:305
 msgid "Display error messages inline (not hidden)"
 msgstr ""
 
-#: options.php:297
+#: options.php:306
 msgid "Disable internal error checking"
 msgstr ""
 
-#: options.php:298
+#: options.php:307
 msgid "Disable document caching"
 msgstr ""
 
-#: options.php:299
+#: options.php:308
 msgid "Disable beta version notifications"
 msgstr ""
 
-#: options.php:302
+#: options.php:309
+msgid "View Debug Information"
+msgstr ""
+
+#: options.php:312
 msgid "Disable all editor integration"
 msgstr ""
 
-#: options.php:307
+#: options.php:317
 msgid "Insert shortcode from Media Library"
 msgstr ""
 
-#: options.php:309
+#: options.php:319
 msgid "Allow uploads of all supported media types"
 msgstr ""
 
-#: options.php:319
+#: options.php:329
 msgid "Save Options"
 msgstr ""
 
-#: options.php:321
+#: options.php:331
 msgid "Reset to Defaults"
 msgstr ""
 
-#: options.php:321
+#: options.php:331
 msgid "Are you sure you want to reset all settings to defaults?"
 msgstr ""
 

@@ -8,11 +8,12 @@
 @define('GDE_BETA_URL', 'http://www.davistribe.org/gde/beta-program/');
 @define('GDE_BETA_CHKFILE', 'http://dev.davismetro.com/beta/gde/beta.chk');
 
-//if ( ! defined( 'GDE_PLUGIN_URL' ) )  define( 'GDE_PLUGIN_URL', WP_PLUGIN_URL . '/google-document-embedder');
-
 function gde_init($reset = NULL) {
 	// set default base url
 	$baseurl = get_bloginfo('url')."/wp-content/uploads/";
+	
+	// check for existing translation for locale
+	$default_lang = gde_get_locale();
 	
 	// define global default settings
 	$defaults = array(
@@ -20,7 +21,7 @@ function gde_init($reset = NULL) {
 		'width_type' => 'pc',
 		'default_height' => '500',
 		'height_type' => 'px',
-		'default_lang' => 'en_US',
+		'default_lang' => $default_lang,
 		//'default_display' => 'inline',
 		'restrict_tb' => '',
 		'base_url' => $baseurl,
@@ -61,8 +62,6 @@ function gde_init($reset = NULL) {
 			foreach ($defaults as $key => $value) {
 				if($gdeoptions[$key]) {
 					$defaults[$key] = $gdeoptions[$key];
-				} else {
-					$gdeoptions[$key] = $defaults[$key];
 				}
 			}
 		}
@@ -192,7 +191,7 @@ function gde_shortUrl($u) {
 function gde_admin_print_scripts( $arg ) {
 	global $pagenow;
 	if (is_admin() && ( $pagenow == 'post-new.php' || $pagenow == 'post.php' ) ) {
-		$js = GDE_PLUGIN_URL.'/js/gde-quicktags.js';
+		$js = GDE_PLUGIN_URL.'js/gde-quicktags.js';
 		wp_enqueue_script("gde_qts", $js, array('quicktags') );
 	}
 }
@@ -201,7 +200,8 @@ function gde_admin_custom_js( $hook ) {
 	global $gde_settings_page;
 	
 	if ( $gde_settings_page == $hook ) {
-		wp_enqueue_script( 'gde_jqs', plugins_url('/js/gde-jquery.js', __FILE__) );
+		$js = GDE_PLUGIN_URL.'js/gde-jquery.js';
+		wp_enqueue_script( 'gde_jqs', $js );
 	}
 }
 
@@ -241,9 +241,7 @@ function gde_media_insert($html, $id, $attachment) {
 		return $output;
 	} else {
 		// default behavior
-		//return $html;
-		$output = "$mime_type not a value in supported_exts";
-		return $output;
+		return $html;
 	}
 }
 
@@ -301,6 +299,77 @@ function gde_get_plugin_data() {
 	$plugin_data  = get_plugin_data( GDE_PLUGIN_DIR . 'gviewer.php' );
 	
 	return $plugin_data;
+}
+
+/**
+ * Get locale
+ *
+ * @since   2.4.1.1
+ * @return  string Google viewer lang code based on WP_LANG setting, or en_US if not defined
+ */
+function gde_get_locale() {
+	if ( function_exists( 'get_locale' ) ) {
+		$locale = get_locale();
+		$locale_files = array(
+			GDE_PLUGIN_DIR."/languages/gde-$locale.mo",
+			GDE_PLUGIN_DIR."/languages/gde-$locale.po" );
+		if ( is_readable($locale_files[0]) && is_readable($locale_files[1]) ) {
+		
+			// enabled languages mapped to Google Viewer language codes
+			if ($locale == "es_ES") { $locale = "es"; }
+			
+			return $locale;
+		}
+	}
+	
+	// default language if none can be set
+	return "en_US";
+}
+
+/**
+ * Display debug information
+ *
+ * @since   2.4.1.1
+ * @return  string HTML outputting debug information
+ */
+function gde_debug() {
+	global $gde_ver, $gdeoptions, $wp_version;
+?>	
+<div class="wrap">
+<h2>Google Doc Embedder <?php _e('Debug Information', 'gde'); ?></h2>
+<p><?php _e('Copy and paste this information into an email to <a href="mailto:kev@tnw.org">the author</a> to
+assist in troubleshooting problems. Remove or anonymize any information you do not wish to share.', 'gde'); ?></p>
+<form>
+<textarea name="debug" style="width:100%;min-height:400px;font-family:monospace;">
+<?php
+echo ":: GDE Debug Information ::\n\n";
+echo "GDE Version: $gde_ver\n";
+echo "WordPress Version: $wp_version [".get_locale()."]\n";
+echo "PHP Version: ".phpversion()."\n";
+echo "Server Env: ".$_SERVER['SERVER_SOFTWARE']."\n";
+echo "Browser Env: ".$_SERVER['HTTP_USER_AGENT']."\n\n";
+echo "cURL: ";
+if (function_exists('curl_version')) {
+	$curl = curl_version(); echo $curl['version']."\n";
+} else { echo "No\n"; }
+echo "allow_url_fopen: ";
+if (ini_get('allow_url_fopen') !== "1") {
+	echo "No\n";
+} else { echo "Yes\n"; }
+echo "Rich Editing: ";
+if (get_user_option('rich_editing')) {
+	echo "Yes\n\n";
+} else { echo "No\n\n"; }
+echo "Settings Array:\n";
+print_r($gdeoptions);
+echo "\n";
+echo "MIME Supported:\n";
+print_r(get_allowed_mime_types());
+?>
+</textarea>
+</form>
+</div>
+<?php
 }
 
 ?>
