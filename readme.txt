@@ -6,6 +6,7 @@ Donate link: http://pledgie.com/campaigns/6048
 Requires at least: 2.8
 Tested up to: 3.4
 Stable tag: trunk
+License: GPLv2 or later
 
 Lets you embed MS Office, PDF, and many other file types in a web page using the Google Docs Viewer (no Flash or PDF browser plug-ins required).
 
@@ -30,12 +31,12 @@ Google Doc Embedder lets you embed several types of files into your WordPress pa
 
 Similar to services like Scribd, Google Doc Embedder will allow you to embed these files directly into your page or post, not requiring the user to have Microsoft Word, Adobe Reader, PowerPoint, or other software installed to view the contents. Unlike Scribd, the files do not need to be uploaded to any service first - including Google Docs - but can exist anywhere publicly accessible on your site or the internet.
 
-Note: Use of this plug-in implies your agreement with Google's published <a href="http://docs.google.com/viewer/TOS?hl=en" target="_blank">Terms of Service</a>.
+Note: Use of this plug-in implies your agreement with Google's published [Terms of Service](http://docs.google.com/viewer/TOS?hl=en "Terms of Service").
 
 Translations are welcome; see [the FAQ](http://wordpress.org/extend/plugins/google-document-embedder/faq/ "FAQ") for instructions.
 
 * English (en\_US), built-in
-* Spanish (es\_ES) by <a href="http://elarequi.com/propuestastic/">elarequi</a>, thanks!
+* Spanish (es\_ES) by [elarequi](http://elarequi.com/propuestastic/ "elarequi"), thanks!
 
 == Installation ==
 
@@ -45,7 +46,7 @@ Translations are welcome; see [the FAQ](http://wordpress.org/extend/plugins/goog
 
 Upload the documents to your site using the media upload facility built into WordPress, via FTP, or link to documents on another (public) site. Use the Google Doc Embedder button in the Visual editor to build the appropriate shortcode.
 
-For basic manual instructions, please see the FAQ. For advanced usage (including codes not exposed in the editor), see the <a href="http://www.davistribe.org/gde/usage/">web site</a>.
+For basic manual instructions, please see the FAQ. For advanced usage (including codes not exposed in the editor), see the [web site](http://www.davistribe.org/gde/usage/ "web site").
 
 Go to "GDE Settings" (under "Settings" in the admin panel) to change defaults, or override individually using the shortcode syntax in the FAQ.
 
@@ -92,7 +93,7 @@ Common optional attributes:
 * `height=` : To override the default height of the viewer, enter a new height value - e.g., "400" (px) or "80%"
 * `cache=` : Set to 0 to bypass the viewer's internal caching (useful only for frequently updated files with the same name)
 
-For a list of all available attributes, see <a href="http://www.davistribe.org/gde/usage/">Usage</a>.
+For a list of all available attributes, see [Usage](http://www.davistribe.org/gde/usage/ "Usage").
 
 = Will it embed files that are password-protected  or stored in protected folders/sites? =
 Most likely, no. If your file requires a login to view - such as being saved in a password-protected directory, or behind a firewall (on your intranet, etc.), the viewer will probably not be able to access the file. This is what is meant above, that the document should be "publicly available." Please save the file in a publicly accessible location for best results.
@@ -109,7 +110,7 @@ You can use the [English translation](http://plugins.svn.wordpress.org/google-do
 Please email your translation, along with your name and link for credit, to <em>translation @ tnw . org</em> for inclusion in the plugin.
 
 = Where can I ask questions, report bug and request features? =
-You can open a topic <a href="http://wordpress.org/tags/google-document-embedder?forum_id=10#postform">on the forum</a> and I'll see what I can do. I review all messages posted here regularly.
+You can open a topic [on the forum](http://wordpress.org/tags/google-document-embedder?forum_id=10#postform) and I'll see what I can do. I review all messages posted here regularly.
 
 == Screenshots ==
 
@@ -191,7 +192,7 @@ You can open a topic <a href="http://wordpress.org/tags/google-document-embedder
 * Fixed: Filenames with spaces wouldn't load
 * Fixed: Suppress beta notification option not honored
 
-<a href="http://www.davistribe.org/gde/changelog/" target="_blank">Full history...</a>
+[Full history...](http://www.davistribe.org/gde/changelog/ "Full History")
 
 == Upgrade Notice ==
 
