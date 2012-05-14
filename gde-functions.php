@@ -260,7 +260,7 @@ function gde_upload_mimes ( $existing_mimes=array() ) {
 function gde_mimes_expanded(array $types) {
 	// expand the supported mime types so that every ext is its own key
 	foreach ($types as $k => $v) {
-		if (substr("|", $k)) {
+		if (strpos("|", $k)) {
 			$subtypes = explode("|", $k);
 			foreach ($subtypes as $type) {
 				$newtypes[$type] = $v;

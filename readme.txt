@@ -120,6 +120,9 @@ You can open a topic [on the forum](http://wordpress.org/tags/google-document-em
 
 == Changelog ==
 
+= 2.4.2 =
+* Fixed: PHP Warning related to MIME type expansion (thanks Adebayo)
+
 = 2.4.1 =
 * Added: Spanish translation (thanks elarequi)
 * Added: Method to obtain debug information
@@ -171,5 +174,5 @@ You can open a topic [on the forum](http://wordpress.org/tags/google-document-em
 
 == Upgrade Notice ==
 
-= 2.4.1 =
-Localization improvements, bug fix
+= 2.4.2 =
+MIME expansion bug fix
