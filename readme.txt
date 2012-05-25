@@ -107,7 +107,7 @@ This plug-in utilizes the viewer from Google Docs in a standalone fashion. There
 = How can I translate the plugin? =
 You can use the [English translation](http://plugins.svn.wordpress.org/google-document-embedder/trunk/language/gde-en_US.po "English") as a start. After saving the file, you can translate it by using a text editor or [Poedit](http://www.poedit.net/ "Poedit"). Or, you may install and use the [Codestyling Localization](http://wordpress.org/extend/plugins/codestyling-localization/ "Codestyling Localization") plugin.
 
-Please email your translation, along with your name and link for credit, to <em>translation @ tnw . org</em> for inclusion in the plugin.
+Please email your translation, along with your name and link for credit, to <em>wpp @ tnw . org</em> for inclusion in the plugin.
 
 = Where can I ask questions, report bug and request features? =
 You can open a topic [on the forum](http://wordpress.org/tags/google-document-embedder?forum_id=10#postform "forum") and I'll see what I can do. I review all messages posted here regularly.
@@ -119,6 +119,11 @@ You can open a topic [on the forum](http://wordpress.org/tags/google-document-em
 3. TinyMCE Editor integration
 
 == Changelog ==
+
+= 2.4.3 =
+* Added: Dark theme shortcode option (EXPERIMENTAL)
+* Fixed: Visual editor integration for IIS webhosts (thanks Kristof)
+* Changed: Debug information is now a support page from plugin list
 
 = 2.4.2 =
 * Fixed: PHP Warning related to MIME type expansion (thanks Adebayo)
@@ -174,5 +179,5 @@ You can open a topic [on the forum](http://wordpress.org/tags/google-document-em
 
 == Upgrade Notice ==
 
-= 2.4.2 =
-MIME expansion bug fix
+= 2.4.3 =
+IIS bug fix, improved support form, experimental dark theme

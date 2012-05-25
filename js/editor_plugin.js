@@ -2,9 +2,12 @@
 	tinymce.PluginManager.requireLangPack('gde');
 	tinymce.create('tinymce.plugins.gde', {
 		init : function(ed,url) {
+			// fix path
+			url = url.replace('/js', '');
+			
 			ed.addCommand('gde_cmd', function() {
 				ed.windowManager.open( {
-					file : url + '/../gde-dialog.php',
+					file : url + '/libs/gde-dialog.php',
 					width : 460 + parseInt(ed.getLang('gde.delta_width',0)),
 					height : 540 + parseInt(ed.getLang('gde.delta_height',0)),
 					inline : 1}, {
@@ -15,7 +18,7 @@
 			ed.addButton('gde', {
 				title : 'Google Doc Embedder',
 				cmd : 'gde_cmd',
-				image : url + '/../img/gde-button.png'
+				image : url + '/img/gde-button.png'
 			});
 			ed.onNodeChange.add
 				(function(ed,cm,n) {
@@ -31,7 +34,7 @@
 				author : 'Kevin Davis',
 				authorurl : 'http://www.davistribe.org/gde',
 				infourl : 'http://www.davistribe.org/gde',
-				version : "1.2"}
+				version : "1.3"}
 		}
 	});
 	tinymce.PluginManager.add('gde',tinymce.plugins.gde);

@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Google Doc Embedder\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-05-03 12:40-0600\n"
-"PO-Revision-Date: 2012-05-03 12:45-0600\n"
+"POT-Creation-Date: 2012-05-25 10:15-0600\n"
+"PO-Revision-Date: 2012-05-25 10:16-0600\n"
 "Last-Translator: Kevin Davis <kev@tnw.org>\n"
 "Language-Team: Kevin Davis <kev@tnw.org>\n"
 "MIME-Version: 1.0\n"
@@ -12,166 +12,128 @@ msgstr ""
 "X-Poedit-KeywordsList: _e;__\n"
 "X-Poedit-Language: English\n"
 "X-Poedit-Country: UNITED STATES\n"
-"X-Poedit-Basepath: .\n"
 "X-Poedit-SearchPath-0: .\n"
 
-#: bootstrap.php:12
-msgid "Could not find wp-load.php"
-msgstr ""
-
-#: gde-dialog.php:34
-msgid "I'll insert the shortcode myself"
-msgstr ""
-
-#: gde-dialog.php:36
-msgid "GDE Shortcode Options"
-msgstr ""
-
-#: gde-dialog.php:40
-msgid "Required"
-msgstr ""
-
-#: gde-dialog.php:43
-msgid "URL or Filename"
-msgstr ""
-
-#: gde-dialog.php:43
-msgid "Full URL or filename to append to File Base URL"
-msgstr ""
-
-#: gde-dialog.php:45
-msgid "File Base URL will be prefixed"
-msgstr ""
-
-#: gde-dialog.php:46
-msgid "Unsupported file type"
-msgstr ""
-
-#: gde-dialog.php:54
-msgid "Optional (Override Global Settings)"
-msgstr ""
-
-#: gde-dialog.php:57
-#: options.php:171
-msgid "Height"
-msgstr ""
-
-#: gde-dialog.php:57
-#: gde-dialog.php:61
-msgid "format:"
-msgstr ""
-
-#: gde-dialog.php:57
-#: gde-dialog.php:61
-msgid "or"
-msgstr ""
-
-#: gde-dialog.php:61
-#: options.php:167
-msgid "Width"
-msgstr ""
-
-#: gde-dialog.php:65
-msgid "Show Download Link"
-msgstr ""
-
-#: gde-dialog.php:66
-msgid "Yes"
-msgstr ""
-
-#: gde-dialog.php:66
-msgid "No"
-msgstr ""
-
-#: gde-dialog.php:71
-msgid "Show download link only if user is logged in"
-msgstr ""
-
-#: gde-dialog.php:77
-msgid "Disable caching (this document is frequently overwritten)"
-msgstr ""
-
-#: gde-dialog.php:84
-msgid "Disable internal error checking (try if URL is confirmed good but document doesn't display)"
-msgstr ""
-
-#: gde-dialog.php:94
-msgid "Shortcode Preview"
-msgstr ""
-
-#: gde-dialog.php:103
-msgid "Insert"
-msgstr ""
-
-#: gde-dialog.php:107
-msgid "Cancel"
-msgstr ""
-
-#: gde-functions.php:31
+#: gde-functions.php:32
 msgid "Download"
 msgstr ""
 
-#: gde-functions.php:338
+#: gde-functions.php:344
+#: gviewer.php:292
+msgid "Support"
+msgstr ""
+
+#: gde-functions.php:346
+msgid "Please review the documentation before submitting a request for support:"
+msgstr ""
+
+#: gde-functions.php:349
+msgid "Plugin FAQ"
+msgstr ""
+
+#: gde-functions.php:350
+msgid "Support Forum"
+msgstr ""
+
+#: gde-functions.php:353
+msgid "If you're still experiencing a problem, please complete the form below."
+msgstr ""
+
+#: gde-functions.php:359
+msgid "Your Name"
+msgstr ""
+
+#: gde-functions.php:363
+msgid "Your E-mail"
+msgstr ""
+
+#: gde-functions.php:369
+msgid "Shortcode"
+msgstr ""
+
+#: gde-functions.php:371
+msgid "If you're having a problem getting a specific document to work, paste the shortcode you're trying to use here."
+msgstr ""
+
+#: gde-functions.php:376
+msgid "Message"
+msgstr ""
+
+#: gde-functions.php:381
+msgid "Message Options"
+msgstr ""
+
+#: gde-functions.php:383
+msgid "Send debug information"
+msgstr ""
+
+#: gde-functions.php:384
+msgid "View"
+msgstr ""
+
+#: gde-functions.php:385
+msgid "Send me a copy"
+msgstr ""
+
+#: gde-functions.php:391
 msgid "Debug Information"
 msgstr ""
 
-#: gde-functions.php:365
-msgid ""
-"Copy and paste this information into an email to <a href=\"mailto:kev@tnw.org\">the author</a> to\n"
-"assist in troubleshooting problems. Remove or anonymize any information you do not wish to share."
+#: gde-functions.php:430
+msgid "I'm less likely to be able to help you if you do not include debug information."
+msgstr ""
+
+#: gde-functions.php:432
+msgid "Send Support Request"
 msgstr ""
 
 #: gviewer.php:137
 msgid "Error"
 msgstr ""
 
-#: gviewer.php:262
-#: gviewer.php:278
+#: gviewer.php:268
+#: gviewer.php:284
 #: options.php:130
 msgid "Settings"
 msgstr ""
 
-#: gviewer.php:269
+#: gviewer.php:275
 msgid "You do not have sufficient permissions to access this page"
 msgstr ""
 
-#: gviewer.php:286
-msgid "Support"
-msgstr ""
-
-#: gviewer.php:299
+#: gviewer.php:305
 msgid "Beta version available"
 msgstr ""
 
-#: gviewer.php:299
+#: gviewer.php:305
 msgid "Please deactivate the plug-in and install the current version if you wish to participate. Otherwise, you can turn off beta version checking in GDE Settings. Testers appreciated!"
 msgstr ""
 
-#: gviewer.php:300
+#: gviewer.php:306
 msgid "Updated beta version available"
 msgstr ""
 
-#: gviewer.php:300
+#: gviewer.php:306
 msgid "A newer beta has been released. Please deactivate the plug-in and install the current version. Thanks for your help!"
 msgstr ""
 
-#: gviewer.php:301
+#: gviewer.php:307
 msgid "You're running a beta version. Please give feedback."
 msgstr ""
 
-#: gviewer.php:301
+#: gviewer.php:307
 msgid "Thank you for running a test version of Google Doc Embedder. You are running the most current beta version. Please give feedback on this version using the &quot;Support&quot; link above. Thanks for your help!"
 msgstr ""
 
-#: gviewer.php:302
+#: gviewer.php:308
 msgid "more info"
 msgstr ""
 
-#: gviewer.php:369
+#: gviewer.php:375
 msgid "plugin"
 msgstr ""
 
-#: gviewer.php:370
+#: gviewer.php:376
 msgid "Version"
 msgstr ""
 
@@ -231,6 +193,16 @@ msgstr ""
 
 #: options.php:166
 msgid "Default Size"
+msgstr ""
+
+#: options.php:167
+#: libs/gde-dialog.php:61
+msgid "Width"
+msgstr ""
+
+#: options.php:171
+#: libs/gde-dialog.php:57
+msgid "Height"
 msgstr ""
 
 #: options.php:177
@@ -349,31 +321,27 @@ msgstr ""
 msgid "Disable beta version notifications"
 msgstr ""
 
-#: options.php:309
-msgid "View Debug Information"
-msgstr ""
-
-#: options.php:312
+#: options.php:311
 msgid "Disable all editor integration"
 msgstr ""
 
-#: options.php:317
+#: options.php:316
 msgid "Insert shortcode from Media Library"
 msgstr ""
 
-#: options.php:319
+#: options.php:318
 msgid "Allow uploads of all supported media types"
 msgstr ""
 
-#: options.php:329
+#: options.php:328
 msgid "Save Options"
 msgstr ""
 
-#: options.php:331
+#: options.php:330
 msgid "Reset to Defaults"
 msgstr ""
 
-#: options.php:331
+#: options.php:330
 msgid "Are you sure you want to reset all settings to defaults?"
 msgstr ""
 
@@ -382,5 +350,87 @@ msgid ""
 "This function is not supported on your web server. Please add\n"
 "\t\t\t<code>allow_url_fopen = 1</code> to your php.ini or enable cURL library.\n"
 "\t\t\tIf you are unable to do this, please switch to Google Standard Viewer in GDE Options."
+msgstr ""
+
+#: libs/bootstrap.php:15
+msgid "Could not find wp-load.php"
+msgstr ""
+
+#: libs/gde-dialog.php:34
+msgid "I'll insert the shortcode myself"
+msgstr ""
+
+#: libs/gde-dialog.php:36
+msgid "GDE Shortcode Options"
+msgstr ""
+
+#: libs/gde-dialog.php:40
+msgid "Required"
+msgstr ""
+
+#: libs/gde-dialog.php:43
+msgid "URL or Filename"
+msgstr ""
+
+#: libs/gde-dialog.php:43
+msgid "Full URL or filename to append to File Base URL"
+msgstr ""
+
+#: libs/gde-dialog.php:45
+msgid "File Base URL will be prefixed"
+msgstr ""
+
+#: libs/gde-dialog.php:46
+msgid "Unsupported file type"
+msgstr ""
+
+#: libs/gde-dialog.php:54
+msgid "Optional (Override Global Settings)"
+msgstr ""
+
+#: libs/gde-dialog.php:57
+#: libs/gde-dialog.php:61
+msgid "format:"
+msgstr ""
+
+#: libs/gde-dialog.php:57
+#: libs/gde-dialog.php:61
+msgid "or"
+msgstr ""
+
+#: libs/gde-dialog.php:65
+msgid "Show Download Link"
+msgstr ""
+
+#: libs/gde-dialog.php:66
+msgid "Yes"
+msgstr ""
+
+#: libs/gde-dialog.php:66
+msgid "No"
+msgstr ""
+
+#: libs/gde-dialog.php:71
+msgid "Show download link only if user is logged in"
+msgstr ""
+
+#: libs/gde-dialog.php:77
+msgid "Disable caching (this document is frequently overwritten)"
+msgstr ""
+
+#: libs/gde-dialog.php:84
+msgid "Disable internal error checking (try if URL is confirmed good but document doesn't display)"
+msgstr ""
+
+#: libs/gde-dialog.php:94
+msgid "Shortcode Preview"
+msgstr ""
+
+#: libs/gde-dialog.php:103
+msgid "Insert"
+msgstr ""
+
+#: libs/gde-dialog.php:107
+msgid "Cancel"
 msgstr ""
 

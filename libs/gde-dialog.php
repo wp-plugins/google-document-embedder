@@ -10,7 +10,7 @@ require_once('bootstrap.php');
 	<title>Google Doc Embedder</title>
 	<script language="javascript" type="text/javascript" src="<?php echo get_option('siteurl'); ?>/wp-includes/js/tinymce/tiny_mce_popup.js"></script>
 	<script language="javascript" type="text/javascript" src="<?php echo get_option('siteurl'); ?>/wp-includes/js/jquery/jquery.js"></script> 
-	<script type="text/javascript" src="js/dialog.js"></script>
+	<script type="text/javascript" src="../js/dialog.js"></script>
 
     <style type="text/css">
 	h2 {
@@ -21,7 +21,7 @@ require_once('bootstrap.php');
 	.mceActionPanel {
 		margin-top:20px;
 	}
-	.diy{
+	.diy {
 		margin:5px 5px -5px 10px;
 	}
     </style>

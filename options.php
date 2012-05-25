@@ -305,8 +305,7 @@ if (!$debug) {
 					<?php gde_showCheck('disable_hideerrors', __('Display error messages inline (not hidden)', 'gde')); ?><br />
 					<?php gde_showCheck('bypass_check', __('Disable internal error checking', 'gde')); ?><br />
 					<?php gde_showCheck('disable_caching', __('Disable document caching', 'gde')); ?><br />
-					<?php gde_showCheck('suppress_beta', __('Disable beta version notifications', 'gde')); ?><br/>
-				<a href="<?php echo gde_this_url(); ?>&debug=1"><?php _e('View Debug Information', 'gde'); ?></a>
+					<?php gde_showCheck('suppress_beta', __('Disable beta version notifications', 'gde')); ?>
 				</div>
 				<div id="adv-editor" style="display:none;padding-left:250px;">
 					<?php gde_showCheck('disable_editor', __('Disable all editor integration', 'gde')); ?><br />
@@ -388,14 +387,5 @@ function gde_showMessage($message, $type='updated') {
 	
 	print '<div id="message" class="'.$class.'"><p>' . $message . '</p></div>';
 }
-
-function gde_this_url() { 
-    $s = empty($_SERVER["HTTPS"]) ? '' : ($_SERVER["HTTPS"] == "on") ? "s" : ""; 
-    $protocol = gde_strleft(strtolower($_SERVER["SERVER_PROTOCOL"]), "/").$s; 
-    $port = ($_SERVER["SERVER_PORT"] == "80") ? "" : (":".$_SERVER["SERVER_PORT"]); 
-    return $protocol."://".$_SERVER['SERVER_NAME'].$port.$_SERVER['REQUEST_URI']; 
-} 
-
-function gde_strleft($s1, $s2) { return substr($s1, 0, strpos($s1, $s2)); }
 
 ?>

@@ -1,7 +1,7 @@
 <?php
 
 // access wp functions externally
-require_once('bootstrap.php');
+require_once('libs/bootstrap.php');
 
 // get settings
 $gdeoptions = get_option('gde_options');
@@ -87,8 +87,15 @@ if (isset($_GET['embedded']) || $_GET['mobile']) {
 		$replace[] = "#page-footer { display: none !important;";
 	}
 	
-	// perform replacements  
+	// perform string replacements  
 	$code = str_replace($search, $replace, $code);
+	
+	// perform theme replacement (experimental)
+	if ($_GET['t'] == 'dark') {
+		$pattern = '#(<style type="text/css">.view.*</style>)#';
+		$replacement = '$1'."\n".'<link rel="stylesheet" type="text/css" href="themes/gde-dark.css">';
+		$code = preg_replace($pattern, $replacement, $code);
+	}
 	
 	// output page
 	header('Content-type: text/html');

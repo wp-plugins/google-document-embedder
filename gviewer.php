@@ -8,11 +8,11 @@ Author: Kevin Davis
 Author URI: http://www.davistribe.org/
 Text Domain: gde
 Domain Path: /languages/
-Version: 2.4.2
+Version: 2.4.3
 License: GPLv2
 */
 
-$gde_ver = "2.4.2.98";
+$gde_ver = "2.4.3.98";
 
 /**
  * LICENSE
@@ -33,7 +33,7 @@ $gde_ver = "2.4.2.98";
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
  * @package    google-document-embedder
- * @author     Kevin Davis <kev@tnw.org>
+ * @author     Kevin Davis <wpp@tnw.org>
  * @copyright  Copyright 2012 Kevin Davis
  * @license    http://www.gnu.org/licenses/gpl.txt GPL 2.0
  * @link       http://www.davistribe.org/gde/
@@ -82,7 +82,7 @@ function gde_gviewer_func($atts) {
 	
 	extract(shortcode_atts(array(
 		'file' => '',
-		'display' => $gdeoptions['default_display'],
+		//'display' => $gdeoptions['default_display'],
 		'save' => $gdeoptions['show_dl'],
 		'width' => '',
 		'height' => '',
@@ -90,7 +90,7 @@ function gde_gviewer_func($atts) {
 		'force' => $gdeoptions['bypass_check'],
 		'cache' => $gdeoptions['disable_cache'],
 		'authonly' => $gdeoptions['restrict_dl'],
-		'page' => ''
+		'theme' => ''
 	), $atts));
 	
 	// add base url if needed
@@ -170,12 +170,18 @@ HERE;
 		} else {
 			$lnk .= "&embedded=true";
 		}
+		// check for theme
+		if ($theme) {
+			$lnk .= "&t=$theme";
+		}
 		// check for page
+		/*
 		if (is_numeric($page)) {
 			// jump to selected page - experimental (works on refresh but not initial page load)
 			$page = (int) $page-1;
 			$lnk = $lnk."#:0.page.".$page;
 		}
+		*/
 		// hide download link for anonymous users
 		get_currentuserinfo();
 		$dlRestrict = $gdeoptions['restrict_dl'];
@@ -195,7 +201,7 @@ HERE;
 					$dlFile = $pUrl;
 					$fileParts = parse_url($file);
 					$fileStr = str_replace($fileParts['scheme']."://","",$file);
-					$dlFile .= "/pdf.php?file=".$fileStr."&fn=".$fn;
+					$dlFile .= "/libs/pdf.php?file=".$fileStr."&fn=".$fn;
 					$target = "_self";
 					$gaTag = 'onclick="var that=this;_gaq.push([\'_trackEvent,\'Download\',\'PDF\',this.href]);setTimeout(function(){location.href=that.href;},200);return false;"';
 				} elseif ($dlMethod == "default") {
@@ -283,7 +289,7 @@ function gde_metalinks($links, $file) {
 	global $debug;
 	$plugin = plugin_basename(__FILE__);
 	if ($file == $plugin) {
-		$support_link = '<a href="'.GDE_SUPPORT_URL.'">'.__('Support', 'gde').'</a>';
+		$support_link = '<a href="options-general.php?page=gviewer.php&debug=1">'.__('Support', 'gde').'</a>';
 		$links[] = $support_link;
 	}
 	return $links;
