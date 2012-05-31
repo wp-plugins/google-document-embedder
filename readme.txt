@@ -37,6 +37,7 @@ Translations are welcome; see [the FAQ](http://wordpress.org/extend/plugins/goog
 
 * English (en\_US), built-in
 * Spanish (es\_ES) by [elarequi](http://elarequi.com/propuestastic/ "elarequi"), thanks!
+* Turkish (tr\_TR) by [LettoBlog](http://profiles.wordpress.org/lettoblog "LettoBlog"), thanks!
 
 == Installation ==
 
@@ -122,6 +123,7 @@ You can open a topic [on the forum](http://wordpress.org/tags/google-document-em
 
 = 2.4.3 =
 * Added: Dark theme shortcode option (EXPERIMENTAL)
+* Added: Turkish translation (thanks LettoBlog)
 * Fixed: Visual editor integration for IIS webhosts (thanks Kristof)
 * Changed: Debug information is now a support page from plugin list
 
