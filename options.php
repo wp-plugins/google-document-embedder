@@ -5,9 +5,11 @@ global $gdeoptions;
 $himg = plugins_url(plugin_basename(dirname(__FILE__))).'/img/help.png';
 
 // check for debug
-if ($_GET['debug']) {
+if (isset($_GET['debug'])) {
 	$debug = true;
 	echo gde_debug();
+} else {
+	$debug = false;
 }
 
 // get initial tbedit status (prevents FOUC)
@@ -124,6 +126,7 @@ if(isset($_REQUEST['defaults'])) {
 }
 
 if (!$debug) {
+	$event = ""; // init to avoid WP_DEBUG notices
 ?>
 
 <div class="wrap">
@@ -339,7 +342,7 @@ if (!$debug) {
 
 function gde_showRadio($value, $id, $option, $title, $event = NULL) {
 	global $gdeoptions;
-	if ($gdeoptions[$option] == $value) { $chk = ' checked="checked"'; }
+	if ($gdeoptions[$option] == $value) { $chk = ' checked="checked"'; } else { $chk = ""; }
 ?>
 <input type="radio" name="<?php echo $option; ?>" value="<?php echo $value; ?>" id="<?php echo $id; ?>"<?php echo $chk; echo $event; ?> />
 <label for="<?php echo $id; ?>"><strong><?php echo $title; ?></strong></label>
@@ -348,8 +351,8 @@ function gde_showRadio($value, $id, $option, $title, $event = NULL) {
 
 function gde_showCheck($option, $title, $link = NULL, $disable = false) {
 	global $gdeoptions;
-	if ($gdeoptions[$option] == "yes") { $chk = ' checked="checked"'; }
-	if ($disable == "true") { $dis = ' disabled="true"'; }
+	if ($gdeoptions[$option] == "yes") { $chk = ' checked="checked"'; } else { $chk = ""; }
+	if ($disable == "true") { $dis = ' disabled="true"'; } else { $dis = ""; }
 ?>
 <input type="checkbox" name="<?php echo $option; ?>" value="1" id="<?php echo $option; ?>"<?php echo $chk; ?><?php echo $dis; ?> />
 <label for="<?php echo $option; ?>"><?php echo $title; ?></label>
@@ -365,7 +368,7 @@ function gde_showCheckTb($option, $title) {
 	
 	$option = str_replace("gdet_", "", $option);
 	
-	if (strstr($gdet, $option) !== false) { $chk = ' checked="checked"'; }
+	if (strstr($gdet, $option) !== false) { $chk = ' checked="checked"'; } else { $chk = ""; }
 ?>
 <input type="checkbox" name="gdet_<?php echo $option; ?>" value="1" id="gdet_<?php echo $option; ?>"<?php echo $chk; ?> />
 <label for="gdet_<?php echo $option; ?>"><?php echo $title; ?></label>
@@ -374,7 +377,7 @@ function gde_showCheckTb($option, $title) {
 
 function gde_showOption($value, $option, $title) {
 	global $gdeoptions;
-	if ($gdeoptions[$option] == $value) { $chk = ' selected="yes"'; }
+	if ($gdeoptions[$option] == $value) { $chk = ' selected="yes"'; } else { $chk = ""; }
 ?>
 <option style="padding-right:5px;" value="<?php echo $value; ?>"<?php echo $chk; ?>><?php echo $title; ?></option>
 <?php

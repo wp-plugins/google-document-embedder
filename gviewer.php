@@ -8,11 +8,11 @@ Author: Kevin Davis
 Author URI: http://www.davistribe.org/
 Text Domain: gde
 Domain Path: /languages/
-Version: 2.4.3
+Version: 2.4.4
 License: GPLv2
 */
 
-$gde_ver = "2.4.3.98";
+$gde_ver = "2.4.4.98";
 
 /**
  * LICENSE
@@ -43,7 +43,7 @@ if ( ! defined( 'GDE_PLUGIN_DIR' ) )
     define( 'GDE_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 if ( ! defined( 'GDE_PLUGIN_URL' ) )
     define( 'GDE_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
-	
+
 include_once('gde-functions.php');
 $gdeoptions = get_option('gde_options');
 $pUrl = plugins_url(plugin_basename(dirname(__FILE__)));
@@ -56,8 +56,10 @@ $supported_exts = array(
 	"docx"		=>	"application/vnd.openxmlformats-officedocument.wordprocessingml",
 	"dxf"		=>	"application/dxf",
 	"eps"		=>	"application/postscript",
+	"otf"		=>	"font/opentype",
 	"pages"		=>	"application/x-iwork-pages-sffpages",
 	"pdf"		=>	"application/pdf",
+	"pps"		=>	"application/vnd.ms-powerpoint",
 	"ppt"		=>	"application/vnd.ms-powerpoint",
 	"pptx"		=>	"application/vnd.openxmlformats-officedocument.presentationml",
 	"ps"		=>	"application/postscript",
@@ -88,7 +90,7 @@ function gde_gviewer_func($atts) {
 		'height' => '',
 		'lang' => $gdeoptions['default_lang'],
 		'force' => $gdeoptions['bypass_check'],
-		'cache' => $gdeoptions['disable_cache'],
+		'cache' => $gdeoptions['disable_caching'],
 		'authonly' => $gdeoptions['restrict_dl'],
 		'theme' => ''
 	), $atts));
@@ -128,8 +130,14 @@ function gde_gviewer_func($atts) {
 		$height .= "px";
 	}
 	
+	// translate filenames with spaces and other forms of wickedness
+	$fn = basename($file);
+	$fnp = gde_splitFilename($fn);
+	$fnp[0] = rawurlencode($fnp[0]);
+	$cfile = str_replace($fn, $fnp[0] . "." . $fnp[1], $file);
+	
 	// check link for validity
-	$status = gde_validTests($file, $force);
+	$status = gde_validTests($cfile, $force);
 	if ($status && !is_array($status)) {
 		if (($gdeoptions['disable_hideerrors'] == "no") || !$gdeoptions['disable_hideerrors']) {
 			$code = "\n<!-- GDE EMBED ERROR: $status -->\n";
@@ -137,26 +145,19 @@ function gde_gviewer_func($atts) {
 			$code = "\n".'<div class="gde-error">Google Doc Embedder '.__('Error', 'gde').": ".$status."</div>\n";
 		}
 	} else {
-		$code = "";
-		
-		$fn = basename($file);
-		$fnp = gde_splitFilename($fn);
 		$fsize = gde_formatBytes($status['fsize']);
 		
-		// translate filenames with spaces and other forms of wickedness
-		$fn = rawurlencode($fn);
-		
-		$code .=<<<HERE
+		$code =<<<HERE
 %A%
 <iframe src="%U%" class="gde-frame" style="width:%W%; height:%H%; border: none;" scrolling="no"></iframe>\n
 %B%
 HERE;
 
-		// obfuscate filename if cache disabled
-		if ($gdeoptions['disable_caching'] == "yes" || $cache == "no" || $cache == "0") {
-			$uefile = $file."%3F".time();
+		// obfuscate filename if cache disabled (globally or via shortcode)
+		if ($gdeoptions['disable_caching'] == "yes" || $cache == "0") {
+			$uefile = rawurlencode($file."?".time());
 		} else {
-			$uefile = $file;
+			$uefile = rawurlencode($file);
 		}
 		// check for proxy
 		if ($gdeoptions['disable_proxy'] == "no") {
@@ -165,7 +166,7 @@ HERE;
 			$lnk = "http://docs.google.com/viewer?url=".$uefile."&hl=".$lang;
 		}
 		// check for mobile
-		if (strstr($gdeoptions['gdet'], 'm') !== false) {
+		if (strstr($gdeoptions['restrict_tb'], 'm') !== false) {
 			$lnk .= "&mobile=true";
 		} else {
 			$lnk .= "&embedded=true";
@@ -226,6 +227,8 @@ HERE;
 			$txt = $gdeoptions['link_text'];
 			if ($gdeoptions['enable_ga'] == "yes") {
 				$gaLink = " $gaTag";
+			} else {
+				$gaLink = "";
 			}
 			$linkcode .= "<p class=\"gde-text\"><a href=\"$dlFile\" target=\"$target\" class=\"gde-link\"$gaLink>$txt</a></p>";
 		}
@@ -235,13 +238,20 @@ HERE;
 			$code = str_replace("%B%", '', $code);
 		} else {
 			$code = str_replace("%A%", '', $code);
+			//$code = str_replace("%A%", '<!-- TEST: '.$test.' -->', $code);
 			$code = str_replace("%B%", $linkcode, $code);
 		}
 		$code = str_replace("%U%", $lnk, $code);
 		$code = str_replace("%W%", $width, $code);
 		$code = str_replace("%H%", $height, $code);
 		$code = str_replace("%FN", $fn, $code);
-		$code = str_replace("%FT", $fnp[1], $code);
+		
+		// file type replacement
+		$ftype = strtoupper($fnp[1]);
+		if ($ftype == "TIF") { 
+			$ftype = "TIFF";
+		}
+		$code = str_replace("%FT", $ftype, $code);
 		$code = str_replace("%FS", $fsize, $code);
 	}
 	

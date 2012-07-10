@@ -7,18 +7,22 @@ require_once('libs/bootstrap.php');
 $gdeoptions = get_option('gde_options');
 $tb = $gdeoptions['restrict_tb'];
 
-# This proxy code is a bypass for an existing flaw in Google Docs Viewer that breaks the functionality
-# for some IE users. If you do not wish to use this code, select Google Standard Viewer rather than
-# Enhanced Viewer in GDE Settings. Note that viewer toolbar customization options depend on this
+# This proxy code was originally intended as a bypass for a longstanding flaw in Google Docs Viewer
+# that broke the functionality for some IE users. That use is rarely or not relevant since around the
+# release of version 1.9.8 of this plugin. However, it's been commandeered to perform other, more
+# groovy functions.
+#
+# If you do not wish to use this code, select Google Standard Viewer rather than
+# Enhanced Viewer in GDE Settings. Note that viewer customization options depend on this
 # proxy workaround remaining enabled.
 # 
-# The problem this code addresses is discussed at length on Google's Help Forum:
+# The problem this code originally addressed was discussed at length on Google's Help Forum:
 # http://www.google.com/support/forum/p/Google+Docs/thread?tid=22d92671afd5b9b7&hl=en
 # 
-# This code is based on the work of Peter Chen. For more information, see:
+# The original proxy code was based on the work of Peter Chen. For more information, see:
 # http://peterchenadded.herobo.com/gview/
 #
-# Peter's code is modified below to allow for cURL fallback, viewer toolbar customization,
+# Peter's code was modified to allow for cURL fallback, viewer customization options, mobile versions,
 # and to reflect changes in the viewer since the code was first released.
 
 // test for allow_url_fopen in php config; try curl for function if disabled
@@ -33,10 +37,13 @@ if (ini_get('allow_url_fopen') !== "1") {
 	}
 }
 
-// check for mobile (m)
-if (strstr($_SERVER['QUERY_STRING'], 'mobile=true') !== false) {
+// check for mobile
+if (strstr($_SERVER['QUERY_STRING'], 'mobile=true') !== false) {	// already set
 	$mobile = true;
-} elseif (strstr($tb, 'm') !== false) { 
+} elseif (strstr($tb, 'm') !== false) { 	// specifically requested mobile version
+	$_SERVER['QUERY_STRING'] .= "&mobile=true";
+	$mobile = true;
+} elseif (gde_mobile_check()) {				// is otherwise a mobile browser, by best guess
 	$_SERVER['QUERY_STRING'] .= "&mobile=true";
 	$mobile = true;
 }
@@ -137,6 +144,12 @@ if (isset($_GET['embedded']) || $_GET['mobile']) {
 	header("Location: https://docs.google.com/viewer?" . $_SERVER['QUERY_STRING']);  
 } 
 
+/**
+ * Fetch remote file source
+ *
+ * @since   1.7.0.0
+ * @return  string Contents of remote file
+ */
 function gde_curl_get_contents($url) {
 	$ch = curl_init();
 	$timeout = 5; // set to zero for no timeout
@@ -148,6 +161,22 @@ function gde_curl_get_contents($url) {
 	curl_close($ch); 
 	
 	return $file_contents;
+}
+
+/**
+ * Check for mobile browser
+ *
+ * @since   2.5.0.1
+ * @return  bool Browser is detected as mobile, or not
+ */
+function gde_mobile_check() {
+	include_once("libs/mobile-check.php");
+	
+	if (gde_is_mobile_browser()) {
+		return true;
+	} else {
+		return false;
+	}
 }
 
 ?>

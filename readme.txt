@@ -1,9 +1,9 @@
 === Google Doc Embedder ===
 Contributors: k3davis
-Tags: doc, docx, pdf, ppt, pptx, xls, psd, zip, rar, tiff, office, powerpoint, google docs, google
+Tags: doc, docx, pdf, ppt, pptx, xls, psd, zip, rar, tiff, ttf, office, powerpoint, google
 Author URI: http://www.davistribe.org/code/
 Donate link: http://pledgie.com/campaigns/6048
-Requires at least: 2.8
+Requires at least: 3.0
 Tested up to: 3.4
 Stable tag: trunk
 License: GPLv2 or later
@@ -14,18 +14,18 @@ Lets you embed MS Office, PDF, and many other file types in a web page using the
 
 Google Doc Embedder lets you embed several types of files into your WordPress pages using the Google Docs Viewer - allowing inline viewing (and optional downloading) of the following file types, with no Flash or PDF browser plug-ins required:
 
-* Adobe PDF
+* Adobe Acrobat (PDF)
 * Microsoft Word (DOC/DOCX)
 * Microsoft PowerPoint (PPT/PPTX)
 * Microsoft Excel (XLS/XLSX)
-* TIFF Images
+* TIFF Images (TIF, TIFF)
 * Apple Pages (PAGES)
 * Adobe Illustrator (AI)
 * Adobe Photoshop (PSD)
 * Autodesk AutoCad (DXF)
 * Scalable Vector Graphics (SVG)
 * PostScript (EPS/PS)
-* TrueType (TTF)
+* OpenType/TrueType Fonts (OTF, TTF)
 * XML Paper Specification (XPS)
 * Archive Files (ZIP/RAR)
 
@@ -56,18 +56,18 @@ Go to "GDE Settings" (under "Settings" in the admin panel) to change defaults, o
 = What file types can be embedded? =
 This plug-in currently can embed the following:
 
-* Adobe PDF
+* Adobe Acrobat (PDF)
 * Microsoft Word (DOC/DOCX)
 * Microsoft PowerPoint (PPT/PPTX)
 * Microsoft Excel (XLS/XLSX)
-* TIFF Images
+* TIFF Images (TIF, TIFF)
 * Apple Pages (PAGES)
 * Adobe Illustrator (AI)
 * Adobe Photoshop (PSD)
 * Autodesk AutoCad (DXF)
 * Scalable Vector Graphics (SVG)
 * PostScript (EPS/PS)
-* TrueType (TTF)
+* OpenType/TrueType Fonts (OTF, TTF)
 * XML Paper Specification (XPS)
 * Archive Files (ZIP/RAR)
 
@@ -106,12 +106,12 @@ View the source on the web page where you've embedded the viewer. In order to de
 This plug-in utilizes the viewer from Google Docs in a standalone fashion. There is no direct integration with Google Docs and even those documents stored there and shared publicly do not embed reliably with their viewer (ironically), so at this time that use is not supported by the plug-in. Please store your original documents somewhere on your web site in their native supported formats.
 
 = How can I translate the plugin? =
-You can use the [English translation](http://plugins.svn.wordpress.org/google-document-embedder/trunk/language/gde-en_US.po "English") as a start. After saving the file, you can translate it by using a text editor or [Poedit](http://www.poedit.net/ "Poedit"). Or, you may install and use the [Codestyling Localization](http://wordpress.org/extend/plugins/codestyling-localization/ "Codestyling Localization") plugin.
+You can use the [English translation](http://plugins.svn.wordpress.org/google-document-embedder/trunk/languages/gde-en_US.po "English") as a start. After saving the file, you can translate it by using a text editor or [Poedit](http://www.poedit.net/ "Poedit"). Or, you may install and use the [Codestyling Localization](http://wordpress.org/extend/plugins/codestyling-localization/ "Codestyling Localization") plugin.
 
 Please email your translation, along with your name and link for credit, to <em>wpp @ tnw . org</em> for inclusion in the plugin.
 
 = Where can I ask questions, report bug and request features? =
-You can open a topic [on the forum](http://wordpress.org/tags/google-document-embedder?forum_id=10#postform "forum") and I'll see what I can do. I review all messages posted here regularly.
+You can open a topic [on the forum](http://wordpress.org/support/plugin/google-document-embedder "forum") and I'll see what I can do. I review all messages posted here regularly. For detailed support on specific documents and uses, please use the "Support" link in your plugin list under Google Doc Embedder.
 
 == Screenshots ==
 
@@ -120,6 +120,14 @@ You can open a topic [on the forum](http://wordpress.org/tags/google-document-em
 3. TinyMCE Editor integration
 
 == Changelog ==
+
+= 2.4.4 =
+* Added: PPS and OTF support
+* Fixed: Broken support of international filenames in IE (thanks beredim)
+* Fixed: More robust file size checking with nonstandard filenames
+* Fixed: Global disable cache option not always honored
+* Fixed: (E) Mobile theme not loaded if not globally requested
+* Changed: Now requires WordPress 3.0+ (mainly for support reasons)
 
 = 2.4.3 =
 * Added: Dark theme shortcode option (EXPERIMENTAL)
@@ -141,7 +149,7 @@ You can open a topic [on the forum](http://wordpress.org/tags/google-document-em
 * Added: Localization support (translations welcome)
 * Added: Ability to use mobile theme with Enhanced Viewer
 * Fixed: Toolbar customization on mobile with Enhanced Viewer
-* Fixed: Editor integration No longer loads its own TinyMCE/jquery libs
+* Fixed: Editor integration no longer loads its own TinyMCE/jquery libs
 * Fixed: URL changes for plugin, help links, beta checking
 * Fixed: "Moved Temporarily" error in Enhanced Viewer (thanks webmonkeywatts)
 
@@ -181,5 +189,5 @@ You can open a topic [on the forum](http://wordpress.org/tags/google-document-em
 
 == Upgrade Notice ==
 
-= 2.4.3 =
-IIS bug fix, improved support form, experimental dark theme
+= 2.4.4 =
+Bug fix release

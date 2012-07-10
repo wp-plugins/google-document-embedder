@@ -48,7 +48,7 @@ var GDEInsertDialog = {
 				});
 		
 		function check_uri() {
-			var type_regex = /\.(doc|docx|pdf|ppt|pptx|tif|tiff|xls|xlsx|pages|ai|psd|dxf|svg|eps|ps|ttf|xps|zip|rar)$/i
+			var type_regex = /\.(doc|docx|pdf|ppt|pptx|pps|tif|tiff|xls|xlsx|pages|ai|psd|dxf|svg|eps|ps|otf|ttf|xps|zip|rar)$/i
 			var path_regex = /^http/i;
 			
 			if(!(type_regex.test( jQuery('#url').val() )) & ( jQuery('#url').val() !=0 )) {
