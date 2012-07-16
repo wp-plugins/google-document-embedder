@@ -1,0 +1,450 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Google Doc Embedder en español\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2012-05-28 19:04+0100\n"
+"PO-Revision-Date: 2012-05-28 19:23+0100\n"
+"Last-Translator: Eduardo Larequi García <elarequi@gmail.com>\n"
+"Language-Team: PNTE <blogs@educacion.navarra.es>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-KeywordsList: __;_e;__ngettext:1,2;_n:1,2;__ngettext_noop:1,2;_n_noop:1,2;_c,_nc:4c,1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;_nx_noop:4c,1,2\n"
+"X-Poedit-Basepath: ..\n"
+"X-Poedit-Language: Spanish\n"
+"X-Poedit-Country: Spain\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#: gde-functions.php:32
+msgid "Download"
+msgstr "Descargar"
+
+#: gde-functions.php:344
+#: gviewer.php:292
+msgid "Support"
+msgstr "Soporte"
+
+#: gde-functions.php:346
+msgid "Please review the documentation before submitting a request for support:"
+msgstr "Por favor, revisa la documentación antes de enviar una solicitud de soporte:"
+
+#: gde-functions.php:349
+msgid "Plugin FAQ"
+msgstr "FAQ del plugin"
+
+#: gde-functions.php:350
+msgid "Support Forum"
+msgstr "Foro de soporte"
+
+#: gde-functions.php:353
+msgid "If you're still experiencing a problem, please complete the form below."
+msgstr "Si todavía experimentas algún problema, por favor completa el formulario que tienes a continuación."
+
+#: gde-functions.php:359
+msgid "Your Name"
+msgstr "Tu nombre"
+
+#: gde-functions.php:363
+msgid "Your E-mail"
+msgstr "Tu email"
+
+#: gde-functions.php:369
+msgid "Shortcode"
+msgstr "Shortcode"
+
+#: gde-functions.php:371
+msgid "If you're having a problem getting a specific document to work, paste the shortcode you're trying to use here."
+msgstr "Si tienes problemas para conseguir que funcione un documento específico, pega aquí el shortcode que estás utilizando."
+
+#: gde-functions.php:376
+msgid "Message"
+msgstr "Mensaje"
+
+#: gde-functions.php:381
+msgid "Message Options"
+msgstr "Opciones del mensaje"
+
+#: gde-functions.php:383
+msgid "Send debug information"
+msgstr "Enviar información de depuración"
+
+#: gde-functions.php:384
+msgid "View"
+msgstr "Ver"
+
+#: gde-functions.php:385
+msgid "Send me a copy"
+msgstr "Enviarme una copia"
+
+#: gde-functions.php:391
+msgid "Debug Information"
+msgstr "Información de depuración"
+
+#: gde-functions.php:430
+msgid "I'm less likely to be able to help you if you do not include debug information."
+msgstr "Si no incluyes la información de depuración, es menos probable que pueda ayudarte."
+
+#: gde-functions.php:432
+msgid "Send Support Request"
+msgstr "Enviar solicitud de soporte"
+
+#: gviewer.php:137
+msgid "Error"
+msgstr "Error"
+
+#: gviewer.php:268
+#: gviewer.php:284
+#: options.php:130
+msgid "Settings"
+msgstr "- Configuración"
+
+#: gviewer.php:275
+msgid "You do not have sufficient permissions to access this page"
+msgstr "No tienes suficientes permisos para acceder a esta página"
+
+#: gviewer.php:305
+msgid "Beta version available"
+msgstr "Versión beta disponible"
+
+#: gviewer.php:305
+msgid "Please deactivate the plug-in and install the current version if you wish to participate. Otherwise, you can turn off beta version checking in GDE Settings. Testers appreciated!"
+msgstr "Si quieres participar, por favor, desactiva el plugin e instala la versión actual. Si no quieres, puedes desactivar la versión beta marcando la correspondiente casilla en la página de configuración del plugin."
+
+#: gviewer.php:306
+msgid "Updated beta version available"
+msgstr "Versión beta actualizada disponible"
+
+#: gviewer.php:306
+msgid "A newer beta has been released. Please deactivate the plug-in and install the current version. Thanks for your help!"
+msgstr "Se ha publicado una versión beta más reciente. Por favor, desactiva el plugin e instala la versión actual. ¡Gracias por tu ayuda!"
+
+#: gviewer.php:307
+msgid "You're running a beta version. Please give feedback."
+msgstr "Estás utilizando una versión beta. Por favor, envía información."
+
+#: gviewer.php:307
+msgid "Thank you for running a test version of Google Doc Embedder. You are running the most current beta version. Please give feedback on this version using the &quot;Support&quot; link above. Thanks for your help!"
+msgstr "Gracias por utilizar esta versión de prueba de Google Doc Embedder. Estás utilizando la versión beta más actualizada. Por favor, envía información sobre está versión mediante el enlace de &quot;Soportet&quot; que tienes sobre estas líneas. Gracias por tu ayuda."
+
+#: gviewer.php:308
+msgid "more info"
+msgstr "más información"
+
+#: gviewer.php:375
+msgid "plugin"
+msgstr "plugin"
+
+#: gviewer.php:376
+msgid "Version"
+msgstr "Versión"
+
+#: options.php:26
+msgid "Options reset to defaults"
+msgstr "Las opciones se han restaurado a sus valores por defecto"
+
+#: options.php:123
+msgid "Options updated"
+msgstr "Las opciones han sido actualizadas"
+
+#: options.php:141
+msgid "Viewer Options"
+msgstr "Opciones del visor"
+
+#: options.php:146
+msgid "Viewer Selection"
+msgstr "Selección del visor"
+
+#: options.php:147
+#: options.php:253
+#: options.php:303
+msgid "Help"
+msgstr "Ayuda"
+
+#: options.php:149
+msgid "Google Standard Viewer"
+msgstr "Visor estándar de Google"
+
+#: options.php:150
+msgid "Embed the standard Google Viewer."
+msgstr "Incrusta el visor estándar de Google"
+
+#: options.php:151
+msgid "Enhanced Viewer"
+msgstr "Visor mejorado"
+
+#: options.php:152
+msgid "Use this option to enable toolbar customization and fix some display problems (experimental)."
+msgstr "Utiliza esta opción para activar la personalización de la barra de herramientas y arreglar algunos problemas de visualización (experimental)."
+
+#: options.php:156
+msgid "Customize Toolbar"
+msgstr "Personalizar la barra de herramientas"
+
+#: options.php:160
+msgid "Hide Zoom In/Out"
+msgstr "Ocultar el zoom hacia dentro/hacia fuera"
+
+#: options.php:161
+msgid "Hide Open in New Window"
+msgstr "Ocultar el botón para abrir los documentos en una nueva ventana"
+
+#: options.php:162
+msgid "Always Use Mobile Theme"
+msgstr "Siempre utilizar el tema para dispositivos móviles"
+
+#: options.php:166
+msgid "Default Size"
+msgstr "Tamaño por defecto"
+
+#: options.php:167
+#: libs/gde-dialog.php:61
+msgid "Width"
+msgstr "Anchura"
+
+#: options.php:171
+#: libs/gde-dialog.php:57
+msgid "Height"
+msgstr "Altura"
+
+#: options.php:177
+msgid "Default Language"
+msgstr "Idioma por defecto"
+
+#: options.php:235
+msgid "Inline (Default)"
+msgstr "Inline (por defecto)"
+
+#: options.php:236
+msgid "Collapsible (Open)"
+msgstr "Plegable (abierto)"
+
+#: options.php:237
+msgid "Collapsible (Closed)"
+msgstr "Plegable (cerrado)"
+
+#: options.php:249
+msgid "Download Link Options"
+msgstr "Opciones para el enlace de descarga"
+
+#: options.php:254
+msgid "Display the download link by default"
+msgstr "Mostrar por defecto el enlace de descarga"
+
+#: options.php:255
+msgid "Only display download link to logged in users"
+msgstr "Solo mostrar el enlace de descarga a los usuarios que han iniciado sesión"
+
+#: options.php:256
+msgid "Track downloads in Google Analytics (tracking script must be installed on your site)"
+msgstr "Seguir las descargas mediante Google Analytics (para ello, debes haber instalado en tu sitio web un script de seguimiento)"
+
+#: options.php:259
+msgid "File Base URL"
+msgstr "URL base para los ficheros"
+
+#: options.php:261
+msgid "Any file not starting with <em>http</em> will be prefixed by this value"
+msgstr "Cualquier fichero que no comience con <em>http</em> será prefijado con este valor"
+
+#: options.php:264
+msgid "Link Text"
+msgstr "Texto del enlace"
+
+#: options.php:266
+msgid "You can further customize text using these dynamic replacements:"
+msgstr "Puedes personalizar el texto mediante los siguientes códigos dinámicos:"
+
+#: options.php:267
+msgid "filename"
+msgstr "nombre del fichero"
+
+#: options.php:268
+msgid "file type"
+msgstr "tipo de fichero"
+
+#: options.php:269
+msgid "file size"
+msgstr "tamaño de fichero"
+
+#: options.php:272
+msgid "Link Position"
+msgstr "Posición del enlace"
+
+#: options.php:274
+msgid "Above Viewer"
+msgstr "Por encima del visor"
+
+#: options.php:275
+msgid "Below Viewer"
+msgstr "Por debajo del visor"
+
+#: options.php:280
+msgid "Link Behavior"
+msgstr "Comportamiento de los enlaces"
+
+#: options.php:282
+msgid "Browser Default"
+msgstr "Comportamiento por defecto del navegador"
+
+#: options.php:283
+msgid "Force Download"
+msgstr "Forzar la descarga"
+
+#: options.php:284
+msgid "Force Download (Mask URL)"
+msgstr "Forzar la descarga (enmascarar la URL)"
+
+#: options.php:298
+msgid "Advanced Options"
+msgstr "Opciones avanzadas"
+
+#: options.php:300
+msgid "Plugin Behavior"
+msgstr "Comportamiento del plugin"
+
+#: options.php:301
+msgid "Editor Behavior"
+msgstr "Comportamiento del editor"
+
+#: options.php:305
+msgid "Display error messages inline (not hidden)"
+msgstr "Mostrar mensajes de error en línea (no oculto)"
+
+#: options.php:306
+msgid "Disable internal error checking"
+msgstr "Desactivar la comprobación interna de errores"
+
+#: options.php:307
+msgid "Disable document caching"
+msgstr "Desactivar el cacheo de documentos"
+
+#: options.php:308
+msgid "Disable beta version notifications"
+msgstr "Desactivar las notificaciones de versiones beta"
+
+#: options.php:311
+msgid "Disable all editor integration"
+msgstr "Desactivar la integración con los editores"
+
+#: options.php:316
+msgid "Insert shortcode from Media Library"
+msgstr "Insertar shortcodes desde la librería multimedia"
+
+#: options.php:318
+msgid "Allow uploads of all supported media types"
+msgstr "Permitir subidas de todos los tipos de multimedia soportados"
+
+#: options.php:328
+msgid "Save Options"
+msgstr "Guardar opciones"
+
+#: options.php:330
+msgid "Reset to Defaults"
+msgstr "Volver a la configuración por defecto"
+
+#: options.php:330
+msgid "Are you sure you want to reset all settings to defaults?"
+msgstr "¿Estás seguro de que quieres volver a la configuración por defecto?"
+
+#: proxy.php:29
+msgid ""
+"This function is not supported on your web server. Please add\n"
+"\t\t\t<code>allow_url_fopen = 1</code> to your php.ini or enable cURL library.\n"
+"\t\t\tIf you are unable to do this, please switch to Google Standard Viewer in GDE Options."
+msgstr ""
+"Esta función no está soportada en tu servidor web, Por favor, añade n\t\t\t<code>allow_url_fopen = 1</code> al fichero php.ini o activa la librería cURL.\n"
+"\t\t\tSi no puedes hacer esto por tus propios medios, por favor selecciona la opción Visor estándar de Google en la página de opciones del plugin."
+
+#: libs/bootstrap.php:15
+msgid "Could not find wp-load.php"
+msgstr "No se ha podido encontrar wp-load.php"
+
+#: libs/gde-dialog.php:34
+msgid "I'll insert the shortcode myself"
+msgstr "Insertaré el shortcode por mí mismo"
+
+#: libs/gde-dialog.php:36
+msgid "GDE Shortcode Options"
+msgstr "Opciones de los shortcodes de GDE"
+
+#: libs/gde-dialog.php:40
+msgid "Required"
+msgstr "Obligatorio"
+
+#: libs/gde-dialog.php:43
+msgid "URL or Filename"
+msgstr "URL o nombre del fichero"
+
+#: libs/gde-dialog.php:43
+msgid "Full URL or filename to append to File Base URL"
+msgstr "URL completa o nombre del fichero para añadirlo a la URL base de los ficheros"
+
+#: libs/gde-dialog.php:45
+msgid "File Base URL will be prefixed"
+msgstr "La URL base que se añadirá como prefijo a los ficheros"
+
+#: libs/gde-dialog.php:46
+msgid "Unsupported file type"
+msgstr "Tipo de fichero no soportado"
+
+#: libs/gde-dialog.php:54
+msgid "Optional (Override Global Settings)"
+msgstr "Valores opcionales (sobrescriben la configuración global)"
+
+#: libs/gde-dialog.php:57
+#: libs/gde-dialog.php:61
+msgid "format:"
+msgstr "formato:"
+
+#: libs/gde-dialog.php:57
+#: libs/gde-dialog.php:61
+msgid "or"
+msgstr "o"
+
+#: libs/gde-dialog.php:65
+msgid "Show Download Link"
+msgstr "Mostrar enlace de descarga"
+
+#: libs/gde-dialog.php:66
+msgid "Yes"
+msgstr "Sí"
+
+#: libs/gde-dialog.php:66
+msgid "No"
+msgstr "No"
+
+#: libs/gde-dialog.php:71
+msgid "Show download link only if user is logged in"
+msgstr "Mostrar el enlace de descarga solo si el usuario ha iniciado sesión"
+
+#: libs/gde-dialog.php:77
+msgid "Disable caching (this document is frequently overwritten)"
+msgstr "Desactivar el cacheo (adecuado para documentos que se sobrescriben con frecuencia)"
+
+#: libs/gde-dialog.php:84
+msgid "Disable internal error checking (try if URL is confirmed good but document doesn't display)"
+msgstr "Desactivar la comprobación interna de errores (prueba con esta opción si has comprobado que la URL es correcta pero el documento no se muestra)"
+
+#: libs/gde-dialog.php:94
+msgid "Shortcode Preview"
+msgstr "Vista previa del shortcode"
+
+#: libs/gde-dialog.php:103
+msgid "Insert"
+msgstr "Insertar"
+
+#: libs/gde-dialog.php:107
+msgid "Cancel"
+msgstr "Cancelar"
+
+#~ msgid ""
+#~ "Copy and paste this information into an email to <a href=\"mailto:kev@tnw."
+#~ "org\">the author</a> to\n"
+#~ "assist in troubleshooting problems. Remove or anonymize any information "
+#~ "you do not wish to share."
+#~ msgstr ""
+#~ "Copia y pega esta información en un email y envíalo al <a href=\"mailto:"
+#~ "kev@tnw.org\">autor del plugin</a> para\n"
+#~ "que te ayude a solucionar los problemas que puedas tener. Si lo deseas, "
+#~ "elimina cualquier información que no quieras difundir."
