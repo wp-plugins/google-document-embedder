@@ -65,10 +65,16 @@ if(isset($_REQUEST['defaults'])) {
 	//if(isset($_POST['default_display'])) {
 	//	$gdeoptions['default_display'] = $_POST['default_display'];
 	//}
+	
+	// custom toolbar
+	$newgdet = "";
 	if(isset($_POST['gdet_z'])) { $newgdet .= "z"; }
 	if(isset($_POST['gdet_n'])) { $newgdet .= "n"; }
 	if(isset($_POST['gdet_m'])) { $newgdet .= "m"; }
-	$gdeoptions['restrict_tb'] = $newgdet;
+	if(isset($newgdet)) {
+		$gdeoptions['restrict_tb'] = $newgdet;
+	}
+	
 	if(isset($_POST['base_url'])) {
 		$gdeoptions['base_url'] = $_POST['base_url'];
 	}
@@ -299,7 +305,7 @@ if (!$debug) {
 
 		<div id="gde_linkoptions" class="postbox">
 			<h3 class="hndle"><span><?php _e('Advanced Options', 'gde'); ?></span></h3>
-			<div class="inside" style="min-height:30px;">
+			<div class="inside" style="min-height:35px;">
 				<div style="float:left;"><a href="javascript:void(0);" id="advopt-plugin"><?php echo __('Plugin Behavior', 'gde'); ?></a><br/> 
 				<a href="javascript:void(0);" id="advopt-editor"><?php echo __('Editor Behavior', 'gde'); ?></a>
 				</div>

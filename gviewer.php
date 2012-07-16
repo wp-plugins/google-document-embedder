@@ -8,11 +8,11 @@ Author: Kevin Davis
 Author URI: http://www.davistribe.org/
 Text Domain: gde
 Domain Path: /languages/
-Version: 2.4.4
+Version: 2.4.5
 License: GPLv2
 */
 
-$gde_ver = "2.4.4.98";
+$gde_ver = "2.4.5.98";
 
 /**
  * LICENSE
@@ -47,6 +47,7 @@ if ( ! defined( 'GDE_PLUGIN_URL' ) )
 include_once('gde-functions.php');
 $gdeoptions = get_option('gde_options');
 $pUrl = plugins_url(plugin_basename(dirname(__FILE__)));
+$support_link = '<a href="options-general.php?page=gviewer.php&debug=1">'.__('Support', 'gde').'</a>';
 
 // note: updates here should also be reflected in js/dialog.js
 $supported_exts = array(
@@ -130,14 +131,13 @@ function gde_gviewer_func($atts) {
 		$height .= "px";
 	}
 	
-	// translate filenames with spaces and other forms of wickedness
+	// translate filenames with spaces (prevent break in file size check, URL check, and mask url option)
 	$fn = basename($file);
 	$fnp = gde_splitFilename($fn);
-	$fnp[0] = rawurlencode($fnp[0]);
-	$cfile = str_replace($fn, $fnp[0] . "." . $fnp[1], $file);
+	$file = str_replace(" ", "%20", $file); // urlencode and rawurlencode don't reliably work here
 	
 	// check link for validity
-	$status = gde_validTests($cfile, $force);
+	$status = gde_validTests($file, $force);
 	if ($status && !is_array($status)) {
 		if (($gdeoptions['disable_hideerrors'] == "no") || !$gdeoptions['disable_hideerrors']) {
 			$code = "\n<!-- GDE EMBED ERROR: $status -->\n";
@@ -155,9 +155,9 @@ HERE;
 
 		// obfuscate filename if cache disabled (globally or via shortcode)
 		if ($gdeoptions['disable_caching'] == "yes" || $cache == "0") {
-			$uefile = rawurlencode($file."?".time());
+			$uefile = urlencode($file."?".time());
 		} else {
-			$uefile = rawurlencode($file);
+			$uefile = urlencode($file);
 		}
 		// check for proxy
 		if ($gdeoptions['disable_proxy'] == "no") {
@@ -197,30 +197,39 @@ HERE;
 		if ($save == "yes" || $save == "1") {
 			
 			$dlMethod = $gdeoptions['link_func'];
-			if ($fnp[1] == "PDF") {
+			
+			if ($fnp[1] == "PDF" || $fnp[1] == "pdf") {
 				if ($dlMethod == "force" or $dlMethod == "force-mask") {
-					$dlFile = $pUrl;
-					$fileParts = parse_url($file);
-					$fileStr = str_replace($fileParts['scheme']."://","",$file);
-					$dlFile .= "/libs/pdf.php?file=".$fileStr."&fn=".$fn;
-					$target = "_self";
+					
+					// fix file name with spaces (again)
+					$fn = str_replace(" ", "%20", $fn);
+					
+					$dlFile = $pUrl . "/libs/pdf.php?file=".urlencode($file)."&fn=".$fn;
+
+					if ($dlMethod == "force-mask") {
+						$dlFile = gde_shortUrl($dlFile);
+						$target = "_blank";
+						$nofollow = ' rel="nofollow"';
+					} else {
+						$target = "_self";
+						$nofollow = "";
+					}
+					
 					$gaTag = 'onclick="var that=this;_gaq.push([\'_trackEvent,\'Download\',\'PDF\',this.href]);setTimeout(function(){location.href=that.href;},200);return false;"';
 				} elseif ($dlMethod == "default") {
 					$dlFile = $file;
 					$target = "_blank";
 					$gaTag = 'onclick="_gaq.push([\'_trackEvent\',\'Download\',\'PDF\',this.href]);"';
 				}
-				if ($dlMethod == "force-mask") {
-					$dlFile = gde_shortUrl($dlFile);
-					$gaTag = 'onclick="var that=this;_gaq.push([\'_trackEvent,\'Download\',\'PDF\',this.href]);setTimeout(function(){location.href=that.href;},200);return false;"';
-				}
 				
 			} elseif ($dlMethod == "force-mask") {
-				$dlFile = gde_shortUrl($file);
+				$dlFile = gde_shortUrl($dlFile);
+				$nofollow = ' rel="nofollow"';
 				$target = "_self";
 				$gaTag = 'onclick="var that=this;_gaq.push([\'_trackEvent,\'Download\',\''.$fnp[1].'\',this.href]);setTimeout(function(){location.href=that.href;},200);return false;"';
 			} else {
 				$dlFile = $file;
+				$nofolow = "";
 				$target = "_self";
 				$gaTag = 'onclick="var that=this;_gaq.push([\'_trackEvent,\'Download\',\''.$fnp[1].'\',this.href]);setTimeout(function(){location.href=that.href;},200);return false;"';
 			}
@@ -230,7 +239,7 @@ HERE;
 			} else {
 				$gaLink = "";
 			}
-			$linkcode .= "<p class=\"gde-text\"><a href=\"$dlFile\" target=\"$target\" class=\"gde-link\"$gaLink>$txt</a></p>";
+			$linkcode .= "<p class=\"gde-text\"><a href=\"$dlFile\" target=\"$target\" class=\"gde-link\"".$gaLink.$nofollow.">$txt</a></p>";
 		}
 		
 		if ($gdeoptions['link_pos'] == "above") {
@@ -238,7 +247,6 @@ HERE;
 			$code = str_replace("%B%", '', $code);
 		} else {
 			$code = str_replace("%A%", '', $code);
-			//$code = str_replace("%A%", '<!-- TEST: '.$test.' -->', $code);
 			$code = str_replace("%B%", $linkcode, $code);
 		}
 		$code = str_replace("%U%", $lnk, $code);
@@ -296,10 +304,9 @@ function gde_actlinks($links) {
 	return $links; 
 }
 function gde_metalinks($links, $file) {
-	global $debug;
+	global $debug, $support_link;
 	$plugin = plugin_basename(__FILE__);
 	if ($file == $plugin) {
-		$support_link = '<a href="options-general.php?page=gviewer.php&debug=1">'.__('Support', 'gde').'</a>';
 		$links[] = $support_link;
 	}
 	return $links;
@@ -381,10 +388,11 @@ if ($gdeoptions['disable_editor'] !== "yes") {
 
 // footer credit
 function gde_admin_footer() {
+	global $support_link;
 	$pdata = get_plugin_data(__FILE__);
 	$plugin_str = __('plugin', 'gde');
 	$version_str = __('Version', 'gde');
-	printf('%1$s %2$s | %3$s %4$s<br />', $pdata['Title'], $plugin_str, $version_str, $pdata['Version']);
+	printf('%1$s %2$s | %3$s %4$s | %5$s<br />', $pdata['Title'], $plugin_str, $version_str, $pdata['Version'], $support_link);
 }
 
 ?>

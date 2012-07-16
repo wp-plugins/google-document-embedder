@@ -136,7 +136,7 @@ function gde_validUrl($url) {
 	
 	$request = new WP_Http;
 	$result = $request->request($url);
-	if (is_array($result)) {
+	if (is_array($result) && isset($result['headers']['content-length'])) {
 		$result['response']['fsize'] = $result['headers']['content-length'];
 		return $result['response'];
 	} else {

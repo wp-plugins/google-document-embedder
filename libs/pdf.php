@@ -24,11 +24,20 @@ if ((isset($_GET['fn'])) && (isset($_GET['file']))) {
 		showErr('Invalid file type; action cancelled.');
 	}
 	
+	// ready file
+	$file = urldecode($file);
+	$fileParts = parse_url($file);
+	if (preg_match("/^https/i", $fileParts['scheme'])) {
+		$ssl = true;
+	} else {
+		$ssl = false;
+	}
+	
 	// get file
 	if ($curl) {
-		$code = @curl_get_contents("http://". $_GET['file']);  
+		$code = @curl_get_contents($_GET['file'], $ssl);  
 	} else {
-		$code = @file_get_contents("http://". $_GET['file']); 
+		$code = @file_get_contents($_GET['file']); 
 	}
 	
 	// output file
@@ -40,12 +49,15 @@ if ((isset($_GET['fn'])) && (isset($_GET['file']))) {
 	showErr('No filename specified; action cancelled.');
 }
 
-function curl_get_contents($url) {
+function curl_get_contents($url, $ssl) {
 	$ch = curl_init();
 	$timeout = 5; // set to zero for no timeout
 	curl_setopt ($ch, CURLOPT_URL, $url);
 	curl_setopt ($ch, CURLOPT_RETURNTRANSFER, 1);
 	curl_setopt ($ch, CURLOPT_CONNECTTIMEOUT, $timeout);
+	if ($ssl) {
+		curl_setopt ($ch, CURLOPT_SSL_VERIFYPEER, false);
+	}
 	$file_contents = curl_exec($ch);
 	curl_close($ch); 
 	

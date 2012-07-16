@@ -48,7 +48,7 @@ if (strstr($_SERVER['QUERY_STRING'], 'mobile=true') !== false) {	// already set
 	$mobile = true;
 }
 
-if (isset($_GET['embedded']) || $_GET['mobile']) {
+if (isset($_GET['embedded']) || isset($_GET['mobile'])) {
 	
 	// get the src page, change relative path to absolute
 	if (isset($curl)) {
@@ -82,14 +82,13 @@ if (isset($_GET['embedded']) || $_GET['mobile']) {
 		}
 	}
 	# hide open in new window (n)
-	if (!$mobile) {
+	if (!isset($mobile)) {
 		if (strstr($tb, 'n') !== false) { 
 			$search[] = "#openInViewerButtonIcon {";
 			$replace[] = "#openInViewerButtonIcon { display: none !important;";
 		}
-	}
-	# hide mobile footer (always)
-	if ($mobile) {
+	} else {
+		# hide mobile footer (always){
 		$search[] = "#page-footer {";
 		$replace[] = "#page-footer { display: none !important;";
 	}
@@ -98,10 +97,12 @@ if (isset($_GET['embedded']) || $_GET['mobile']) {
 	$code = str_replace($search, $replace, $code);
 	
 	// perform theme replacement (experimental)
-	if ($_GET['t'] == 'dark') {
-		$pattern = '#(<style type="text/css">.view.*</style>)#';
-		$replacement = '$1'."\n".'<link rel="stylesheet" type="text/css" href="themes/gde-dark.css">';
-		$code = preg_replace($pattern, $replacement, $code);
+	if (isset($_GET['t'])) {
+		if ($_GET['t'] == 'dark') {
+			$pattern = '#(<style type="text/css">.view.*</style>)#';
+			$replacement = '$1'."\n".'<link rel="stylesheet" type="text/css" href="themes/gde-dark.css">';
+			$code = preg_replace($pattern, $replacement, $code);
+		}
 	}
 	
 	// output page

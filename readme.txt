@@ -121,6 +121,13 @@ You can open a topic [on the forum](http://wordpress.org/support/plugin/google-d
 
 == Changelog ==
 
+(E) Enhanced Viewer
+
+= 2.4.5 =
+* Fixed: Regression breaks some files containing spaces (thanks mlautens)
+* Fixed: Mask URL 400 error on filenames with spaces (thanks mrhaanraadts)
+* Fixed: PDF Force Download option doesn't support SSL
+
 = 2.4.4 =
 * Added: PPS and OTF support
 * Fixed: Broken support of international filenames in IE (thanks beredim)
@@ -130,7 +137,7 @@ You can open a topic [on the forum](http://wordpress.org/support/plugin/google-d
 * Changed: Now requires WordPress 3.0+ (mainly for support reasons)
 
 = 2.4.3 =
-* Added: Dark theme shortcode option (EXPERIMENTAL)
+* Added: (E) Dark theme shortcode option (EXPERIMENTAL)
 * Added: Turkish translation (thanks LettoBlog)
 * Fixed: Visual editor integration for IIS webhosts (thanks Kristof)
 * Changed: Debug information is now a support page from plugin list
@@ -147,11 +154,11 @@ You can open a topic [on the forum](http://wordpress.org/support/plugin/google-d
 * Added: Allow native upload/insert of all supported file types
 * Added: Shortcode inserted from Media Library for supported files
 * Added: Localization support (translations welcome)
-* Added: Ability to use mobile theme with Enhanced Viewer
-* Fixed: Toolbar customization on mobile with Enhanced Viewer
+* Added: (E) Ability to use mobile theme
+* Fixed: (E) Toolbar customization on mobile
 * Fixed: Editor integration no longer loads its own TinyMCE/jquery libs
 * Fixed: URL changes for plugin, help links, beta checking
-* Fixed: "Moved Temporarily" error in Enhanced Viewer (thanks webmonkeywatts)
+* Fixed: (E) "Moved Temporarily" error (thanks webmonkeywatts)
 
 = 2.3 =
 * Added: Option to set base URL for embedded files (thanks KevEd)
@@ -160,11 +167,11 @@ You can open a topic [on the forum](http://wordpress.org/support/plugin/google-d
 * Fixed: Download Link setting didn't update shortcode in editor dialog
 
 = 2.2.3 =
-* Fixed: Additional Enhanced Viewer fixes
+* Fixed: (E) Additional bug fixes
 * Fixed: jQuery error in editor integration
 
 = 2.2.2 =
-* Fixed: Toolbar customizations in Enhanced Viewer
+* Fixed: (E) Toolbar customizations broken after Google redesign
 * Fixed: iPhone scrolling bug (thanks Vayu)
 * Changed: Confirmed compatibility with WP 3.3
 
@@ -174,20 +181,9 @@ You can open a topic [on the forum](http://wordpress.org/support/plugin/google-d
 = 2.2 =
 * Added: ZIP/RAR Archive support (thanks enkerli)
 
-= 2.1 =
-* Added: Ability to track downloads with Google Analytics (thanks omarigil)
-* Changed: New editor integration was disabled by default - oops! (thanks Brian)
-
-= 2.0 =
-* Added: TinyMCE and Quicktag editor integration (thanks cr.aguila)
-* Added: Option to override internal caching of viewer (thanks Brian)
-* Added: More individual overrides for global settings
-* Fixed: Deprecated HTML output that interfered with some browsers
-* Removed: Plugin conflict code and setting; not particularly useful
-
 [Full history...](http://www.davistribe.org/gde/changelog/ "Full history")
 
 == Upgrade Notice ==
 
-= 2.4.4 =
+= 2.4.5 =
 Bug fix release
