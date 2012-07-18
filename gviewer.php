@@ -325,13 +325,13 @@ function gde_checkforBeta($plugin) {
 	$beta_msg['link'] = __('more info', 'gde');
 	
 	$pdata = get_plugin_data(__FILE__);
-	if (preg_match('/-dev$/i', $pdata['Version'])) { $isbeta = 1; }
+	if (preg_match('/-dev$/i', $pdata['Version'])) { $isbeta = 1; } else { $isbeta = ""; }
 	
 	if (strpos($pUrl.'/gviewer.php', $plugin) !== false) {
 		if ($gdeoptions['suppress_beta'] !== "yes") {
 			$vcheck = wp_remote_fopen(GDE_BETA_CHKFILE);
 		}
-		$isbeta = "";
+		
 		if ($vcheck) {
 			$lver = $gde_ver;
 			
