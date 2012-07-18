@@ -123,6 +123,9 @@ You can open a topic [on the forum](http://wordpress.org/support/plugin/google-d
 
 (E) Enhanced Viewer
 
+= 2.4.6 =
+* Fixed: Error in Mask URL download link for non-PDF file types
+
 = 2.4.5 =
 * Fixed: Regression breaks some files containing spaces (thanks mlautens)
 * Fixed: Mask URL 400 error on filenames with spaces (thanks mrhaanraadts)

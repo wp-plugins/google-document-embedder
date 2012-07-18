@@ -8,11 +8,11 @@ Author: Kevin Davis
 Author URI: http://www.davistribe.org/
 Text Domain: gde
 Domain Path: /languages/
-Version: 2.4.5
+Version: 2.4.6
 License: GPLv2
 */
 
-$gde_ver = "2.4.5.98";
+$gde_ver = "2.4.6.98";
 
 /**
  * LICENSE
@@ -223,7 +223,7 @@ HERE;
 				}
 				
 			} elseif ($dlMethod == "force-mask") {
-				$dlFile = gde_shortUrl($dlFile);
+				$dlFile = gde_shortUrl($file);
 				$nofollow = ' rel="nofollow"';
 				$target = "_self";
 				$gaTag = 'onclick="var that=this;_gaq.push([\'_trackEvent,\'Download\',\''.$fnp[1].'\',this.href]);setTimeout(function(){location.href=that.href;},200);return false;"';
