@@ -39,6 +39,7 @@ Translations are welcome; see [the FAQ](http://wordpress.org/extend/plugins/goog
 
 * English (en\_US), built-in
 * Spanish (es\_ES) by [elarequi](http://elarequi.com/propuestastic/ "elarequi"), thanks!
+* Czech (cs\_CZ) by Jirka, thanks!
 * Turkish (tr\_TR) by [LettoBlog](http://profiles.wordpress.org/lettoblog "LettoBlog"), thanks!
 
 == Installation ==
