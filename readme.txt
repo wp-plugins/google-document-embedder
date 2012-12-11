@@ -47,7 +47,7 @@ Translations are welcome; see the [web site](http://www.davistribe.org/gde/notes
 * Hungarian (hu\_HU) by [szemcse](http://profiles.wordpress.org/szemcse "szemcse"), thanks!
 * Spanish (es\_ES) by [elarequi](http://elarequi.com/propuestastic/ "elarequi"), thanks!
 * Turkish (tr\_TR) by [LettoBlog](http://profiles.wordpress.org/lettoblog "LettoBlog"), thanks!
-* Ukrainian (uk) by Józek, thanks!
+* Ukrainian (uk) by J&#243;zek, thanks!
 
 == Installation ==
 
