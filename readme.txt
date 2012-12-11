@@ -4,7 +4,7 @@ Tags: doc, docx, pdf, ppt, pptx, xls, psd, zip, rar, tiff, ttf, office, powerpoi
 Author URI: http://www.davistribe.org/code/
 Donate link: http://www.davistribe.org/gde/donate/
 Requires at least: 3.2
-Tested up to: 3.4.6
+Tested up to: 3.4
 Stable tag: trunk
 License: GPLv2 or later
 
