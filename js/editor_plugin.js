@@ -7,9 +7,9 @@
 			
 			ed.addCommand('gde_cmd', function() {
 				ed.windowManager.open( {
-					file : url + '/libs/gde-dialog.php',
-					width : 460 + parseInt(ed.getLang('gde.delta_width',0)),
-					height : 540 + parseInt(ed.getLang('gde.delta_height',0)),
+					file : url + '/libs/lib-eddialog.php',
+					width : 475 + parseInt(ed.getLang('gde.delta_width',0)),
+					height : 500 + parseInt(ed.getLang('gde.delta_height',0)),
 					inline : 1}, {
 						plugin_url : url
 					}
@@ -34,7 +34,7 @@
 				author : 'Kevin Davis',
 				authorurl : 'http://www.davistribe.org/gde',
 				infourl : 'http://www.davistribe.org/gde',
-				version : "1.3"}
+				version : "1.4"}
 		}
 	});
 	tinymce.PluginManager.add('gde',tinymce.plugins.gde);

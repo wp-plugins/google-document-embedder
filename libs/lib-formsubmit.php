@@ -1,13 +1,44 @@
 <?php
 
 // access wp functions externally
-require_once('bootstrap.php');
-include_once(ABSPATH . 'wp-includes/pluggable.php');
+require_once('lib-bootstrap.php');
+include_once(ABSPATH . 'wp-includes/pluggable.php'); // required for wp_mail
 
-if (!$_POST || !$_POST['email']) {
+if ( ! function_exists('gde_activate') ) {
+	// no access if parent plugin is disabled
+	wp_die('<p>'.__('You do not have sufficient permissions to access this page.').'</p>');
+} elseif ( empty( $_POST ) || ! isset( $_POST['email'] ) || empty( $_POST['email'] ) ) {
+	// fail submit if email not completed
 	echo "fail";
 	exit;
 } else {
+	
+	function gde_change_phpmailer( $phpmailer ) {
+		// gather settings and profiles
+		$datasrc = GDE_PLUGIN_URL . 'libs/lib-service.php?json=all';
+		$response = wp_remote_get( $datasrc );
+		if ( is_wp_error( $response ) ) {
+			$contents = "Error attaching export data.";
+			$file = "export-error.txt";
+		} else {
+			$contents = $response['body'];
+			$file = "gde-export.json";
+		}
+		$phpmailer->AddStringAttachment( $contents, $file, 'base64', 'text/plain' );
+		
+		// gather dx log
+		$datasrc = GDE_PLUGIN_URL . 'libs/lib-service.php?viewlog=all';
+		$response = wp_remote_get( $datasrc );
+		if ( is_wp_error( $response ) ) {
+			$contents = "[InternetShortcut]\nURL=" . $datasrc ."\n";
+			$file = "remote-dx-log.url";
+		} else {
+			$contents = $response['body'];
+			$file = "dx-log.txt";
+		}
+		$phpmailer->AddStringAttachment( $contents, $file, 'base64', 'text/plain' );
+	}
+	
 	
 	function gde_change_mail( $mail ) {
 		return $_POST['email'];
@@ -54,6 +85,9 @@ if (!$_POST || !$_POST['email']) {
 	
 	if ($_POST['senddb']) {
 		$message .= $_POST['senddb'];
+		
+		// add debug attachment
+		add_filter( 'phpmailer_init', 'gde_change_phpmailer' );
 	} else {
 		$message .= "No debug info was included.";
 	}

@@ -32,21 +32,32 @@
 
 /* toolbar buttons (desktop) */
 .toolbar-button-icon {
-	background-image: url("gde-dark-sprites.png");
+	background-image: url("../img/gde-dark-sprites.png");
+}
+
+/* toolbar button mouseover effect (desktop) */
+.goog-toolbar-button-outer-box:hover {
+	background-color: transparent;
+	background-image: none;
+	box-shadow: none;
+	border: 1px solid #000;
+}
+.goog-custom-button-disabled:hover {
+	border: 0 none;
 }
 
 /* toolbar buttons (mobile)	*/
 .mobile-icon-zoom-out {
-	background: url("gde-dark-m-sprites.png") no-repeat 0 0px;
+	background: url("../img/gde-dark-m-sprites.png") no-repeat 0 0px;
 }
 .mobile-icon-zoom-in {
-	background: url("gde-dark-m-sprites.png") no-repeat 0 -18px;
+	background: url("../img/gde-dark-m-sprites.png") no-repeat 0 -18px;
 }
 .mobile-icon-left {
-	background: url("gde-dark-m-sprites.png") no-repeat 0 -36px;
+	background: url("../img/gde-dark-m-sprites.png") no-repeat 0 -36px;
 }
 .mobile-icon-right {
-	background: url("gde-dark-m-sprites.png") no-repeat 0 -54px;
+	background: url("../img/gde-dark-m-sprites.png") no-repeat 0 -54px;
 }
 
 /* CONTENT AREA STYLES *****/
