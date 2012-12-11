@@ -34,18 +34,18 @@ the user to have Microsoft Word, Adobe Reader, PowerPoint, or other software ins
 not need to be uploaded to any service first - including Google Docs - but can exist anywhere publicly accessible on your site or the
 internet.
 
-* Office XML (2007+) file formats are sometimes problematic with Google Viewer. Please test your documents, and when possible I recommend
+Office XML (2007+) file formats are sometimes problematic with Google Viewer. Please test your documents, and when possible I recommend
 you use the Office 2003 equivalent formats instead.
 
 Note: Use of this plug-in implies your agreement with Google's published [Terms of Service](http://docs.google.com/viewer/TOS?hl=en "Terms of Service").
 
-Translations are welcome; see [the FAQ](http://wordpress.org/extend/plugins/google-document-embedder/faq/ "FAQ") for instructions.
+Translations are welcome; see the [web site](http://www.davistribe.org/gde/notes/#translate "web site") for details.
 
 * English (en\_US), built-in
 * Czech (cs\_CZ) by Jirka, thanks! (update needed)
-* Spanish (es\_ES) by [elarequi](http://elarequi.com/propuestastic/ "elarequi"), thanks!
 * French (fr\_FR) by [Erwan](http://profiles.wordpress.org/erwanlescop "Erwan"), thanks!
 * Hungarian (hu\_HU) by [szemcse](http://profiles.wordpress.org/szemcse "szemcse"), thanks!
+* Spanish (es\_ES) by [elarequi](http://elarequi.com/propuestastic/ "elarequi"), thanks!
 * Turkish (tr\_TR) by [LettoBlog](http://profiles.wordpress.org/lettoblog "LettoBlog"), thanks!
 
 == Installation ==
@@ -63,9 +63,9 @@ Go to "GDE Settings" (under "Settings" in the admin panel) to change defaults, o
 
 == Frequently Asked Questions ==
 
-= What file types can be embedded? =
-The file to embed must first be publicly available somewhere on the internet. You can upload it to your WordPress site using the standard
-techniques, or link to a file on another site.
+= Where can the files live? =
+The file to embed must first be publicly available somewhere on the internet, in order for Google to retrieve the document for conversion.
+You can upload it to your WordPress site using the standard techniques, or link to a file on another site.
 
 = How do I embed a file in my page or post? =
 There are several ways you can insert a supported document, depending on your preference:
@@ -123,7 +123,7 @@ More common questions are answered on the GDE web site [here](http://www.davistr
 
 == Screenshots ==
 
-1. Default appearance of embedded viewer
+1. Default appearance of embedded viewer (cropped)
 2. Enhanced viewer toolbar showing option to view full screen in same window
 3. Enhanced viewer colors can be customized using basic settings or your own CSS file. This "dark" template is included as an example.
 4. Preview of the settings page (portion of profile edit page)
