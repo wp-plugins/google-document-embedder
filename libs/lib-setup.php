@@ -158,7 +158,7 @@ function gde_setup() {
 		// new activation - write profile(s)
 		foreach ( $defpros as $key => $prodata ) {
 			if ( $key == "default" ) {
-				if ( isset( $upgrade ) ) {
+				if ( $upgrade ) {
 					// upgrade conversion handled this - skip
 					continue;
 				} else {

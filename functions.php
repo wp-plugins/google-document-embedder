@@ -112,8 +112,19 @@ function gde_validate_file( $file = NULL, $force ) {
 	}
 	
 	$result = gde_valid_url( $file );
-	if ( $force == "1" || $force == "yes" ) {
-		return $result;
+	if ( $result === true ) {
+		// validation skipped due to service failure
+		return -1;
+	} elseif ( $force == "1" || $force == "yes" ) {
+		if ( is_array( $result ) ) {
+			return $result;
+		} else {
+			// couldn't get file size due to service failure
+			return -1;
+		}
+	} elseif ( ! $result ) {
+		// can't validate
+		return -1;
 	} else {
 		if ( isset( $result['code'] ) && $result['code'] !== 200 ) {
 			if ( ! gde_valid_link( $file ) ) {
@@ -153,7 +164,7 @@ function gde_valid_link($link) {
 function gde_valid_type($link) {
 	$supported_exts = implode( "|", array_keys( gde_supported_types() ) );
 	
-    if (preg_match("/\.($supported_exts)$/i",$link)) {
+    if ( preg_match( "/\.($supported_exts)$/i", $link ) ) {
         return true;
     } else {
         return false;
@@ -170,8 +181,14 @@ function gde_valid_url( $url ) {
 			$result['response']['fsize'] = '';
 		}
 		return $result['response'];
+	} elseif ( is_wp_error( $result ) ) {
+		// unable to get head
+		$error = $result->get_error_message();
+		gde_dx_log("bypassing URL check; cant validate URL $url: $error");
+		return true;
 	} else {
-		return false;
+		gde_dx_log("cant determine URL validity; skipping");
+		return true;
 	}
 }
 
@@ -204,6 +221,35 @@ function gde_format_bytes( $bytes, $precision = 2 ) {
 		} else {
 			return round( $bytes, $precision ) . $units[$pow];
 		}
+	}
+}
+
+/**
+ * Sanitize dimensions (width, height)
+ *
+ * @since   2.5.0.1
+ * @return  string Sanitized dimensions, or false if value is invalid
+ * @note	Replaces old gde_sanitizeOpts function
+ */
+function gde_sanitize_dims( $dim ) {
+	// remove any spacing junk
+	$dim = trim( str_replace( " ", "", $dim ) );
+	
+	if ( ! strstr( $dim, '%' ) ) {
+		$type = "px";
+		$dim = preg_replace( "/[^0-9]*/", '', $dim );
+	} else {
+		$type = "%";
+		$dim = preg_replace( "/[^0-9]*/", '', $dim );
+		if ( (int) $dim > 100 ) {
+			$dim = "100";
+		}
+	}
+	
+	if ( $dim ) {
+		return $dim.$type;
+	} else {
+		return false;
 	}
 }
 

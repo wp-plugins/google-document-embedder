@@ -8,11 +8,11 @@ Author: Kevin Davis
 Author URI: http://www.davistribe.org/
 Text Domain: gde
 Domain Path: /languages/
-Version: 2.5
+Version: 2.5.1
 License: GPLv2
 */
 
-$gde_ver = "2.5.0.98";
+$gde_ver = "2.5.1.96";
 
 /**
  * LICENSE
@@ -48,7 +48,7 @@ global $wp_version;
 
 // get global settings
 if ( is_multisite() ) {
-	$gdeglobals			= get_site_option('gde_globals');
+	//$gdeglobals			= get_site_option('gde_globals'); // not implemented yet
 }
 
 // activate plugin, allow full uninstall
@@ -147,6 +147,10 @@ function gde_do_shortcode( $atts ) {
 		}
 	}
 	
+	// tweak the dimensions if necessary
+	$width = gde_sanitize_dims( $width );
+	$height = gde_sanitize_dims( $height );
+	
 	// add base url if needed
 	if ( ! preg_match( "/^http/i", $file ) ) {
 		if ( substr( $file, 0, 2 ) == "//" ) {
@@ -178,11 +182,11 @@ function gde_do_shortcode( $atts ) {
 	}
 	$status = gde_validate_file( str_replace( " ", "%20", $file ), $force );
 	
-	if ( ! isset( $code ) && ! is_array( $status ) ) {
+	if ( ! isset( $code ) && ! is_array( $status ) && $status !== -1 ) {
 		// validation failed
 		$code = gde_show_error( $status );
 	} elseif ( ! isset( $code ) ) {
-		// validation passed
+		// validation passed or was skipped
 		
 		// check for max filesize
 		$viewer = true;

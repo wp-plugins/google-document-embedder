@@ -379,7 +379,7 @@ function gde_row_actions( $pid ) {
 	foreach ($actions as $k => $v) {
 		$act[] = '<span class="'.$v[1].'" id="'.$k.'-'.$pid.'"><a href="options-general.php?page=gde-settings">'.$v[0].'</a></span>';
 	}
-	$acts = implode(" | ", $act);
+	$acts = implode( " | ", $act );
 	
 	return $acts;
 }

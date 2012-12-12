@@ -502,35 +502,6 @@ function gde_sec_cleanup() {
 */
 
 /**
- * Sanitize dimensions (width, height)
- *
- * @since   2.5.0.1
- * @return  string Sanitized dimensions, or false if value is invalid
- * @note	Replaces old gde_sanitizeOpts function
- */
-function gde_sanitize_dims( $dim ) {
-	// remove any spacing junk
-	$dim = trim( str_replace( " ", "", $dim ) );
-	
-	if ( stristr( $dim, 'p' ) ) {
-		$type = "px";
-		$dim = preg_replace( "/[^0-9]*/", '', $dim );
-	} else {
-		$type = "%";
-		$dim = preg_replace( "/[^0-9]*/", '', $dim );
-		if ( (int) $dim > 100 ) {
-			$dim = "100";
-		}
-	}
-	
-	if ( $dim ) {
-		return $dim.$type;
-	} else {
-		return false;
-	}
-}
-
-/**
  * Include custom css for settings pages
  *
  * @since   2.5.0.1

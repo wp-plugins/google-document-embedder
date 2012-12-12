@@ -4,7 +4,7 @@ Tags: doc, docx, pdf, ppt, pptx, xls, psd, zip, rar, tiff, ttf, office, powerpoi
 Author URI: http://www.davistribe.org/code/
 Donate link: http://www.davistribe.org/gde/donate/
 Requires at least: 3.2
-Tested up to: 3.4
+Tested up to: 3.4.6
 Stable tag: trunk
 License: GPLv2 or later
 
@@ -134,6 +134,11 @@ More common questions are answered on the GDE web site [here](http://www.davistr
 
 (E) Enhanced Viewer
 
+= 2.5.1 =
+* Fixed: Default profile not created on clean install (thanks Clifford)
+* Fixed: Viewer size from shortcode doesn't default to pixel
+* Fixed: Erroneous error message when file validation is blocked
+
 = 2.5 =
 * Added: "Profiles" allow each viewer instance to have its own settings
 * Added: (E) Private document support (block downloads of source file)
@@ -145,6 +150,7 @@ More common questions are answered on the GDE web site [here](http://www.davistr
 * Added: Media Library and editor integration improvements
 * Added: Support for dynamic protocol document links (thanks Clifford)
 * Added: French translation (thanks Erwan)
+* Added: Ukrainian translation (thanks J&#243;zek)
 * Fixed: Uses WordPress HTTP API instead of cURL etc. throughout
 * Fixed: (E) Hidden toolbar buttons still narrowly clickable (thanks rohan)
 * Fixed: Editor dialog and default base URL with non-standard include
