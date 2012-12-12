@@ -4,7 +4,7 @@ Tags: doc, docx, pdf, ppt, pptx, xls, psd, zip, rar, tiff, ttf, office, powerpoi
 Author URI: http://www.davistribe.org/code/
 Donate link: http://www.davistribe.org/gde/donate/
 Requires at least: 3.2
-Tested up to: 3.4.6
+Tested up to: 3.5
 Stable tag: trunk
 License: GPLv2 or later
 
@@ -45,6 +45,7 @@ Translations are welcome; see the [web site](http://www.davistribe.org/gde/notes
 * Czech (cs\_CZ) by Jirka, thanks! (update needed)
 * French (fr\_FR) by [Erwan](http://profiles.wordpress.org/erwanlescop "Erwan"), thanks!
 * Hungarian (hu\_HU) by [szemcse](http://profiles.wordpress.org/szemcse "szemcse"), thanks!
+* Russian (ru\_RU) by J&#243;zek, thanks!
 * Spanish (es\_ES) by [elarequi](http://elarequi.com/propuestastic/ "elarequi"), thanks!
 * Turkish (tr\_TR) by [LettoBlog](http://profiles.wordpress.org/lettoblog "LettoBlog"), thanks!
 * Ukrainian (uk) by J&#243;zek, thanks!
@@ -135,6 +136,7 @@ More common questions are answered on the GDE web site [here](http://www.davistr
 (E) Enhanced Viewer
 
 = 2.5.1 =
+* Added: Russian translation (thanks J&#243;zek)
 * Fixed: Default profile not created on clean install (thanks Clifford)
 * Fixed: Viewer size from shortcode doesn't default to pixel
 * Fixed: Erroneous error message when file validation is blocked
