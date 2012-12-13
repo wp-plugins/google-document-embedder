@@ -117,8 +117,10 @@ documents stored there and shared publicly do not embed reliably with their stan
 supported by the plug-in. Please store your original documents somewhere on your web site in their native supported formats.
 
 = Does it work in Multisite environments? =
-Yes, though more granular multisite options are planned for future versions based on demand. If you use GDE in a multisite environment, I
-welcome your feedback on helpful improvements.
+Yes, though I recommend activating the plugin on a per-site basis rather than network activate at this time, as there may be activation 
+issues and some settings may get stranded if the plugin is ever uninstalled. I will work to improve this in a coming version. Otherwise,
+more granular multisite options are planned for future versions based on demand. If you use GDE in a multisite environment, I
+welcome your feedback on what functionality you would like to see.
 
 = Other Common Questions =
 More common questions are answered on the GDE web site [here](http://www.davistribe.org/gde/notes/ "Notes").
