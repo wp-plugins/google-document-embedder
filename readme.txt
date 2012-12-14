@@ -43,6 +43,7 @@ Translations are welcome; see the [web site](http://www.davistribe.org/gde/notes
 
 * English (en\_US), built-in
 * Czech (cs\_CZ) by Jirka, thanks! (update needed)
+* Dutch (nl\_NL) by Robert van den Breemen, thanks!
 * French (fr\_FR) by [Erwan](http://profiles.wordpress.org/erwanlescop "Erwan"), thanks!
 * Hungarian (hu\_HU) by [szemcse](http://profiles.wordpress.org/szemcse "szemcse"), thanks!
 * Russian (ru\_RU) by J&#243;zek, thanks!
@@ -139,6 +140,7 @@ More common questions are answered on the GDE web site [here](http://www.davistr
 
 = 2.5.1 =
 * Added: Russian translation (thanks J&#243;zek)
+* Added: Dutch translation (thanks Robert)
 * Fixed: Default profile not created on clean install (thanks Clifford)
 * Fixed: Viewer size from shortcode doesn't default to pixel
 * Fixed: Erroneous error message when file validation is blocked
