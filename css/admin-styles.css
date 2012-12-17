@@ -122,3 +122,17 @@ p.gde-submit {
 .gde-tab-active {
 	display: block;
 }
+
+.gde-support-warn {
+	margin-top: 1em;
+	-moz-border-radius: 5px;
+	border-radius: 15px;
+	border: 1px solid #CCCCCC;
+	padding: 10px 15px;
+	float: left;
+	background-color: #F9F9F9;
+}
+
+#pro-submit, #profile-submit, #import-submit, #debugsend {
+	margin-bottom: 3em;
+}

@@ -8,11 +8,11 @@ Author: Kevin Davis
 Author URI: http://www.davistribe.org/
 Text Domain: gde
 Domain Path: /languages/
-Version: 2.5.1
+Version: 2.5.2
 License: GPLv2
 */
 
-$gde_ver = "2.5.1.96";
+$gde_ver = "2.5.2.98";
 
 /**
  * LICENSE
@@ -40,7 +40,7 @@ $gde_ver = "2.5.1.96";
  */
 
 // boring init junk
-require_once('functions.php');
+require_once( plugin_dir_path( __FILE__ ) . 'functions.php' );
 $pdata 					= gde_get_plugin_data();
 $gdeoptions				= get_option('gde_options');
 $healthy				= gde_debug_tables('gde_profiles');
@@ -48,20 +48,18 @@ global $wp_version;
 
 // get global settings
 if ( is_multisite() ) {
-	//$gdeglobals			= get_site_option('gde_globals'); // not implemented yet
+	$gdeglobals			= get_site_option( 'gde_globals' );
 }
 
 // activate plugin, allow full uninstall
 register_activation_hook( __FILE__, 'gde_activate' );
+register_deactivation_hook( __FILE__, 'gde_deactivate' );
 register_uninstall_hook( __FILE__, 'gde_uninstall' );
 
-// allow localisation
-load_plugin_textdomain( 'gde', false, basename( dirname( __FILE__ ) ) . '/languages' );
-
-// activate shortcode
+// bring the magic
+add_action( 'plugins_loaded', 'gde_load' );
 add_shortcode( 'gview', 'gde_do_shortcode' );
 
-// basic usage: [gview file="http://path.to/file.pdf"]
 function gde_do_shortcode( $atts ) {
 	
 	// current settings
@@ -83,7 +81,7 @@ function gde_do_shortcode( $atts ) {
 	}
 	*/
 	
-	extract(shortcode_atts(array(
+	extract( shortcode_atts( array (
 		'file' => '',
 		'profile' => 1, // default profile is always ID 1
 		'save' => '',
@@ -96,7 +94,7 @@ function gde_do_shortcode( $atts ) {
 		// backwards compatibility < gde 2.5 (still work but make undocumented as shortcode opts)
 		'authonly' => '',
 		'lang' => ''
-	), $atts));
+	), $atts ) );
 	
 	// get requested profile data (or default if doesn't exist)
 	$term = $profile;
@@ -319,7 +317,7 @@ function gde_do_shortcode( $atts ) {
 
 if ( is_admin() ) {
 	// add quick settings link to plugin list
-	add_filter("plugin_action_links_" . plugin_basename(__FILE__), 'gde_actlinks');
+	add_filter( "plugin_action_links_" . plugin_basename( __FILE__ ), 'gde_actlinks' );
 	
 	// beta notification (if enabled)
 	if ( gde_check_for_beta( __FILE__ ) ) {
@@ -366,9 +364,42 @@ if ( is_admin() ) {
  * @return  void
  * @note	This function must remain in this file
  */
-function gde_activate() {
-	require_once('libs/lib-setup.php');
+function gde_activate( $network_wide ) {
+	// set db schema version for this release
+	@define( 'GDE_DB_VER', '1.2' );
+	
+	// check for network-wide activation (currently not supported)
+	if ( $network_wide ) {
+		wp_die("Network activation is not supported at this time. Please activate individually until an update is available.");
+	}
+	
+	require_once( plugin_dir_path( __FILE__ ) . 'libs/lib-setup.php' );
 	gde_setup();
+}
+
+/**
+ * Remove dx log on deactivation
+ *
+ * @since   2.5.2.1
+ * @return  void
+ */
+function gde_deactivate() {
+	global $wpdb;
+	$blogid = get_current_blog_id();
+	
+	$table = $wpdb->base_prefix . 'gde_dx_log';
+	$wpdb->query("DELETE FROM $table WHERE blogid = '$blogid'");
+}
+
+/**
+ * Actions to perform when plugins have finished loading (before init)
+ *
+ * @since   2.5.2.1
+ * @return  void
+ */
+function gde_load() {
+	// localization
+	load_plugin_textdomain( 'gde', false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
 }
 
 /**
@@ -382,21 +413,37 @@ function gde_uninstall() {
 	global $wpdb;
 	
 	// delete all options
-	delete_option('gde_options');
-	delete_option('gde_db_version');
-	delete_site_option('gde_globals');
+	delete_option( 'gde_options' );
+	delete_site_option( 'gde_db_version' );
+	delete_site_option( 'gde_globals' );
 	
 	// remove beta cache, if any
-	delete_option('external_updates-google-document-embedder');
-	delete_transient('gde_beta_version');
+	delete_option( 'external_updates-google-document-embedder' );
+	delete_site_transient( 'gde_beta_version' );
 	
 	// drop db tables
 	$table = $wpdb->prefix . 'gde_profiles';
 	$wpdb->query( "DROP TABLE IF EXISTS $table" );
 	$table = $wpdb->prefix . 'gde_secure';
 	$wpdb->query( "DROP TABLE IF EXISTS $table" );
-	$table = $wpdb->prefix . 'gde_dx_log';
+	$table = $wpdb->base_prefix . 'gde_dx_log';
 	$wpdb->query( "DROP TABLE IF EXISTS $table" );
+	
+	// multisite cleanup
+	if ( is_multisite() ) {
+		$blogids = $wpdb->get_col( $wpdb->prepare( "SELECT blog_id FROM $wpdb->blogs" ) );
+		foreach ( $blogids as $blogid ) {
+			switch_to_blog( $blogid );
+			
+			delete_option( 'gde_options' );
+			
+			$table = $wpdb->prefix . 'gde_profiles';
+			$wpdb->query( "DROP TABLE IF EXISTS $table" );
+			$table = $wpdb->prefix . 'gde_secure';
+			$wpdb->query( "DROP TABLE IF EXISTS $table" );
+		}
+		restore_current_blog();
+	}
 }
 
 ?>

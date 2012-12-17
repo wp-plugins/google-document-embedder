@@ -250,6 +250,22 @@ jQuery(function ($) {
 	}
 	
 	/**
+	 * Used for dx logging
+	 */
+	$('.gde-viewlog').click(function(e) {
+		var id = this.id;
+		id = id.replace('log-', '');
+		
+		var url = jqs_vars.gde_url + "libs/lib-service.php";
+		
+		
+		// write data in new window //  onsubmit="this.target=\'_blank\'"
+		var form = $('<form action="' + url + '" method="post" target="_blank"><input type="hidden" name="blogid" value="' + id + '" /><input type="hidden" name="viewlog" value="all"></form>');
+		$('body').append(form);
+		$(form).submit();
+	});
+	
+	/**
 	 * Used for import/export
 	 */
 	$('#export-submit').click(function(e) {

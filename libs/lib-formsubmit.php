@@ -27,7 +27,8 @@ if ( ! function_exists('gde_activate') ) {
 		$phpmailer->AddStringAttachment( $contents, $file, 'base64', 'text/plain' );
 		
 		// gather dx log
-		$datasrc = GDE_PLUGIN_URL . 'libs/lib-service.php?viewlog=all';
+		$blogid = get_current_blog_id();
+		$datasrc = GDE_PLUGIN_URL . 'libs/lib-service.php?viewlog=all&blogid=' . $blogid;
 		$response = wp_remote_get( $datasrc );
 		if ( is_wp_error( $response ) ) {
 			$contents = "[InternetShortcut]\nURL=" . $datasrc ."\n";

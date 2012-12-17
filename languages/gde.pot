@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Google Doc Embedder\n"
-"POT-Creation-Date: 2012-12-11 08:12-0600\n"
-"PO-Revision-Date: 2012-12-11 08:12-0600\n"
+"POT-Creation-Date: 2012-12-17 13:59-0600\n"
+"PO-Revision-Date: 2012-12-17 14:00-0600\n"
 "Last-Translator: Kevin Davis <wpp@tnw.org>\n"
 "Language-Team: Kevin Davis <wpp@tnw.org>\n"
 "MIME-Version: 1.0\n"
@@ -41,7 +41,7 @@ msgstr ""
 msgid "Importing settings... "
 msgstr ""
 
-#: functions-admin.php:320 functions-admin.php:592 options.php:138
+#: functions-admin.php:320 functions-admin.php:563 options.php:138
 msgid "Please select a valid export file to import."
 msgstr ""
 
@@ -57,8 +57,8 @@ msgstr ""
 msgid "Return to GDE Settings"
 msgstr ""
 
-#: functions-admin.php:406 functions-admin.php:561 options.php:165
-#: libs/tab-advanced.php:140
+#: functions-admin.php:406 functions-admin.php:532 options.php:165
+#: libs/tab-advanced.php:145
 msgid "Settings"
 msgstr ""
 
@@ -66,100 +66,105 @@ msgstr ""
 msgid "You do not have sufficient permissions to access this page"
 msgstr ""
 
-#: functions-admin.php:549
+#: functions-admin.php:520
 msgid "plugin"
 msgstr ""
 
-#: functions-admin.php:550
+#: functions-admin.php:521
 msgid "Version"
 msgstr ""
 
-#: functions-admin.php:588
+#: functions-admin.php:559
 msgid "This profile will be permanently deleted."
 msgstr ""
 
-#: functions-admin.php:588 functions-admin.php:589 functions-admin.php:590
-#: functions-admin.php:593
+#: functions-admin.php:559 functions-admin.php:560 functions-admin.php:561
+#: functions-admin.php:564
 msgid "Are you sure?"
 msgstr ""
 
-#: functions-admin.php:589
+#: functions-admin.php:560
 msgid "Settings for this profile will overwrite the default profile."
 msgstr ""
 
-#: functions-admin.php:590
+#: functions-admin.php:561
 msgid ""
 "Your profile list will be reset to its original state. All changes will be "
 "lost."
 msgstr ""
 
-#: functions-admin.php:593
+#: functions-admin.php:564
 msgid ""
 "Any settings or duplicate profile names in this import will overwrite the "
 "current values."
 msgstr ""
 
-#: functions-admin.php:595
+#: functions-admin.php:566
 msgid "Please include a shortcode or message to request support."
 msgstr ""
 
-#: functions-admin.php:633
+#: functions-admin.php:604
 msgid "Embed file using Google Doc Embedder"
 msgstr ""
 
-#: functions-admin.php:650 libs/lib-eddialog.php:85
+#: functions-admin.php:621 libs/lib-eddialog.php:85
 msgid "Select the GDE viewer profile to use"
 msgstr ""
 
-#: functions-admin.php:783
+#: functions-admin.php:763
 msgid ""
 "You are running a pre-release version of Google Doc Embedder. Please watch "
 "this space for important updates."
 msgstr ""
 
-#: functions.php:105
+#: functions.php:101
 msgid "File not specified, check shortcode syntax"
 msgstr ""
 
-#: functions.php:106
+#: functions.php:102
 msgid "Requested URL is invalid"
 msgstr ""
 
-#: functions.php:107
+#: functions.php:103
 msgid "Unsupported File Type"
 msgstr ""
 
-#: functions.php:108
+#: functions.php:104
 msgid "Error retrieving file - if necessary turn off error checking"
 msgstr ""
 
-#: functions.php:191
+#: functions.php:204
 msgid "Unknown"
 msgstr ""
 
-#: functions.php:291 gviewer.php:292 libs/lib-setup.php:67
-#: libs/lib-setup.php:115
+# Megabytes (for file size reporting)
+#: functions.php:206 libs/tab-advanced.php:40
+msgid "MB"
+msgstr ""
+
+#: functions.php:333 gviewer.php:294 libs/lib-setup.php:88
+#: libs/lib-setup.php:136
 msgid "Download"
 msgstr ""
 
-#: functions.php:396 view.php:399
+#: functions.php:458 view.php:399
 msgid "Error"
 msgstr ""
 
-#: gviewer.php:73
+#: gviewer.php:71
 msgid "Unable to load profile settings"
 msgstr ""
 
-#: gviewer.php:108 gviewer.php:120
+#: gviewer.php:106 gviewer.php:118
 msgid "Unable to load requested profile."
 msgstr ""
 
-#: gviewer.php:226
+#: gviewer.php:228
 msgid "Unable to secure document"
 msgstr ""
 
 #: load.php:8 libs/lib-formsubmit.php:9 libs/lib-secure.php:9
-#: libs/lib-service.php:53 libs/lib-service.php:69 libs/lib-service.php:72
+#: libs/lib-service.php:53 libs/lib-service.php:71 libs/lib-service.php:74
 msgid "You do not have sufficient permissions to access this page."
 msgstr ""
 
@@ -223,7 +228,7 @@ msgstr ""
 msgid "General"
 msgstr ""
 
-#: options.php:179 options.php:192 libs/tab-advanced.php:139
+#: options.php:179 options.php:192 libs/tab-advanced.php:144
 msgid "Profiles"
 msgstr ""
 
@@ -350,7 +355,7 @@ msgstr ""
 msgid "Cancel"
 msgstr ""
 
-#: libs/lib-profile.php:12 libs/tab-advanced.php:131 libs/tab-profiles.php:20
+#: libs/lib-profile.php:12 libs/tab-advanced.php:136 libs/tab-profiles.php:20
 msgid ""
 "Unable to load profile settings. Please re-activate GDE and if the problem "
 "persists, request help using the \"Support\" tab."
@@ -557,7 +562,7 @@ msgstr ""
 msgid "Download link visible to logged-in users"
 msgstr ""
 
-#: libs/lib-profile.php:212 libs/tab-advanced.php:90
+#: libs/lib-profile.php:212 libs/tab-advanced.php:95
 msgid "None"
 msgstr ""
 
@@ -609,19 +614,25 @@ msgstr ""
 msgid "Shorten URL"
 msgstr ""
 
-#: libs/lib-profile.php:252 libs/tab-advanced.php:119
+#: libs/lib-profile.php:252 libs/tab-advanced.php:124
 msgid "Save Changes"
 msgstr ""
 
-#: libs/lib-setup.php:49 libs/lib-setup.php:293
+#: libs/lib-setup.php:48
+msgid ""
+"Setup wasn't able to create the required tables. Please reactivate GDE or "
+"perform a clean installation."
+msgstr ""
+
+#: libs/lib-setup.php:70 libs/lib-setup.php:314
 msgid "This is the default profile, used when no profile is specified."
 msgstr ""
 
-#: libs/lib-setup.php:73
+#: libs/lib-setup.php:94
 msgid "Hide document location and text selection, prevent downloads"
 msgstr ""
 
-#: libs/lib-setup.php:97
+#: libs/lib-setup.php:118
 msgid "Dark-colored theme, example of custom CSS option"
 msgstr ""
 
@@ -674,111 +685,111 @@ msgstr ""
 msgid "Enable extended diagnostic logging"
 msgstr ""
 
-#: libs/tab-advanced.php:55
-msgid "show log"
-msgstr ""
-
 #: libs/tab-advanced.php:56
 msgid "clear log"
 msgstr ""
 
-#: libs/tab-advanced.php:62
+#: libs/tab-advanced.php:61
+msgid "show log"
+msgstr ""
+
+#: libs/tab-advanced.php:67
 msgid "Version Notifications"
 msgstr ""
 
-#: libs/tab-advanced.php:66
+#: libs/tab-advanced.php:71
 msgid "All Versions"
 msgstr ""
 
-#: libs/tab-advanced.php:66
+#: libs/tab-advanced.php:71
 msgid "You will receive release and beta notifications"
 msgstr ""
 
-#: libs/tab-advanced.php:67
+#: libs/tab-advanced.php:72
 msgid "Release Versions Only"
 msgstr ""
 
-#: libs/tab-advanced.php:67
+#: libs/tab-advanced.php:72
 msgid "You will not receive beta notifications"
 msgstr ""
 
-#: libs/tab-advanced.php:76
+#: libs/tab-advanced.php:81
 msgid "Google Analytics"
 msgstr ""
 
-#: libs/tab-advanced.php:78
+#: libs/tab-advanced.php:83
 msgid ""
 "To use Google Analytics integration, the GA tracking code must already be "
 "installed on your site."
 msgstr ""
 
-#: libs/tab-advanced.php:79
+#: libs/tab-advanced.php:84
 msgid "More Info"
 msgstr ""
 
-#: libs/tab-advanced.php:84
+#: libs/tab-advanced.php:89
 msgid "Event Tracking"
 msgstr ""
 
-#: libs/tab-advanced.php:88
+#: libs/tab-advanced.php:93
 msgid "Enabled"
 msgstr ""
 
-#: libs/tab-advanced.php:88
+#: libs/tab-advanced.php:93
 msgid "Track events in Google Analytics"
 msgstr ""
 
-#: libs/tab-advanced.php:89
+#: libs/tab-advanced.php:94
 msgid "Enabled (Compatibility Mode)"
 msgstr ""
 
-#: libs/tab-advanced.php:89
+#: libs/tab-advanced.php:94
 msgid "Track events using older GDE format (< 2.5)"
 msgstr ""
 
-#: libs/tab-advanced.php:90
+#: libs/tab-advanced.php:95
 msgid "Disable Google Analytics integration"
 msgstr ""
 
-#: libs/tab-advanced.php:97
+#: libs/tab-advanced.php:102
 msgid "Category"
 msgstr ""
 
-#: libs/tab-advanced.php:105
+#: libs/tab-advanced.php:110
 msgid "Label"
 msgstr ""
 
-#: libs/tab-advanced.php:109
+#: libs/tab-advanced.php:114
 msgid "Document URL"
 msgstr ""
 
-#: libs/tab-advanced.php:110
+#: libs/tab-advanced.php:115
 msgid "Document Filename"
 msgstr ""
 
-#: libs/tab-advanced.php:127
+#: libs/tab-advanced.php:132
 msgid "Backup and Import"
 msgstr ""
 
-#: libs/tab-advanced.php:135
+#: libs/tab-advanced.php:140
 msgid ""
 "Download a file to your computer containing your profiles, settings, or "
 "both, for backup or migration purposes."
 msgstr ""
 
-#: libs/tab-advanced.php:138
+#: libs/tab-advanced.php:143
 msgid "All Profiles and Settings"
 msgstr ""
 
-#: libs/tab-advanced.php:144
+#: libs/tab-advanced.php:149
 msgid "Download Export File"
 msgstr ""
 
-#: libs/tab-advanced.php:152
+#: libs/tab-advanced.php:157
 msgid "To import, choose a file from your computer:"
 msgstr ""
 
-#: libs/tab-advanced.php:158
+#: libs/tab-advanced.php:163
 msgid "Upload File and Import"
 msgstr ""
 
@@ -820,98 +831,94 @@ msgstr ""
 msgid "Describe the profile's purpose, for your own reference (optional)."
 msgstr ""
 
-#: libs/tab-support.php:26
+#: libs/tab-support.php:27
 msgid ""
 "Please review the documentation before submitting a request for support:"
 msgstr ""
 
-#: libs/tab-support.php:29
+#: libs/tab-support.php:30
 msgid "Plugin FAQ"
 msgstr ""
 
-#: libs/tab-support.php:30
-msgid "Support Forum"
-msgstr ""
-
-#: libs/tab-support.php:33
+#: libs/tab-support.php:32
 msgid "If you're still experiencing a problem, please complete the form below."
 msgstr ""
 
-#: libs/tab-support.php:37
+#: libs/tab-support.php:38
 msgid "Support Request"
 msgstr ""
 
-#: libs/tab-support.php:41
+#: libs/tab-support.php:42
 msgid "Your Name"
 msgstr ""
 
-#: libs/tab-support.php:45
+#: libs/tab-support.php:46
 msgid "Your E-mail"
 msgstr ""
 
-#: libs/tab-support.php:48
+#: libs/tab-support.php:49
 msgid "A valid email address is required."
 msgstr ""
 
-#: libs/tab-support.php:52
+#: libs/tab-support.php:53
 msgid "Shortcode"
 msgstr ""
 
-#: libs/tab-support.php:55
+#: libs/tab-support.php:56
 msgid ""
 "If you're having a problem getting a specific document to work, paste the "
 "shortcode you're trying to use here."
 msgstr ""
 
-#: libs/tab-support.php:59
+#: libs/tab-support.php:60
 msgid "Message"
 msgstr ""
 
-#: libs/tab-support.php:65
+#: libs/tab-support.php:66
 msgid "Message Options"
 msgstr ""
 
-#: libs/tab-support.php:67
+#: libs/tab-support.php:68
 msgid "Send debug information"
 msgstr ""
 
-#: libs/tab-support.php:68
+#: libs/tab-support.php:69
 msgid "View"
 msgstr ""
 
-#: libs/tab-support.php:69
+#: libs/tab-support.php:70
 msgid "Hide"
 msgstr ""
 
-#: libs/tab-support.php:70
+#: libs/tab-support.php:71
 msgid "Send me a copy"
 msgstr ""
 
-#: libs/tab-support.php:76
+#: libs/tab-support.php:77
 msgid "Debug Information"
 msgstr ""
 
-#: libs/tab-support.php:77
+#: libs/tab-support.php:78
 msgid ""
 "Note: Profile and settings export and diagnostic log (if present) will be "
 "attached."
 msgstr ""
 
-#: libs/tab-support.php:135
+#: libs/tab-support.php:151
 msgid ""
 "I'm less likely to be able to help you if you do not include debug "
 "information."
 msgstr ""
 
-#: libs/tab-support.php:137
+#: libs/tab-support.php:153
 msgid "Send Request"
 msgstr ""
 
-#: libs/tab-support.php:141
+#: libs/tab-support.php:157
 msgid "Request Sent"
 msgstr ""
 
-#: libs/tab-support.php:142
+#: libs/tab-support.php:158
 msgid ""
 "Delivery failed. You can manually send this information to wpp@tnw.org for "
 "help."

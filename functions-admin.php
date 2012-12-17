@@ -710,7 +710,7 @@ function gde_mce_addbuttons() {
    }
 }
 
-function gde_add_tinymce_plugin($plugin_array) {
+function gde_add_tinymce_plugin( $plugin_array ) {
 	// load the TinyMCE plugin
 	$plugin_array['gde'] = GDE_PLUGIN_URL . 'js/editor_plugin.js';
 	return $plugin_array;
@@ -748,7 +748,16 @@ function gde_is_beta() {
  * @return  void
  */
 function gde_warn_on_plugin_page( $plugin_file ) {
-	if ( strstr( $plugin_file, 'gviewer.php' ) ) {
+	global $pdata;
+	$master = 'gviewer.php';
+	
+	if ( strstr( $plugin_file, $master ) ) {
+		
+		// see if there's a release waiting first (prevent double messages)
+		$updates = (array) get_site_option( '_site_transient_update_plugins' );
+		if ( isset( $updates['response'] ) && array_key_exists( $pdata['Slug'] . '/' . $master, $updates['response'] ) ) {
+			return;
+		}
 		
 		if ( gde_is_beta() ) {
 			$message[] = __('You are running a pre-release version of Google Doc Embedder. Please watch this space for important updates.', 'gde');
@@ -829,7 +838,7 @@ function gde_beta_available() {
 	
 	$key = 'gde_beta_version';
 	
-	if ( $avail_version = get_transient( $key ) ) {
+	if ( $avail_version = get_site_transient( $key ) ) {
 		// transient already set - compare versions
 		if ( version_compare( $pdata['Version'], $avail_version ) >= 0 ) {
 			// installed version is same or newer, don't do anything
@@ -842,7 +851,7 @@ function gde_beta_available() {
 		// beta status unknown - attempt to fetch
 		$api_url = GDE_BETA_API . "versions/gde";
 		
-		if ( ! empty ($gdeoptions['api_key']) ) {
+		if ( ! empty ( $gdeoptions['api_key'] ) ) {
 			$api_url .= '?api_key=' . $gdeoptions['api_key'];
 		}
 		
@@ -856,22 +865,22 @@ function gde_beta_available() {
 			$hours = 12;
 		}
 		
-		if ( ! is_wp_error($response)) {
-			if ( $json = json_decode(wp_remote_retrieve_body($response)) ) {
+		if ( ! is_wp_error( $response ) ) {
+			if ( $json = json_decode( wp_remote_retrieve_body( $response ) ) ) {
 				if ( isset( $json->beta->version ) ) {
 					$ver = $json->beta->version;
 					gde_dx_log("Beta detected: ".$ver);
 				}
-				if ( ! empty($ver) ) {
+				if ( ! empty( $ver ) ) {
 					gde_dx_log("Beta detected, don't check again for $hours hours");
-					set_transient($key, $ver, 60*60*$hours);
+					set_site_transient( $key, $ver, 60*60*$hours );
 					
 					// there is a beta available, let the checker decide if it's relevant
 					return true;
 				} else {
 					// no beta available - don't check again for 24 hours
 					gde_dx_log("No beta detected, check again in $hours hours");
-					set_transient($key, $pdata['Version'], 60*60*24);
+					set_site_transient( $key, $pdata['Version'], 60*60*24 );
 					return false;
 				}
 			}
@@ -895,6 +904,29 @@ function gde_admin_beta_js_update() {
 		$js = GDE_PLUGIN_URL . 'js/gde-betanotify.js';
 		wp_enqueue_script( 'gde_betanotify', $js );
 	}
+}
+
+/**
+ * Check for existence and valid content of dx log
+ *
+ * @since   2.5.2.1
+ * @return  bool
+ */
+function gde_log_available() {
+	global $wpdb;
+	
+	$table = $wpdb->base_prefix . 'gde_dx_log';
+	$blogid = get_current_blog_id();
+	$log = false;
+	
+	if ( $wpdb->get_var( "SHOW TABLES LIKE '$table'" ) == $table ) {
+		$c = $wpdb->get_var( "SELECT COUNT(*) FROM $table WHERE blogid = $blogid" );
+		if ( $c > 0 ) {
+			$log = true;
+		}
+	}
+	
+	return $log;
 }
 
 ?>

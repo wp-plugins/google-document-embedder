@@ -22,10 +22,31 @@ function gde_setup() {
 	$default_lang = gde_get_locale();
 	$pdata = gde_get_plugin_data();
 	$apikey = gde_get_api_key( $pdata['Version'] );
-	gde_dx_log("API Key: $apikey");
+	if ( empty( $apikey ) ) {
+		gde_dx_log("Failed to set API key");
+	} else {
+		gde_dx_log("API Key: $apikey");
+	}
+	
+	if ( is_multisite() ) {
+		// define multisite "global" options
+		$globalopts = array(
+			'file_maxsize'			=>	'12',
+			'beta_check'			=>	'yes',
+			'api_key'				=>	$apikey
+		);
+		
+		if ( ! $gdeglobals = get_site_option( 'gde_globals' ) ) {
+			gde_dx_log("Writing multisite global options");
+			update_site_option( 'gde_globals', $globalopts );
+		}
+	}
 	
 	// create/update profile db, if necessary
-	gde_db_tables();
+	if ( ! gde_db_tables() ) {
+		gde_dx_log("Table creation failed; setup halted");
+		wp_die( __("Setup wasn't able to create the required tables. Please reactivate GDE or perform a clean installation.", 'gde') );
+	}
 	
 	// define default options (does not include multisite yet)
 	$defopts = array(
@@ -345,14 +366,20 @@ function gde_upgrade( $gdeoptions, $defopts, $defaults ) {
  * @return  string Stored or newly generated API key, or blank value.
  * @note	This should only run once on activation so no transient is necessary
  */
-function gde_get_api_key($ver) {
+function gde_get_api_key( $ver ) {
 	global $current_user;
 	
-	$gdeoptions = get_option('gde_options'); // global var not available on activation
+	if ( is_multisite() ) {
+		$gdeglobals = get_site_option( 'gde_globals' );
+		$api = $gdeglobals['api_key'];
+	} else {
+		$gdeoptions = get_option( 'gde_options' );
+		$api = $gdeoptions['api_key'];
+	}
 	
-	if ( ! empty ($gdeoptions['api_key']) ) {
+	if ( ! empty ( $api ) ) {
 		gde_dx_log("API key already set");
-		return $gdeoptions['api_key'];
+		return $api;
 	} else {
 		gde_dx_log("Requesting new API key");
 		get_currentuserinfo();
@@ -367,6 +394,8 @@ function gde_get_api_key($ver) {
 		$response = wp_remote_get( $api_url );
 		
 		if ( is_wp_error( $response ) ) {
+			$error = $result->get_error_message();
+			gde_dx_log("API Error: " . $error);
 			// can't get response
 			return '';
 		} else {
@@ -374,14 +403,16 @@ function gde_get_api_key($ver) {
 				if ( isset( $json->api_key ) ) {
 					$key = $json->api_key;
 				}
-				if ( ! empty($key) ) {
+				if ( ! empty( $key ) ) {
 					return $key;
 				} else {
+					gde_dx_log("API returned empty response");
 					// empty value response
 					return '';
 				}
 			} else {
 				// invalid response
+				gde_dx_log("API returned invalid response");
 				return '';
 			}
 		}
@@ -392,33 +423,33 @@ function gde_get_api_key($ver) {
  * Create/update database table to store profile data
  *
  * @since   2.5.0.1
- * @return  void
+ * @return  bool Whether or not table creation/update was successful
  */
 function gde_db_tables() {
 	global $wpdb;
 	
-	// check for unhealthy table state (clear db version)
+	// attempt to trap table creation failures
+	$fails = 0;
+	
+	// check for missing required tables (clear db version)
 	$table = $wpdb->prefix . 'gde_profiles';
-	if ($wpdb->get_var("SHOW TABLES LIKE '$table'") !== $table) {
-		gde_dx_log("db failed health check");
-		delete_option( 'gde_db_version' );
+	if ($wpdb->get_var( "SHOW TABLES LIKE '$table'" ) !== $table) {
+		//gde_dx_log("profiles db failed health check");
+		delete_site_option( 'gde_db_version' );
 	}
 	
 	$table = $wpdb->prefix . 'gde_secure';
-	if ($wpdb->get_var("SHOW TABLES LIKE '$table'") !== $table) {
-		gde_dx_log("db failed health check");
-		delete_option( 'gde_db_version' );
+	if ($wpdb->get_var( "SHOW TABLES LIKE '$table'" ) !== $table) {
+		//gde_dx_log("securedoc db failed health check");
+		delete_site_option( 'gde_db_version' );
 	}
 	
-	// db version for this release (for potential schema changes)
-	$curr_db_ver = "1.1";
-	
-	$db_ver_installed = get_option( 'gde_db_version', 0 );
-	gde_dx_log("Installed DB ver: $db_ver_installed; This DB ver: $curr_db_ver");
-	if ( version_compare( $curr_db_ver, $db_ver_installed ) == 1 ) {
+	$db_ver_installed = get_site_option( 'gde_db_version', 0 );
+	gde_dx_log("Installed DB ver: $db_ver_installed; This DB ver: " . GDE_DB_VER );
+	if ( version_compare( GDE_DB_VER, $db_ver_installed, ">" ) ) {
 		// install or upgrade profile table
 		$table = $wpdb->prefix . 'gde_profiles';
-
+	
 		$sql = "CREATE TABLE " . $table . " (
 		  profile_id mediumint(9) UNSIGNED NOT NULL AUTO_INCREMENT,
 		  profile_name varchar(64) NOT NULL,
@@ -427,16 +458,16 @@ function gde_db_tables() {
 		  UNIQUE KEY (profile_id)
 		) ENGINE=MyISAM  DEFAULT CHARSET=utf8; ";
 
-		if ( isset($sql) ) {
+		if ( isset( $sql ) ) {
 			// write table or update to database
-			require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
+			require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
 			dbDelta($sql);
 			
-			if ($wpdb->get_var("SHOW TABLES LIKE '$table'") == $table) {
-				gde_dx_log("Profile table exists, recording version $curr_db_ver");
-				update_option( 'gde_db_version', $curr_db_ver );
+			if ($wpdb->get_var( "SHOW TABLES LIKE '$table'" ) == $table ) {
+				gde_dx_log("Profile table create/update successful");
 			} else {
-				gde_dx_log("Profile table still doesn't exist");
+				gde_dx_log("Profile table create/update failed");
+				$fails++;
 			}
 		}
 		
@@ -451,17 +482,28 @@ function gde_db_tables() {
 		  UNIQUE KEY code (code)
 		) ENGINE=MyISAM DEFAULT CHARSET=utf8; ";
 		
-		if ( isset($sql) ) {
+		if ( isset( $sql ) ) {
 			// write table or update to database
-			require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
-			dbDelta($sql);
+			require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
+			dbDelta( $sql );
 			
-			if ($wpdb->get_var("SHOW TABLES LIKE '$table'") == $table) {
-				gde_dx_log("Secure doc table exists");
+			if ( $wpdb->get_var( "SHOW TABLES LIKE '$table'" ) == $table ) {
+				gde_dx_log("Secure doc table create/update successful");
 			} else {
-				gde_dx_log("Secure doc table still doesn't exist");
+				gde_dx_log("Secure doc table create/update failed");
+				$fails++;
 			}
 		}
+	} else {
+		gde_dx_log("Tables OK, nothing to do");
+	}
+	
+	if ( $fails > 0 ) {
+		delete_site_option( 'gde_db_version' );
+		return false;
+	} else {
+		update_site_option( 'gde_db_version', GDE_DB_VER );
+		return true;
 	}
 }
 

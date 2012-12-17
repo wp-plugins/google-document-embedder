@@ -37,7 +37,7 @@
 				<td>
 <?php
 	gde_profile_text( $g['file_maxsize'], 'file_maxsize', '', 3 );
-	echo " MB <br/>";
+	echo " " . __('MB', 'gde') ."<br/>";
 ?>
 				<span class="gde-fnote"><?php _e( "Very large files (typically 8-12MB) aren't supported by Google Doc Viewer", 'gde' ); ?></span>
 				</td>
@@ -49,11 +49,16 @@
 	gde_opts_checkbox( 'error_display', __('Show error messages inline (otherwise, they appear in HTML comments)', 'gde'), '', 1 );
 	gde_opts_checkbox( 'error_check', __('Check for errors before loading viewer', 'gde'), '', 1 );
 	if ( GDE_DX_LOGGING > 0 ) {
-		gde_opts_checkbox( 'error_log', __('Enable extended diagnostic logging <em>(manually enabled)</em>', 'gde'), '', 1, true );
+		gde_opts_checkbox( 'error_log', __('Enable extended diagnostic logging <em>(manually enabled)</em>', 'gde'), '', 0, true );
 	} else {
-		gde_opts_checkbox( 'error_log', __('Enable extended diagnostic logging', 'gde'), '', 1 );
-		$tmp = __('show log', 'gde');	// not implemented yet
-		$tmp = __('clear log', 'gde');
+		gde_opts_checkbox( 'error_log', __('Enable extended diagnostic logging', 'gde'), '', 0 );
+
+		$tmp = __('clear log', 'gde'); // not implemented yet
+	}
+	if ( gde_log_available() ) {
+		//$url = GDE_PLUGIN_URL . 'libs/lib-service.php?viewlog=all';
+		echo '<span style="vertical-align:middle;">&nbsp;&nbsp; <a href="#viewlog" class="gde-viewlog" id="log-2">' . 
+		__('show log', 'gde') . '</a>';
 	}
 ?>
 				</td>

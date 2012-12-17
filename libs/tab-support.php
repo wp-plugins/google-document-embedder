@@ -23,14 +23,15 @@
 	}
 ?>
 
-<p><strong><?php _e('Please review the documentation before submitting a request for support:', 'gde'); ?></strong></p>
-<ul style="list-style-type:square; padding-left:25px;line-height:1em;">
-	<li><a href="<?php echo $pdata['PluginURI']; ?>">Google Doc Embedder</a></li>
-	<li><a href="<?php echo GDE_WP_URL; ?>faq/"><?php _e('Plugin FAQ', 'gde'); ?></a></li>
-	<!--li><a href="<?php echo GDE_FORUM_URL; ?>"><?php _e('Support Forum', 'gde'); ?></a></li-->
-</ul>
-
-<p><?php _e("If you're still experiencing a problem, please complete the form below.", 'gde'); ?></p>
+<div class="gde-support-warn">
+	<p><strong><?php _e('Please review the documentation before submitting a request for support:', 'gde'); ?></strong></p>
+	<ul style="list-style-type:square; padding-left:25px;line-height:1em;">
+		<li><a href="<?php echo $pdata['PluginURI']; ?>">Google Doc Embedder</a></li>
+		<li><a href="<?php echo GDE_WP_URL; ?>faq/"><?php _e('Plugin FAQ', 'gde'); ?></a></li>
+	</ul>
+	<p><?php _e("If you're still experiencing a problem, please complete the form below.", 'gde'); ?></p>
+</div>
+<br clear="both" />
 
 <form action="<?php echo GDE_PLUGIN_URL;?>libs/lib-formsubmit.php" id="debugForm">
 
@@ -80,13 +81,24 @@
 
 	echo "=== GDE Debug Information ===\n\n";
 	
-	echo "GDE Version: $gde_ver / GDE DB: " . get_option( 'gde_db_version', 0 ) . "\n";
+	echo "GDE Version: $gde_ver / GDE DB: " . get_site_option( 'gde_db_version', 0 ) . "\n";
 	echo "API Key: " . $gdeoptions['api_key'] . "\n";
 	echo "Profiles: " . gde_debug_tables( 'gde_profiles', true ) . "\n";
 	echo "Secure Docs: " . gde_debug_tables( 'gde_secure', true );
 	
 	echo "\n\n--- Env ---\n";
 	echo "WordPress Version: $wp_version [".get_locale()."]\n";
+	echo "Multisite: ";
+	if ( is_multisite() ) {
+		echo "Yes ";
+		if ( is_plugin_active_for_network( plugin_basename( __FILE__ ) ) ) {
+			echo "(network activated)\n";
+		} else {
+			echo "(not network activated)\n";
+		}
+	} else {
+		echo "No\n";
+	}
 	echo "PHP Version: ".phpversion()."\n";
 	echo "Plugin URL: ".GDE_PLUGIN_URL."\n";
 	echo "Server Env: ".$_SERVER['SERVER_SOFTWARE']."\n";
@@ -116,7 +128,11 @@
 		echo "Yes\n";
 	} else { echo "No\n"; }
 	
-	echo "\n--- Other Active Plugins ---\n";
+	echo "\n-- Active Theme --\n";
+	$theme = wp_get_theme();
+	echo $theme->Name . " " . $theme->Version;
+	
+	echo "\n\n--- Other Active Plugins ---\n";
 	$plugins = get_plugins();
 	foreach ( $plugins as $k => $v ) {
 		$str = $v['Name'] . " " . $v['Version'];

@@ -118,10 +118,9 @@ documents stored there and shared publicly do not embed reliably with their stan
 supported by the plug-in. Please store your original documents somewhere on your web site in their native supported formats.
 
 = Does it work in Multisite environments? =
-Yes, though I recommend activating the plugin on a per-site basis rather than network activate at this time, as there may be activation 
-issues and some settings may get stranded if the plugin is ever uninstalled. I will work to improve this in a coming version. Otherwise,
-more granular multisite options are planned for future versions based on demand. If you use GDE in a multisite environment, I
-welcome your feedback on what functionality you would like to see.
+Yes, though the plugin does not support network activation at this time. For now, please activate individually on muultisite installs.
+I will work to improve this in a coming version. Otherwise, more granular multisite options are planned for future versions based on demand.
+If you use GDE in a multisite environment, I welcome your feedback on what functionality you would like to see.
 
 = Other Common Questions =
 More common questions are answered on the GDE web site [here](http://www.davistribe.org/gde/notes/ "Notes").
@@ -137,6 +136,13 @@ More common questions are answered on the GDE web site [here](http://www.davistr
 == Changelog ==
 
 (E) Enhanced Viewer
+
+= 2.5.2 =
+* Fixed: Fatal error with certain plugins and themes
+* Changed: Network activation halted for now (multisite single activation OK)
+* Changed: Removed reliance on web services for file type recognition
+* Changed: Multisite database improvements
+* Changed: Text domain now called on the appropriate hook
 
 = 2.5.1 =
 * Added: Russian translation (thanks J&#243;zek)
@@ -218,5 +224,5 @@ More common questions are answered on the GDE web site [here](http://www.davistr
 
 == Upgrade Notice ==
 
-= 2.5 =
-Multiple profiles, private document support, other extensive improvements
+= 2.5.2 =
+Bug fix release

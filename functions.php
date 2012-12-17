@@ -14,8 +14,8 @@
 
 // set up environment
 if ( ! defined( 'ABSPATH' ) ) {	exit; }
-if ( ! defined( 'GDE_PLUGIN_DIR' ) ) { define( 'GDE_PLUGIN_DIR', trailingslashit( plugin_dir_path( __FILE__ ) ) ); }
-if ( ! defined( 'GDE_PLUGIN_URL' ) ) { define( 'GDE_PLUGIN_URL', trailingslashit( plugin_dir_url( __FILE__ ) ) ); }
+@define( 'GDE_PLUGIN_DIR', trailingslashit( plugin_dir_path( __FILE__ ) ) );
+@define( 'GDE_PLUGIN_URL', trailingslashit( plugin_dir_url( __FILE__ ) ) );
 
 // external urls (help, beta API, etc.)
 @define( 'GDE_STDOPT_URL', 'http://www.davistribe.org/gde/settings/viewer-options/' );
@@ -27,7 +27,7 @@ if ( ! defined( 'GDE_PLUGIN_URL' ) ) { define( 'GDE_PLUGIN_URL', trailingslashit
 @define( 'GDE_BETA_API', 'http://dev.davismetro.com/api/1.0/' );
 
 // add admin functions only if needed
-if ( is_admin() ) { require_once('functions-admin.php'); }
+if ( is_admin() ) { require_once( GDE_PLUGIN_DIR . 'functions-admin.php' ); }
 
 /**
  * List supported extensions & MIME types
@@ -36,17 +36,13 @@ if ( is_admin() ) { require_once('functions-admin.php'); }
  * @return  array List of all supported extensions and their MIME types
  */
 function gde_supported_types() {
-	$extlib = GDE_PLUGIN_URL . 'libs/lib-exts.php';
+	$no_output = 1;
+	include_once( GDE_PLUGIN_DIR . 'libs/lib-exts.php');
 	
-	// attempt get extension list
-	$response = wp_remote_get( $extlib );
-	
-	if ( is_wp_error( $response ) ) {
-		// unable to retrieve
-		return false;
+	if ( isset( $types ) ) {
+		return $types;
 	} else {
-		$answer = json_decode( wp_remote_retrieve_body( $response ), true );
-		return $answer;
+		return false;
 	}
 }
 
@@ -150,18 +146,18 @@ function gde_validate_file( $file = NULL, $force ) {
 	}
 }
 
-function gde_valid_link($link) {
+function gde_valid_link( $link ) {
 
     $urlregex = '/^(([\w]+:)?\/\/)(([\d\w]|%[a-fA-f\d]{2,2})+(:([\d\w]|%[a-fA-f\d]{2,2})+)?@)?([\d\w][-\d\w]{0,253}[\d\w]\.)+[\w]{2,4}(:[\d]+)?(\/([-+_~.\d\w]|%[a-fA-f\d]{2,2})*)*(\?(&amp;?([-+_~.\d\w]|%[a-fA-f\d]{2,2})=?)*)?(#([-+_~.\d\w]|%[a-fA-f\d]{2,2})*)?$/i';
 
-    if (preg_match($urlregex, $link)) {
+    if ( preg_match( $urlregex, $link ) ) {
         return true;
     } else {
         return false;
     }
 }
 
-function gde_valid_type($link) {
+function gde_valid_type( $link ) {
 	$supported_exts = implode( "|", array_keys( gde_supported_types() ) );
 	
     if ( preg_match( "/\.($supported_exts)$/i", $link ) ) {
@@ -192,14 +188,14 @@ function gde_valid_url( $url ) {
 	}
 }
 
-function gde_split_filename($filename) {
-    $pos = strrpos($filename, '.');
-    if ($pos === false) {
-        return array($filename, ''); // no extension (dot is not found in the filename)
+function gde_split_filename( $filename ) {
+    $pos = strrpos( $filename, '.' );
+    if ( $pos === false ) {
+        return array( $filename, '' ); // no extension (dot is not found in the filename)
     } else {
-        $basename = substr($filename, 0, $pos);
-        $ext = substr($filename, $pos+1);
-        return array($basename, $ext);
+        $basename = substr( $filename, 0, $pos );
+        $ext = substr( $filename, $pos + 1 );
+        return array( $basename, $ext );
     }
 }
 
@@ -207,7 +203,7 @@ function gde_format_bytes( $bytes, $precision = 2 ) {
 	if ( ! is_numeric( $bytes ) || $bytes < 1 ) {
 		return __('Unknown', 'gde');
 	} else {
-		$units = array( 'B', 'KB', 'MB', 'GB', 'TB' );
+		$units = array( 'B', 'KB', __('MB', 'gde'), 'GB', 'TB' );
 		
 		$bytes = max( $bytes, 0 );
 		$pow = floor( ( $bytes ? log( $bytes ) : 0 ) / log( 1024 ) );
@@ -374,50 +370,70 @@ function gde_dx_log( $text ) {
 	global $gdeoptions, $wpdb;
 	
 	if ( GDE_DX_LOGGING > 0 || ( isset( $gdeoptions['error_log'] ) && $gdeoptions['error_log'] == "yes" ) ) {
-		// trap any "unexpected output" to log
+		// filter to trap any "unexpected output" to log
 		add_action( 'activated_plugin', 'gde_save_error' );
 		
-		$table = $wpdb->prefix . 'gde_dx_log';
+		$table = $wpdb->base_prefix . 'gde_dx_log';
 		
-		if ($wpdb->get_var("SHOW TABLES LIKE '$table'") == $table) {
-			// table already exists; skip creation
+		// create/update table if necessary, then write to log
+		if ( gde_dx_log_create() ) {
+			// write to log
+			$blogid = get_current_blog_id();
+			$text = date( "d-m-Y, H:i:s" ) . " - $text";
+			
+			if ( ! $wpdb->insert(
+					$table,
+					array(
+						'blogid' 	=>	$blogid,
+						'data'		=>	$text
+					),
+					array(
+						'%d', '%s'
+					)
+				) ) {
+				// couldn't write to db
+				return false;
+			} else {
+				return true;
+			}
 		} else {
-			$sql = "CREATE TABLE " . $table . " (
+			// can't create db table
+			return false;
+		}
+	} else {
+		// logging disabled
+		return false;
+	}
+}
+
+/**
+ * Create/update database table to store dx log
+ *
+ * @since   2.5.2.1
+ * @return  bool Whether or not table creation/update was successful
+ */
+function gde_dx_log_create() {
+	global $wpdb, $gde_db_ver;
+	
+	$db_ver_installed = get_site_option( 'gde_db_version', 0 );
+	
+	$table = $wpdb->base_prefix . 'gde_dx_log';
+	
+	$sql = "CREATE TABLE " . $table . " (
 			  id mediumint(9) UNSIGNED NOT NULL AUTO_INCREMENT,
+			  blogid smallint(5) UNSIGNED NOT NULL,
 			  data longtext NOT NULL,
 			  UNIQUE KEY (id)
 			) ENGINE=MyISAM  DEFAULT CHARSET=utf8; ";
 			
-			// write table to database
-			require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
-			dbDelta($sql);
-			
-			if ($wpdb->get_var("SHOW TABLES LIKE '$table'") == $table) {
-				// we're good
-			} else {
-				// table count not be written
-				return false;
-			}
-		}
-		
-		// write to log
-		$text = date( "d-m-Y, H:i:s" ) . " - $text";
-		if ( ! $wpdb->insert(
-					$table,
-					array(
-						'data'	=>	$text
-					),
-					array(
-						'%s'
-					)
-				) ) {
-			// couldn't write to db
-			return false;
-		} else {
-			return true;
-		}
+	// write table to database
+	require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
+	dbDelta( $sql );
+	
+	if ( $wpdb->get_var( "SHOW TABLES LIKE '$table'" ) == $table ) {
+		return true;
 	} else {
-		// logging disabled
+		// table count not be written
 		return false;
 	}
 }
@@ -429,7 +445,7 @@ function gde_dx_log( $text ) {
  * @return  void
  * @note	Writes any activation errors to log, when enabled
  */
-function gde_save_error(){
+function gde_save_error() {
 	$buffer = ob_get_contents();
 	if ( ! empty( $buffer ) ) {
 		gde_dx_log('Activation Msg: '. $buffer );
@@ -453,7 +469,8 @@ function gde_show_error( $status ) {
  * Check health of database tables
  *
  * @since   2.5.0.3
- * @return  string Text used in debug information
+ * @return  bool or string
+ * @note	Verbose text used in debug information
  */
 function gde_debug_tables( $table = array('gde_profiles', 'gde_secure'), $verbose = false ) {
 	global $wpdb;

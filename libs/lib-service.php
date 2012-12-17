@@ -56,8 +56,10 @@ if ( isset( $_REQUEST['json'] ) ) {
 	// request to view dx log
 	global $wpdb;
 	
-	$table = $wpdb->prefix . 'gde_dx_log';
-	$data = $wpdb->get_col( "SELECT * FROM $table", 1 );
+	$blogid = get_current_blog_id();
+	
+	$table = $wpdb->base_prefix . 'gde_dx_log';
+	$data = $wpdb->get_col( "SELECT * FROM $table WHERE blogid = '$blogid'", 2 );
 	
 	header('Content-type: text/plain');
 	

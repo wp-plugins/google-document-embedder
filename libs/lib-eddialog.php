@@ -1,10 +1,10 @@
 <?php
 
 // access wp functions externally
-require_once('lib-bootstrap.php');
+require_once( dirname( __FILE__ ) . '/lib-bootstrap.php');
 
 // no access if parent plugin is disabled
-if ( ! function_exists('gde_do_shortcode') ) {
+if ( ! function_exists( 'gde_do_shortcode' ) ) {
 	wp_die( __('Access denied.', 'gde') );
 }
 
@@ -60,7 +60,7 @@ $profiles = gde_get_profiles();
 				<span class="note"><?php _e('Full URL or filename to append to profile Base URL', 'gde'); ?></span>
 			</td>
 			<td valign="top">
-				<input name="url" type="text" class="opt dwl" id="url" style="width:215px;" /><br/>
+				<input name="url" type="text" class="opt dwl" id="url" style="width:220px;" /><br/>
 				<span id="uri-note-base" style="display:none;color:#2B6FB6;">
 					<?php _e('Profile Base URL will be prefixed', 'gde'); ?>
 				</span>
