@@ -36,13 +36,19 @@ if ( is_admin() ) { require_once( GDE_PLUGIN_DIR . 'functions-admin.php' ); }
  * @return  array List of all supported extensions and their MIME types
  */
 function gde_supported_types() {
-	$no_output = 1;
-	include_once( GDE_PLUGIN_DIR . 'libs/lib-exts.php');
+	global $gdetypes;
 	
-	if ( isset( $types ) ) {
-		return $types;
+	if ( is_array( $gdetypes ) ) {
+		return $gdetypes;
 	} else {
-		return false;
+		$no_output = 1;
+		include_once( GDE_PLUGIN_DIR . 'libs/lib-exts.php' );
+		
+		if ( isset( $types ) ) {
+			return $types;
+		} else {
+			return false;
+		}
 	}
 }
 
@@ -158,10 +164,14 @@ function gde_valid_link( $link ) {
 }
 
 function gde_valid_type( $link ) {
-	$supported_exts = implode( "|", array_keys( gde_supported_types() ) );
+	global $gdetypes;
 	
-    if ( preg_match( "/\.($supported_exts)$/i", $link ) ) {
-        return true;
+	if ( is_array( $gdetypes ) ) {
+		$supported_exts = implode( "|", array_keys( $gdetypes ) );
+		
+		if ( preg_match( "/\.($supported_exts)$/i", $link ) ) {
+			return true;
+		}
     } else {
         return false;
     }
@@ -203,7 +213,7 @@ function gde_format_bytes( $bytes, $precision = 2 ) {
 	if ( ! is_numeric( $bytes ) || $bytes < 1 ) {
 		return __('Unknown', 'gde');
 	} else {
-		$units = array( 'B', 'KB', __('MB', 'gde'), 'GB', 'TB' );
+		$units = array( 'B', 'KB', 'MB', 'GB', 'TB' );
 		
 		$bytes = max( $bytes, 0 );
 		$pow = floor( ( $bytes ? log( $bytes ) : 0 ) / log( 1024 ) );

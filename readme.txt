@@ -137,6 +137,9 @@ More common questions are answered on the GDE web site [here](http://www.davistr
 
 (E) Enhanced Viewer
 
+= 2.5.3 =
+* Fixed: Unsupported file type regression interferes with some uploads
+
 = 2.5.2 =
 * Fixed: Fatal error with certain plugins and themes
 * Changed: Network activation halted for now (multisite single activation OK)
@@ -224,5 +227,5 @@ More common questions are answered on the GDE web site [here](http://www.davistr
 
 == Upgrade Notice ==
 
-= 2.5.2 =
+= 2.5.3 =
 Bug fix release

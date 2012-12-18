@@ -8,11 +8,11 @@ Author: Kevin Davis
 Author URI: http://www.davistribe.org/
 Text Domain: gde
 Domain Path: /languages/
-Version: 2.5.2
+Version: 2.5.3
 License: GPLv2
 */
 
-$gde_ver = "2.5.2.98";
+$gde_ver = "2.5.3.98";
 
 /**
  * LICENSE
@@ -42,8 +42,9 @@ $gde_ver = "2.5.2.98";
 // boring init junk
 require_once( plugin_dir_path( __FILE__ ) . 'functions.php' );
 $pdata 					= gde_get_plugin_data();
-$gdeoptions				= get_option('gde_options');
-$healthy				= gde_debug_tables('gde_profiles');
+$gdeoptions				= get_option( 'gde_options' );
+$healthy				= gde_debug_tables( 'gde_profiles' );
+$gdetypes				= gde_supported_types();
 global $wp_version;
 
 // get global settings
