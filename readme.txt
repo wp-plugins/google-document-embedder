@@ -137,6 +137,13 @@ More common questions are answered on the GDE web site [here](http://www.davistr
 
 (E) Enhanced Viewer
 
+= 2.5.4 =
+* Fixed: Force download option gives PHP error (thanks Zverina)
+* Fixed: Force download breaks on filenames with multiple extensions
+* Fixed: Numeric-only profile names accepted (conflict with IDs)
+* Fixed: Can't validate redirected URLs (thanks onesoftindiana)
+* Fixed: Duplicating table indexes when logging enabled
+
 = 2.5.3 =
 * Fixed: Unsupported file type regression interferes with some uploads
 
@@ -217,15 +224,9 @@ More common questions are answered on the GDE web site [here](http://www.davistr
 * Fixed: URL changes for plugin, help links, beta checking
 * Fixed: (E) "Moved Temporarily" error (thanks webmonkeywatts)
 
-= 2.3 =
-* Added: Option to set base URL for embedded files (thanks KevEd)
-* Added: Option to show error messages inline instead of as HTML comments
-* Added: File type check in editor dialog
-* Fixed: Download Link setting didn't update shortcode in editor dialog
-
 [Full history...](http://www.davistribe.org/gde/changelog/ "Full history")
 
 == Upgrade Notice ==
 
-= 2.5.3 =
+= 2.5.4 =
 Bug fix release

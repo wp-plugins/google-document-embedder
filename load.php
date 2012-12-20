@@ -75,20 +75,19 @@ if ( ! $contents || empty( $contents ) ) {
 	// got nothing of merit
 	wp_die( __('Unable to open the requested file. ', 'gde') );
 } else {
+	global $gdetypes;
+	
 	// filename (without query string, in case of non-cached doc)
 	$fn = strtok( basename( $data['url'] ), '?' );
-	
 	// get ext
-	$ext = explode( ".", $fn );
-	if ( isset( $ext[1]) ) {
-		$ext = strtolower( $ext[1] );
-		
-		$no_output = 1;
-		require_once( GDE_PLUGIN_DIR . 'libs/lib-exts.php' );
+	$ext = end( explode( ".", $fn ) );
+	
+	if ( isset( $ext ) ) {
+		$ext = strtolower( $ext );
 		
 		// get mime type
-		if ( array_key_exists( $ext, $types) ) {
-			$type = $types[$ext];
+		if ( array_key_exists( $ext, $gdetypes ) ) {
+			$type = $gdetypes[$ext];
 		} else {
 			wp_die( __('The document file type is not supported.', 'gde') );
 		}

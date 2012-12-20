@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Google Doc Embedder\n"
-"POT-Creation-Date: 2012-12-17 13:59-0600\n"
-"PO-Revision-Date: 2012-12-17 14:00-0600\n"
+"POT-Creation-Date: 2012-12-20 08:12-0600\n"
+"PO-Revision-Date: 2012-12-20 08:12-0600\n"
 "Last-Translator: Kevin Davis <wpp@tnw.org>\n"
 "Language-Team: Kevin Davis <wpp@tnw.org>\n"
 "MIME-Version: 1.0\n"
@@ -41,7 +41,7 @@ msgstr ""
 msgid "Importing settings... "
 msgstr ""
 
-#: functions-admin.php:320 functions-admin.php:563 options.php:138
+#: functions-admin.php:320 functions-admin.php:563 options.php:141
 msgid "Please select a valid export file to import."
 msgstr ""
 
@@ -57,7 +57,7 @@ msgstr ""
 msgid "Return to GDE Settings"
 msgstr ""
 
-#: functions-admin.php:406 functions-admin.php:532 options.php:165
+#: functions-admin.php:406 functions-admin.php:532 options.php:168
 #: libs/tab-advanced.php:145
 msgid "Settings"
 msgstr ""
@@ -117,49 +117,49 @@ msgid ""
 "this space for important updates."
 msgstr ""
 
-#: functions.php:101
+#: functions.php:107
 msgid "File not specified, check shortcode syntax"
 msgstr ""
 
-#: functions.php:102
+#: functions.php:108
 msgid "Requested URL is invalid"
 msgstr ""
 
-#: functions.php:103
+#: functions.php:109
 msgid "Unsupported File Type"
 msgstr ""
 
-#: functions.php:104
+#: functions.php:110
 msgid "Error retrieving file - if necessary turn off error checking"
 msgstr ""
 
-#: functions.php:204
+#: functions.php:214
 msgid "Unknown"
 msgstr ""
 
 # Megabytes (for file size reporting)
-#: functions.php:206 libs/tab-advanced.php:40
+#: functions.php:216 libs/tab-advanced.php:40
 msgid "MB"
 msgstr ""
 
-#: functions.php:333 gviewer.php:294 libs/lib-setup.php:88
+#: functions.php:343 gviewer.php:295 libs/lib-setup.php:88
 #: libs/lib-setup.php:136
 msgid "Download"
 msgstr ""
 
-#: functions.php:458 view.php:399
+#: functions.php:468 view.php:399
 msgid "Error"
 msgstr ""
 
-#: gviewer.php:71
+#: gviewer.php:72
 msgid "Unable to load profile settings"
 msgstr ""
 
-#: gviewer.php:106 gviewer.php:118
+#: gviewer.php:107 gviewer.php:119
 msgid "Unable to load requested profile."
 msgstr ""
 
-#: gviewer.php:228
+#: gviewer.php:229
 msgid "Unable to secure document"
 msgstr ""
 
@@ -180,79 +180,83 @@ msgstr ""
 msgid "Unable to open the requested file. "
 msgstr ""
 
-#: load.php:93 load.php:97
+#: load.php:92 load.php:96
 msgid "The document file type is not supported."
 msgstr ""
 
-#: options.php:13 options.php:65
+#: options.php:13 options.php:68
 msgid "Default profile <strong>updated</strong>."
 msgstr ""
 
-#: options.php:15 options.php:50
+#: options.php:15 options.php:53
 msgid "Unable to update profile."
 msgstr ""
 
 #: options.php:28
+msgid "Profile name must contain at least one letter."
+msgstr ""
+
+#: options.php:31
 msgid "Profile name already exists. Please choose another name."
 msgstr ""
 
-#: options.php:35
+#: options.php:38
 msgid "New profile <strong>created</strong>."
 msgstr ""
 
-#: options.php:37 options.php:40
+#: options.php:40 options.php:43
 msgid "Unable to create profile."
 msgstr ""
 
-#: options.php:48
+#: options.php:51
 msgid "Profile <strong>updated</strong>."
 msgstr ""
 
-#: options.php:58
+#: options.php:61
 msgid "Profile <strong>deleted</strong>."
 msgstr ""
 
-#: options.php:60
+#: options.php:63
 msgid "Unable to delete profile."
 msgstr ""
 
-#: options.php:102
+#: options.php:105
 msgid "Unable to enable diagnostic logging."
 msgstr ""
 
-#: options.php:114 options.php:116
+#: options.php:117 options.php:119
 msgid "Settings <strong>updated</strong>."
 msgstr ""
 
-#: options.php:174 options.php:187
+#: options.php:177 options.php:190
 msgid "General"
 msgstr ""
 
-#: options.php:179 options.php:192 libs/tab-advanced.php:144
+#: options.php:182 options.php:195 libs/tab-advanced.php:144
 msgid "Profiles"
 msgstr ""
 
-#: options.php:200
+#: options.php:203
 msgid "Advanced"
 msgstr ""
 
-#: options.php:205
+#: options.php:208
 msgid "Support"
 msgstr ""
 
-#: options.php:343
+#: options.php:346
 msgid "Help"
 msgstr ""
 
-#: options.php:369
+#: options.php:372
 msgid "Edit"
 msgstr ""
 
-#: options.php:370
+#: options.php:373
 msgid "Delete"
 msgstr ""
 
-#: options.php:371
+#: options.php:374
 msgid "Make Default"
 msgstr ""
 

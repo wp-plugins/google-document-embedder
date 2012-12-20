@@ -114,7 +114,7 @@ function gde_validate_file( $file = NULL, $force ) {
 	}
 	
 	$result = gde_valid_url( $file );
-	if ( $result === true ) {
+	if ( $result === false ) {
 		// validation skipped due to service failure
 		return -1;
 	} elseif ( $force == "1" || $force == "yes" ) {
@@ -177,24 +177,40 @@ function gde_valid_type( $link ) {
     }
 }
 
-function gde_valid_url( $url ) {
-	$result = wp_remote_head( $url );
+function gde_valid_url( $url, $method = "head", $stop = 0 ) {
+
+	if ( $method == "head" ) {
+		$result = wp_remote_head( $url );
+	} elseif ( $stop == 0 ) {
+		$stop++;
+		$result = wp_remote_get( $url );
+	} else {
+		gde_dx_log("can't get URL to test; skipping");
+		return false;
+	}
+	
 	if ( is_array( $result ) ) {
-		// capture file size if determined
-		if ( isset( $result['headers']['content-length'] ) ) {
-			$result['response']['fsize'] = $result['headers']['content-length'];
+		$code = $result['response']['code'];
+		if ( ! empty( $code ) && ( $code == "301" || $code == "302" ) ) {
+			// HEAD requests don't redirect. Probably a file/directory with spaces in it...
+			return gde_valid_url( $url, 'get', $stop );
 		} else {
-			$result['response']['fsize'] = '';
+			// capture file size if determined
+			if ( isset( $result['headers']['content-length'] ) ) {
+				$result['response']['fsize'] = $result['headers']['content-length'];
+			} else {
+				$result['response']['fsize'] = '';
+			}
+			return $result['response'];
 		}
-		return $result['response'];
 	} elseif ( is_wp_error( $result ) ) {
 		// unable to get head
 		$error = $result->get_error_message();
 		gde_dx_log("bypassing URL check; cant validate URL $url: $error");
-		return true;
+		return false;
 	} else {
 		gde_dx_log("cant determine URL validity; skipping");
-		return true;
+		return false;
 	}
 }
 
@@ -213,7 +229,7 @@ function gde_format_bytes( $bytes, $precision = 2 ) {
 	if ( ! is_numeric( $bytes ) || $bytes < 1 ) {
 		return __('Unknown', 'gde');
 	} else {
-		$units = array( 'B', 'KB', 'MB', 'GB', 'TB' );
+		$units = array( 'B', 'KB', __('MB', 'gde'), 'GB', 'TB' );
 		
 		$bytes = max( $bytes, 0 );
 		$pow = floor( ( $bytes ? log( $bytes ) : 0 ) / log( 1024 ) );
@@ -297,7 +313,7 @@ function gde_get_short_url( $u ) {
  * @return  string Secure URL, or false on error
  */
 function gde_get_secure_url( $u ) {
-	require_once('libs/lib-secure.php');
+	require_once( GDE_PLUGIN_DIR . 'libs/lib-secure.php' );
 
 	if ( ! $url = gde_make_secure_url( $u ) ) {
 		return false;
@@ -423,28 +439,37 @@ function gde_dx_log( $text ) {
  * @return  bool Whether or not table creation/update was successful
  */
 function gde_dx_log_create() {
-	global $wpdb, $gde_db_ver;
-	
-	$db_ver_installed = get_site_option( 'gde_db_version', 0 );
+	global $wpdb;
 	
 	$table = $wpdb->base_prefix . 'gde_dx_log';
-	
+	$db_ver_installed = get_site_option( 'gde_db_version', 0 );
+		
 	$sql = "CREATE TABLE " . $table . " (
 			  id mediumint(9) UNSIGNED NOT NULL AUTO_INCREMENT,
 			  blogid smallint(5) UNSIGNED NOT NULL,
 			  data longtext NOT NULL,
 			  UNIQUE KEY (id)
 			) ENGINE=MyISAM  DEFAULT CHARSET=utf8; ";
-			
-	// write table to database
-	require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
-	dbDelta( $sql );
-	
-	if ( $wpdb->get_var( "SHOW TABLES LIKE '$table'" ) == $table ) {
+		
+	if ( version_compare( GDE_DB_VER, $db_ver_installed, ">" ) ) {
+		// upgrade table if needed
+		require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
+		dbDelta( $sql );
+	} elseif ( $wpdb->get_var( "SHOW TABLES LIKE '$table'" ) == $table ) {
+		// table's OK
 		return true;
 	} else {
-		// table count not be written
-		return false;
+		// table doesn't exist, try to create
+		require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
+		dbDelta( $sql );
+		
+		if ( $wpdb->get_var( "SHOW TABLES LIKE '$table'" ) == $table ) {
+			// table's OK
+			return true;
+		} else {
+			// can't create
+			return false;
+		}
 	}
 }
 

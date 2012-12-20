@@ -23,7 +23,10 @@ if ( isset( $_POST['_general_default'] ) ) {
 		$name = preg_replace( "/[^A-Za-z0-9 -]/", '', $_POST['profile-name'] );
 		$name = strtolower( str_replace( " ", "-", $name ) );
 		
-		if ( gde_profile_name_exists( $name ) !== -1 ) {
+		if ( ! preg_match( '/[\pL]/u', $name ) ) {
+			// profile name doesn't contain any letter - possible ID conflict
+			gde_show_msg( __('Profile name must contain at least one letter.', 'gde'), true );
+		} elseif ( gde_profile_name_exists( $name ) !== -1 ) {
 			// profile name is duplicate
 			gde_show_msg( __('Profile name already exists. Please choose another name.', 'gde'), true );
 		} elseif ( gde_profile_to_profile( $_POST['parent'], $name, stripslashes( $_POST['description'] ) ) ) {
