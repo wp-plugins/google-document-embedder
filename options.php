@@ -301,6 +301,9 @@ function gde_profile_checkbox( $option, $field, $label, $wrap = '', $br = '' ) {
 	// open in new window
 	} elseif ( $field == "fs_win" && $option !== "same" ) {
 		echo ' checked="checked"';
+	// logged-in users only
+	} elseif ( $field == "fs_user" && $option == "yes" ) {
+		echo ' checked="checked"';
 	// allow print
 	} elseif ( $field == "fs_print" && $option !== "no" ) {
 		echo ' checked="checked"';

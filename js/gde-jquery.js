@@ -151,8 +151,10 @@ jQuery(function ($) {
 	function allowPrint() {
 		if ($('#tb_fullscr').val() == "default") {
 			$('#allowPrint').hide();
+			$('#blockAnon').hide();
 		} else if ($('#gdet_n').is(':checked')) {
 			$('#allowPrint').show();
+			$('#blockAnon').show();
 		}
 	}
 	
@@ -393,6 +395,7 @@ jQuery(function ($) {
 		var debug = $('#debugtxt').val();
 		var email = $('#sender').val();
 		var sc = $('#sc').val();
+		var eurl = $('#url').val();
 		var msg = $('#msg').val();
 			
 		// check for debug info
@@ -414,6 +417,7 @@ jQuery(function ($) {
 			name: name,
 			email: email,
 			sc: sc,
+			url: eurl,
 			msg: msg,
 			senddb: senddb,
 			cc: sendcc

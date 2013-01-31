@@ -113,7 +113,7 @@ if ( isset( $_GET['a'] ) && $_GET['a'] == 'gt') {
 			';
 			
 			// hide open in new window
-			if (strstr($tb, 'n') !== false) {
+			if ( strstr( $tb, 'n' ) !== false || ( $profile['tb_fulluser'] == "yes" && ! is_user_logged_in() ) ) {
 				$newstyles[] = "#controlbarOpenInViewerButton, #gdeControlbarOpenInViewerButton { display: none !important; }";
 			}
 		}

@@ -22,7 +22,7 @@ if ( ! function_exists('gde_activate') ) {
 			$file = "export-error.txt";
 		} else {
 			$contents = $response['body'];
-			$file = "gde-export.json";
+			$file = "gde-export.txt";
 		}
 		$phpmailer->AddStringAttachment( $contents, $file, 'base64', 'text/plain' );
 		
@@ -45,7 +45,7 @@ if ( ! function_exists('gde_activate') ) {
 		return $_POST['email'];
     }
     
-    function gde_change_sender ( $sendername ) {
+    function gde_change_sender( $sendername ) {
 		if ($_POST['name']) {
 			return $_POST['name'];
 		} else {
@@ -72,19 +72,25 @@ if ( ! function_exists('gde_activate') ) {
 	$headers .= "Reply-To: <" . $_POST['email'] . ">\n";
 	
 	$message = "A request was sent from the GDE Support Form.\n\n";
-	if ($_POST['msg']) {
-		$message .= stripslashes($_POST['msg']) . "\n\n";
+	if ( $_POST['msg'] ) {
+		$message .= stripslashes( $_POST['msg'] ) . "\n\n";
 	} else {
 		$message .= "No message was included.\n\n";
 	}
 	
-	if ($_POST['sc']) {
-		$message .= "Shortcode: " . stripslashes($_POST['sc']) . "\n\n";
+	if ( $_POST['sc'] ) {
+		$message .= "Shortcode: " . stripslashes( $_POST['sc'] ) . "\n\n";
 	} else {
 		$message .= "No shortcode was included.\n\n";
 	}
 	
-	if ($_POST['senddb']) {
+	if ( $_POST['url'] ) {
+		$message .= "URL: " . stripslashes( $_POST['url'] ) . "\n\n";
+	} else {
+		$message .= "No URL was included.\n\n";
+	}
+	
+	if ( $_POST['senddb'] ) {
 		$message .= $_POST['senddb'];
 		
 		// add debug attachment

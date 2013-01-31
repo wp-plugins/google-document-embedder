@@ -25,9 +25,7 @@
 				<td>
 <?php
 	gde_opts_checkbox( 'ed_disable', __('Disable all editor integration', 'gde'), '', 1 );
-	if ( version_compare( $wp_version, "3.5", "<" ) ) {
-		gde_opts_checkbox( 'ed_embed_sc', __('Insert shortcode from Media Library by default', 'gde'), 'ed-embed', 1 );
-	}
+	gde_opts_checkbox( 'ed_embed_sc', __('Insert shortcode from Media Library by default', 'gde'), 'ed-embed', 1 );
 	gde_opts_checkbox( 'ed_extend_upload', __('Allow uploads of all supported media types', 'gde'), 'ed-upload', 1 );
 ?>
 				</td>

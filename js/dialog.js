@@ -15,6 +15,10 @@ var GDEInsertDialog = {
 					update_sc();
 				});
 				
+				//jQuery('.use_defaults').change(function(){
+				//	use_defaults();
+				//});
+				
 				jQuery('#height').blur(function(){
 					update_sc();
 				});
@@ -69,6 +73,15 @@ var GDEInsertDialog = {
 			}
 		}
 		
+		/*function use_defaults() {
+			if ( jQuery('.use_defaults').is(':checked') ) {
+				jQuery('.ovrride').hide();
+			} else {
+				jQuery('.ovrride').show();
+			}
+			update_sc();
+		}*/
+		
 		function update_insert() {
 			if ( jQuery('#shortcode').val() !='' ) {
 				jQuery('#insert').removeAttr('disabled');
@@ -96,31 +109,55 @@ var GDEInsertDialog = {
 					shortcode = shortcode + '  profile="'+jQuery('#profile').val()+'"';
 				}
 				
-				if (( jQuery('#height').val() !=0 ) & ( jQuery('#height').val() ) !=null) {
-					shortcode = shortcode + '  height="'+jQuery('#height').val()+'"';
-				}
-				if (( jQuery('#width').val() !=0 ) & ( jQuery('#width').val() ) !=null) {
-					shortcode = shortcode + '  width="'+jQuery('#width').val()+'"';
-				}
+				if ( ! jQuery('.use_defaults').is(':checked') ) {
 				
-				if (( jQuery('#page').val() != "1" ) & ( jQuery('#page').val() ) !='') {
-					shortcode = shortcode + '  page="'+jQuery('#page').val()+'"';
-				}
+					var height = jQuery('#height').val();
+					var width = jQuery('#width').val();
+					
+					if ( height != 0  && height != null ) {
+						height = sanitize(height);
+						jQuery('#height').val(height);
+						shortcode = shortcode + '  height="'+height+'"';
+					}
+					
+					if ( width != 0  && width != null ) {
+						width = sanitize(width);
+						jQuery('#width').val(width);
+						shortcode = shortcode + '  width="'+width+'"';
+					}
+					
+					if (( jQuery('#page').val() != "1" ) & ( jQuery('#page').val() ) !='') {
+						shortcode = shortcode + '  page="'+jQuery('#page').val()+'"';
+					}
+					
+					if ( jQuery("input[name='save']:checked").val() == '1') {
+						shortcode = shortcode + '  save="1"';
+					} else if ( jQuery("input[name='save']:checked").val() == '0') {
+						shortcode = shortcode + '  save="0"';
+					}
+					
+					if ( jQuery('.disable_cache').is(':checked') ) {
+						shortcode = shortcode + ' cache="0"';
+					}
 				
-				if ( jQuery("input[name='save']:checked").val() == '1') {
-					shortcode = shortcode + '  save="1"';
-				} else if ( jQuery("input[name='save']:checked").val() == '0') {
-					shortcode = shortcode + '  save="0"';
-				}
-				
-				if ( jQuery('.disable_cache').is(':checked') ) {
-					shortcode = shortcode + ' cache="0"';
 				}
 				
 				var newsc = shortcode.replace(/  /g,' ');
 				
 				jQuery('#shortcode').val('['+newsc+']');
 				update_insert();
+		}
+		
+		function sanitize( dim ) {
+			if (dim.indexOf("%") == -1) {
+				dim = dim.replace(/[^0-9]/g, '');
+				dim += "px";
+			} else {
+				dim = dim.replace(/[^0-9]/g, '');
+				dim += "%";
+			}
+			
+			return dim;
 		}
 	},
 	insert : function() {

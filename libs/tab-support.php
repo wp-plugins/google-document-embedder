@@ -52,8 +52,15 @@
 <tr valign="top">
 	<th scope="row"><label for="sc" id="sc_label"><?php _e('Shortcode', 'gde'); ?></label></th>
 	<td>
-		<input size="50" name="shortcode" id="sc" value="" type="text"><br/>
+		<input size="50" name="shortcode" id="sc" value="" type="text" placeholder="[gview file=&quot;...&quot;]"><br/>
 		<em><?php _e("If you're having a problem getting a specific document to work, paste the shortcode you're trying to use here.", 'gde'); ?></em>
+	</td>
+</tr>
+<tr valign="top">
+	<th scope="row"><label for="url" id="url_label"><?php _e('URL', 'gde'); ?></label></th>
+	<td>
+		<input size="50" name="url" id="url" value="" type="text" placeholder="http://..."><br/>
+		<em><?php _e("Paste the full web address of a page where I should be able to see the problem occurring.", 'gde'); ?></em>
 	</td>
 </tr>
 <tr valign="top">
@@ -146,7 +153,7 @@
 ?>
 	<br/><br/>
 	</div>
-</div>
+
 	<div id="debugwarn" style="display:none;color:red;font-weight:bold;">
 		<p><?php _e("I'm less likely to be able to help you if you do not include debug information.", 'gde'); ?></p>
 	</div>

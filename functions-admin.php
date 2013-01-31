@@ -18,6 +18,7 @@ function gde_form_to_profile( $pid, $data ) {
 	// initialize checkbox values (values if options unchecked)
 	$profile['tb_flags'] = "przn";
 	$profile['tb_fullwin'] = "same";
+	$profile['tb_fulluser'] = "no";
 	$profile['tb_print'] = "no";
 	$profile['vw_flags'] = "";
 	$profile['link_force'] = "no";
@@ -50,6 +51,8 @@ function gde_form_to_profile( $pid, $data ) {
 			}
 		} elseif ( $k == "fs_win" ) {
 			$profile['tb_fullwin'] = "new";
+		} elseif ( $k == "fs_user" ) {
+			$profile['tb_fulluser'] = "yes";
 		} elseif ( $k == "fs_print" ) {
 			$profile['tb_print'] = "yes";
 		} elseif ( strstr( $k, 'gdev_' ) && ( strstr( $v, 'gdev_' ) ) ) {
@@ -99,32 +102,36 @@ function gde_profile_to_profile( $sourceid, $name, $desc = '' ) {
  *
  * @since   2.5.0.1
  * @return  int 0 = fail, 1 = created, 2 = updated, 3 = nothing to do
+ * @note	data array expected: [0] name, [1] desc, [2] serialized data
  */
 function gde_write_profile( $data, $id = null, $overwrite = false ) {
 	global $wpdb;
 	$table = $wpdb->prefix . 'gde_profiles';
 	
 	if ( empty( $id ) ) {
+		// get profile name
+		$pname = strtolower( $data[0] );
+		
 		// new (non-default) profile
 		if ( ! $wpdb->insert(
 					$table,
 					array(
-						'profile_name'	=>	strtolower( $data[0] ),
+						'profile_name'	=>	$pname,
 						'profile_desc'	=>	$data[1],
 						'profile_data'	=>	$data[2]
 					)
 				) ) {
-			gde_dx_log("Profile creation failed");
+			gde_dx_log("Failed to create profile '$pname'");
 			return 0;
 		} else {
-			gde_dx_log("New profile created");
+			gde_dx_log("New profile '$pname' created");
 			return 1;
 		}
 	} else {
 		// new (default) or updated profile
 		if ( is_null( $wpdb->get_row( "SELECT * FROM $table WHERE profile_id = $id" ) ) ) {
 			// new default profile
-			gde_dx_log("Profile ID $id doesn't exist - creating");
+			//gde_dx_log("Profile ID $id doesn't exist - creating");
 			
 			if ( ! $wpdb->insert(
 						$table,
@@ -401,7 +408,7 @@ function gde_get_locale() {
 }
 
 function gde_option_page() {
-	global $gde_settings_page;
+	global $gde_settings_page, $gdeoptions;
 	
 	$gde_settings_page = add_options_page( 'GDE '.__('Settings', 'gde'), 'GDE '.__('Settings', 'gde'), 'manage_options', 'gde-settings', 'gde_options' );
 	
@@ -646,6 +653,16 @@ function gde_media_insert( $html, $id, $attachment ) {
 	}
 }
 
+function gde_media_insert_35( $html, $id, $attachment ) {
+	global $gdeoptions;
+	
+	if ( gde_valid_type( $attachment['url'] ) && $gdeoptions['ed_embed_sc'] == "yes" ) {
+		return '[gview file="' . $attachment['url'] . '"]';
+	} else {
+		return $html;
+	}
+}
+
 /**
  * Add upload support for natively unsupported mimetypes used by this plugin
  *
@@ -749,13 +766,12 @@ function gde_is_beta() {
  */
 function gde_warn_on_plugin_page( $plugin_file ) {
 	global $pdata;
-	$master = 'gviewer.php';
 	
-	if ( strstr( $plugin_file, $master ) ) {
+	if ( strstr( $plugin_file, $pdata['mainfile'] ) ) {
 		
 		// see if there's a release waiting first (prevent double messages)
 		$updates = (array) get_site_option( '_site_transient_update_plugins' );
-		if ( isset( $updates['response'] ) && array_key_exists( $pdata['Slug'] . '/' . $master, $updates['response'] ) ) {
+		if ( isset( $updates['response'] ) && array_key_exists( $pdata['basename'], $updates['response'] ) ) {
 			return;
 		}
 		
@@ -802,13 +818,13 @@ function gde_check_for_beta( $plugin_file ) {
 			$betacheck = new PluginUpdateChecker(
 				GDE_BETA_API . 'beta-info/gde',
 				$plugin_file,
-				$pdata['Slug']
+				$pdata['slug']
 			);
 
-			if ( ! $state = get_option('external_updates-' . $pdata['Slug']) ) {
+			if ( ! $state = get_option('external_updates-' . $pdata['slug']) ) {
 				// get beta info if not cached
 				$betacheck->checkForUpdates();
-				if ( ! $state = get_option('external_updates-' . $pdata['Slug']) ) {
+				if ( ! $state = get_option('external_updates-' . $pdata['slug']) ) {
 					// something's wrong with the process - skip
 					gde_dx_log("Can't fetch beta info - skipping");
 					return false;
@@ -840,7 +856,7 @@ function gde_beta_available() {
 	
 	if ( $avail_version = get_site_transient( $key ) ) {
 		// transient already set - compare versions
-		if ( version_compare( $pdata['Version'], $avail_version ) >= 0 ) {
+		if ( version_compare( $pdata['Version'], $avail_version, '>=' ) ) {
 			// installed version is same or newer, don't do anything
 			return false;
 		} else {
@@ -862,7 +878,7 @@ function gde_beta_available() {
 		if ( gde_is_beta() ) {
 			$hours = 3;
 		} else {
-			$hours = 12;
+			$hours = 24;
 		}
 		
 		if ( ! is_wp_error( $response ) ) {
@@ -878,7 +894,7 @@ function gde_beta_available() {
 					// there is a beta available, let the checker decide if it's relevant
 					return true;
 				} else {
-					// no beta available - don't check again for 24 hours
+					// no beta available - don't check again for x hours
 					gde_dx_log("No beta detected, check again in $hours hours");
 					set_site_transient( $key, $pdata['Version'], 60*60*24 );
 					return false;

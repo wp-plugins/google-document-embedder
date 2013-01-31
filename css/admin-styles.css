@@ -102,13 +102,17 @@ p.gde-submit {
 	margin: 10px 0 5px;
 }
 
-#toolbuttons td input, #gdet_h, #fs_win, #fs_print, #gdev_t, #gdev_f, #gdev_b, #force, #mask, #docsec td input{
+#toolbuttons td input, #gdet_h, #fs_user, #fs_win, #fs_print, #gdev_t, #gdev_f, #gdev_b, #force, #mask, #docsec td input{
 	margin-left: 3px;
 }
 
 #toolbuttons td label, #fullscreen td label {
 	margin-right: 10px;
 }
+
+::-webkit-input-placeholder { color: #777777; }
+::-moz-placeholder { color: #777777; } /* firefox 19+ */
+input:-moz-placeholder { color: #777777; }
 
 .gde-fnote {
 	font-style: italic;

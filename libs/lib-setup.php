@@ -1,54 +1,30 @@
 <?php
 
 /**
- * Initialize environment (settings/profiles)
+ * Define system defaults (settings/profiles)
  *
- * @since	2.5.0.1
- * @return  void
+ * @since	2.5.5.1
+ * @return  mixed
  */
-function gde_setup() {
-	// check for sufficient php version (minimum supports json_encode)
-	if ( ! ( phpversion() >= '5.2.0' ) ) {
-		wp_die( 'Your server is running PHP version ' . phpversion() . ' but this plugin requires at least 5.2.0' );
+function gde_defaults( $type ) {
+	global $env;
+	
+	// gather/set environment info
+	if ( ! $env ) {
+		$env['pdata'] = gde_get_plugin_data();
+		$env['baseurl'] = gde_base_url();
+		$env['default_lang'] = gde_get_locale();
+		$env['apikey'] = gde_get_api_key( $env['pdata']['Version'] );
 	}
 	
-	if ( GDE_DX_LOGGING > 0 ) {
-		gde_dx_log("Dx log manually enabled in functions.php");
-	}
-	gde_dx_log("Activating...");
-	
-	// gather environment info
-	$baseurl = gde_base_url();
-	$default_lang = gde_get_locale();
-	$pdata = gde_get_plugin_data();
-	$apikey = gde_get_api_key( $pdata['Version'] );
-	if ( empty( $apikey ) ) {
-		gde_dx_log("Failed to set API key");
-	} else {
-		gde_dx_log("API Key: $apikey");
-	}
-	
-	if ( is_multisite() ) {
-		// define multisite "global" options
-		$globalopts = array(
-			'file_maxsize'			=>	'12',
-			'beta_check'			=>	'yes',
-			'api_key'				=>	$apikey
-		);
-		
-		if ( ! $gdeglobals = get_site_option( 'gde_globals' ) ) {
-			gde_dx_log("Writing multisite global options");
-			update_site_option( 'gde_globals', $globalopts );
-		}
-	}
-	
-	// create/update profile db, if necessary
-	if ( ! gde_db_tables() ) {
-		gde_dx_log("Table creation failed; setup halted");
-		wp_die( __("Setup wasn't able to create the required tables. Please reactivate GDE or perform a clean installation.", 'gde') );
-	}
-	
-	// define default options (does not include multisite yet)
+	// define "global" options (multisite only)
+	$globalopts = array(
+		'file_maxsize'			=>	'12',
+		'beta_check'			=>	'yes',
+		'api_key'				=>	$env['apikey']
+	);
+
+	// define default options
 	$defopts = array(
 		'ed_disable'			=>	'no',
 		'ed_extend_upload'		=>	'yes',
@@ -59,9 +35,9 @@ function gde_setup() {
 		'error_log'				=>	'no',
 		'beta_check'			=>	'yes',
 		'ga_enable'				=>	'no',
-		'ga_category'			=>	$pdata['Name'],
+		'ga_category'			=>	$env['pdata']['Name'],
 		'ga_label'				=>	'url',
-		'api_key'				=>	$apikey
+		'api_key'				=>	$env['apikey']
 	);
 	
 	// define default profile(s)
@@ -75,13 +51,14 @@ function gde_setup() {
 			"tb_flags"			=>	'',
 			"tb_fullscr"		=>	'default',
 			"tb_fullwin"		=>	'new',
+			"tb_fulluser"		=>	'no',
 			"tb_print"			=>	'no',
 			"vw_bgcolor"		=>	'#EBEBEB',
 			"vw_pbcolor"		=>	'#DADADA',
 			"vw_css"			=>	'',
 			"vw_flags"			=>	'',
-			"language"			=>	$default_lang,
-			"base_url"			=>	$baseurl,
+			"language"			=>	$env['default_lang'],
+			"base_url"			=>	$env['baseurl'],
 			"link_show"			=>	'all',
 			"link_mask"			=>	'no',
 			"link_block"		=>	'no',
@@ -99,13 +76,14 @@ function gde_setup() {
 			"tb_flags"			=>	'',
 			"tb_fullscr"		=>	'viewer',
 			"tb_fullwin"		=>	'new',
+			"tb_fulluser"		=>	'no',
 			"tb_print"			=>	'no',
 			"vw_bgcolor"		=>	'#EBEBEB',
 			"vw_pbcolor"		=>	'#DADADA',
 			"vw_css"			=>	'',
 			"vw_flags"			=>	'',
-			"language"			=>	$default_lang,
-			"base_url"			=>	$baseurl,
+			"language"			=>	$env['default_lang'],
+			"base_url"			=>	$env['baseurl'],
 			"link_show"			=>	'none',
 			"link_mask"			=>	'no',
 			"link_block"		=>	'yes',
@@ -123,13 +101,14 @@ function gde_setup() {
 			"tb_flags"			=>	'',
 			"tb_fullscr"		=>	'viewer',
 			"tb_fullwin"		=>	'new',
+			"tb_fulluser"		=>	'no',
 			"tb_print"			=>	'no',
 			"vw_bgcolor"		=>	'',
 			"vw_pbcolor"		=>	'',
 			"vw_css"			=>	GDE_PLUGIN_URL . 'css/gde-dark.css',
 			"vw_flags"			=>	'',
-			"language"			=>	$default_lang,
-			"base_url"			=>	$baseurl,
+			"language"			=>	$env['default_lang'],
+			"base_url"			=>	$env['baseurl'],
 			"link_show"			=>	'all',
 			"link_mask"			=>	'no',
 			"link_block"		=>	'no',
@@ -140,52 +119,60 @@ function gde_setup() {
 		)
 	);
 	
-	$upgrade = false;
+	switch ( $type ) {
+		case "globals":
+			return $globalopts;
+			break;
+		case "options":
+			return $defopts;
+			break;
+		case "profiles":
+			return $defpros;
+			break;
+		default:
+			gde_dx_log('Defaults requested but type not specified');
+			return false;
+			break;
+	}
+}
+
+/**
+ * Perform activation
+ *
+ * @since	2.5.0.1
+ * @return  void
+ */
+function gde_setup() {
+	if ( GDE_DX_LOGGING > 0 ) {
+		gde_dx_log("Dx log manually enabled in functions.php");
+	}
 	
-	if ( ! $gdeoptions = get_option('gde_options') ) {
-		// write default options
-		gde_dx_log("Writing default options");
-		update_option('gde_options', $defopts);
-	} else {
-		// check or upgrade options
-		gde_dx_log("Options already exist");
-		foreach ( $defopts as $k => $v ) {
-			if ( ! array_key_exists( $k, $gdeoptions ) ) {
-				$gdeoptions[$k] = $v;
-				//gde_dx_log("New option $k added");
-				$updated = true;
-			}
-			if ( isset( $updated ) ) {
-				update_option('gde_options', $defopts);
-			}
-		}
-		
-		// set API key if empty (ie., failed on earlier attempt or first upgrade)
-		if ( empty( $gdeoptions['api_key'] ) && ! empty( $apikey ) ) {
-			$gdeoptions['api_key'] = $apikey;
-			gde_dx_log("Updated API Key");
-			update_option( 'gde_options', $gdeoptions );
-		}
-		
-		if ( isset( $gdeoptions['default_width'] ) ) {
-			// old (pre-2.5) settings exist - convert to profile
-			gde_upgrade( $gdeoptions, $defopts, $defpros['default'] );
-			$upgrade = true;
+	// clear any beta transient
+	gde_dx_log("Clearing beta cache");
+	delete_site_transient( 'gde_beta_version' );
+	delete_transient( 'gde_beta_version' );
+	delete_option( 'external_updates-google-document-embedder' );
+	
+	gde_dx_log("Activating...");
+	
+	if ( is_multisite() ) {
+		if ( ! $gdeglobals = get_site_option( 'gde_globals' ) ) {
+			gde_dx_log("Writing multisite global options");
+			$globalopts = gde_defaults('global');
+			update_site_option( 'gde_globals', $globalopts );
 		}
 	}
 	
+	// check for existing or updated options
+	$gdeoptions = gde_get_options();
+	
 	// check for existence of default profile (re-activation?)
-	if ( ! gde_get_profiles( 1 ) || $upgrade ) {
+	if ( ! gde_get_profiles( 1 ) ) {
 		// new activation - write profile(s)
+		$defpros = gde_defaults('profiles');
 		foreach ( $defpros as $key => $prodata ) {
 			if ( $key == "default" ) {
-				if ( $upgrade ) {
-					// upgrade conversion handled this - skip
-					continue;
-				} else {
-					// default profile is always ID 1
-					$id = 1;
-				}
+				$id = 1; // default profile is always ID 1
 			} else {
 				$id = null;	// assign next id
 			}
@@ -194,169 +181,104 @@ function gde_setup() {
 			$desc = $prodata['desc'];
 			unset( $prodata['desc'] );
 			
-			// does profile already exist (check for new options)
-			if ( $id !== null ) {
-				if ( $current = gde_get_profiles( $id ) ) {
-					$changed = false;
-					foreach ( $prodata as $k => $v ) {
-						if ( ! array_key_exists( $k, $current ) ) {
-							$current[$k] = $v;
-							$changed = true;
-							gde_dx_log("Setting added: $k");
-						}
-					}
-					foreach ( $current as $k => $v ) {
-						if ( ! array_key_exists( $k, $prodata ) ) {
-							unset( $current[$k] );
-							$changed = true;
-							gde_dx_log("Setting removed: $k");
-						}
-					}
-				}
-			}
-			
-			if ( isset( $current ) && $current && isset( $changed ) && $changed ) {
-				// updating current profile
-				$data = serialize( $current );
-				$profile = array( $key, $desc, $data );
-				if ( gde_write_profile( $profile, $id, true ) < 1 ) {
-					gde_dx_log("Failed to update profile '$key'");
-				}
-			} elseif ( ! isset( $changed ) ) {
-				// write new profile
-				$data = serialize( $prodata );
-				$profile = array( $key, $desc, $data );
-				if ( gde_write_profile( $profile, $id ) < 1 ) {
-					gde_dx_log("Failed to write profile '$key'");
-				}
+			// write profile
+			$data = serialize( $prodata );
+			$profile = array( $key, $desc, $data );
+			if ( gde_write_profile( $profile, $id ) < 1 ) {
+				gde_dx_log("Failed to write profile '$key'");
 			}
 		}
 	} else {
-		gde_dx_log("Profiles already exist - skip creation");
+		gde_dx_log("Profiles already exist");
+		update_profiles();
 	}
 	
 	gde_dx_log("Activation complete.");
 }
 
 /**
- * Upgrade settings to profiles (for pre-2.5 installs)
+ * Upgrade profiles if changes have been made
  *
- * @since	2.5.0.1
+ * @since	2.5.5.1
  * @return  void
  */
-function gde_upgrade( $gdeoptions, $defopts, $defaults ) {
-	gde_dx_log("Old settings found - upgrade initiated");
+function update_profiles() {
+	$prodata = gde_get_profiles();
+	$defpros = gde_defaults('profiles');
+	$default = $defpros['default'];
 	
-	// reformat some settings
-	if ( $gdeoptions['disable_proxy'] == "no" ) {
-		$viewer = "enhanced";
-	} else {
-		$viewer = "standard";
-	}
-	if ( $gdeoptions['disable_caching'] == "no" ) {
-		$cache = "on";
-	} else {
-		$cache = "off";
-	}
-	if ( strstr( $gdeoptions['restrict_tb'], 'm') !== false ) {
-		$mobile = "always";
-		$gdeoptions['restrict_tb'] = str_replace( "m", "", $gdeoptions['restrict_tb'] );
-	} else {
-		$mobile = "default";
-	}
-	if ( $gdeoptions['show_dl'] == "no" ) {
-		$link_show = "none";
-	} elseif ( $gdeoptions['restrict_dl'] == "yes" ) {
-		$link_show = "users";
-	} else {
-		$link_show = "all";
-	}
-	if ( $gdeoptions['link_func'] == "force-mask" ) {
-		$link_force = "yes";
-		$link_mask = "yes";
-	} elseif ( $gdeoptions['link_func'] == "force" ) {
-		$link_force = "yes";
-		$link_mask = "no";
-	} else {
-		$link_force = "no";
-		$link_mask = "no";
-	}
-	
-	// define new default profile - take default profile and override from old settings
-	$profile = $defaults;
-	$profile['viewer'] = $viewer;
-	
-	// height and width are now combined with their type
-	$profile['default_width'] = $gdeoptions['default_width'].$gdeoptions['width_type'];
-	$profile['default_width'] = str_replace( "pc", "%", $profile['default_width'] );
-	$profile['default_height'] = $gdeoptions['default_height'].$gdeoptions['height_type'];
-	$profile['default_height'] = str_replace( "pc", "%", $profile['default_height'] );
-	
-	$profile['tb_mobile'] = $mobile;
-	$profile['tb_flags'] = $gdeoptions['restrict_tb'];
-	$profile['language'] = $gdeoptions['default_lang'];
-	$profile['base_url'] = $gdeoptions['base_url'];
-	$profile['link_show'] = $link_show;
-	$profile['link_mask'] = $link_mask;
-	
-	// download link replacements changed
-	$profile['link_text'] = $gdeoptions['link_text'];
-	$profile['link_text'] = str_replace( "%FN", "%FILE", $profile['link_text'] );
-	$profile['link_text'] = str_replace( "%FT", "%TYPE", $profile['link_text'] );
-	$profile['link_text'] = str_replace( "%FS", "%SIZE", $profile['link_text'] );
-	
-	$profile['link_pos'] = $gdeoptions['link_pos'];
-	$profile['link_force'] = $link_force;
-	$profile['cache'] = $cache;
-	
-	$default = array( 
-		'default',
-		__('This is the default profile, used when no profile is specified.', 'gde'),
-		serialize($profile)
-	);
-	
-	if ( gde_write_profile( $default, 1 ) > 0 ) {	// default profile is always ID 1
-		// profile conversion successful; write new settings array
-		$oldsets = print_r($gdeoptions, true);
-		$newprofile = serialize($profile);
-		//gde_dx_log("Converting old settings to default profile: \n\n $oldsets \n\n $newprofile \n\n");
+	foreach ( $prodata as $profile ) {
+		$updated = false;
 		
-		if ($gdeoptions['bypass_check'] == "yes") {
-			$errorchk = "no";
-		} else {
-			$errorchk = "yes";
-		}
-		if ($gdeoptions['suppress_beta'] == "yes") {
-			$betachk = "no";
-		} else {
-			$betachk = "yes";
-		}
-		if ($gdeoptions['enable_ga'] == "yes") {
-			$ga = "compat";
-		} else {
-			$ga = "no";
+		$id = $profile['profile_id'];
+		$data = unserialize( $profile['profile_data'] );
+
+		foreach ( $default as $k => $v ) {
+			if ( $k !== "desc" && ! array_key_exists( $k, $data ) ) {
+				$data[$k] = $default[$k];
+				
+				$updated = true;
+			}
 		}
 		
-		// build new settings - start with default and overwrite
-		$newopts = $defopts;
-		
-		$newopts['ed_disable'] = $gdeoptions['disable_editor'];
-		if ( $newopts['ed_disable'] == "yes" ) {
-			$newopts['ed_extend_upload'] = "yes";
-			$newopts['ed_embed_sc'] = "yes";
-		} else {
-			$newopts['ed_extend_upload'] = $gdeoptions['ed_extend_upload'];
-			$newopts['ed_embed_sc'] = $gdeoptions['ed_embed_sc'];
+		if ( $updated ) {
+			// write updated profile
+			$data = serialize( $data );
+			$newpro = array( $profile['profile_name'], $profile['profile_desc'], $data );
+			if ( gde_write_profile( $newpro, $id, true ) < 1 ) {
+				gde_dx_log("Failed to update profile '" . $profile['profile_name'] . "'");
+			}
 		}
-		$newopts['error_check'] = $errorchk;
-		$newopts['beta_check'] = $betachk;
-		$newopts['ga_enable'] = $ga;
-		$newopts['api_key'] = $gdeoptions['api_key'];
-		
-		update_option('gde_options', $newopts);
-		
-		gde_dx_log("Old settings converted");
 	}
+}
+
+/**
+ * Get the current options, upgrading or resetting them as needed
+ *
+ * @since	2.5.5.1
+ * @return  array Current value of gde_options
+ */
+function gde_get_options() {
+	$defopts = gde_defaults('options');
+	
+	if ( ! $gdeoptions = get_option('gde_options') ) {
+		// options don't exist
+		gde_dx_log("Writing default options");
+		update_option('gde_options', $defopts);
+	} else {
+		// check if upgrading from < 2.5
+		if ( isset( $gdeoptions['default_width'] ) ) {
+			gde_dx_log("Old options found - resetting");
+			$defopts['upgraded'] = "yes";
+			update_option('gde_options', $defopts);
+		} else {
+			gde_dx_log("Options already exist");
+			
+			// check or upgrade options
+			$updated = false;
+			foreach ( $defopts as $k => $v ) {
+				if ( ! array_key_exists( $k, $gdeoptions ) ) {
+					$gdeoptions[$k] = $v;
+					//gde_dx_log("New option $k added");
+					$updated = true;
+				}
+			}
+			
+			if ( $updated ) {
+				gde_dx_log('Options were updated');
+				update_option('gde_options', $defopts);
+			}
+			
+			// set API key if empty (ie., failed on earlier attempt or first upgrade)
+			if ( empty( $gdeoptions['api_key'] ) && ! empty( $apikey ) ) {
+				$gdeoptions['api_key'] = $apikey;
+				gde_dx_log("Updated API Key");
+				update_option( 'gde_options', $gdeoptions );
+			}
+		}
+	}
+	
+	return $gdeoptions;
 }
 
 /**
@@ -374,11 +296,15 @@ function gde_get_api_key( $ver ) {
 		$api = $gdeglobals['api_key'];
 	} else {
 		$gdeoptions = get_option( 'gde_options' );
-		$api = $gdeoptions['api_key'];
+		if ( isset( $gdeoptions['api_key'] ) ) {
+			$api = $gdeoptions['api_key'];
+		} else {
+			$api = "";
+		}
 	}
 	
 	if ( ! empty ( $api ) ) {
-		gde_dx_log("API key already set");
+		gde_dx_log("API key already set: $api");
 		return $api;
 	} else {
 		gde_dx_log("Requesting new API key");
@@ -404,6 +330,7 @@ function gde_get_api_key( $ver ) {
 					$key = $json->api_key;
 				}
 				if ( ! empty( $key ) ) {
+					gde_dx_log("API Key: $key");
 					return $key;
 				} else {
 					gde_dx_log("API returned empty response");
@@ -425,7 +352,7 @@ function gde_get_api_key( $ver ) {
  * @since   2.5.0.1
  * @return  bool Whether or not table creation/update was successful
  */
-function gde_db_tables() {
+function gde_db_tables( $gde_db_ver ) {
 	global $wpdb;
 	
 	// attempt to trap table creation failures
@@ -444,9 +371,14 @@ function gde_db_tables() {
 		delete_site_option( 'gde_db_version' );
 	}
 	
-	$db_ver_installed = get_site_option( 'gde_db_version', 0 );
-	gde_dx_log("Installed DB ver: $db_ver_installed; This DB ver: " . GDE_DB_VER );
-	if ( version_compare( GDE_DB_VER, $db_ver_installed, ">" ) ) {
+	if ( is_multisite() ) {
+		$db_ver_installed = get_site_option( 'gde_db_version', 0 );
+	} else {
+		$db_ver_installed = get_option( 'gde_db_version', 0 );
+	}
+	
+	gde_dx_log("Installed DB ver: $db_ver_installed; This DB ver: " . $gde_db_ver );
+	if ( version_compare( $gde_db_ver, $db_ver_installed, ">" ) ) {
 		// install or upgrade profile table
 		$table = $wpdb->prefix . 'gde_profiles';
 	
@@ -502,7 +434,7 @@ function gde_db_tables() {
 		delete_site_option( 'gde_db_version' );
 		return false;
 	} else {
-		update_site_option( 'gde_db_version', GDE_DB_VER );
+		update_site_option( 'gde_db_version', $gde_db_ver );
 		return true;
 	}
 }

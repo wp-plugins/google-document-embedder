@@ -92,7 +92,13 @@ $profiles = gde_get_profiles();
 	<fieldset>
 		<legend class="gray dwl_gray"><?php _e('Optional (Override Profile Settings)', 'gde'); ?></legend>
 		<table width="100%" border="0" cellspacing="0" cellpadding="5">
-		<tr>
+		<!--tr class="switch">
+			<td colspan="2" class="gray dwl_gray">
+				<input name="use_defaults" type="checkbox" value="-1" class="use_defaults dwl opt" />
+				<?php _e('Use selected profile settings', 'gde'); ?>
+			</td>
+		</tr-->
+		<tr class="ovrride">
 			<td align="right" valign="top" class="gray dwl_gray" style="width:40%">
 				<strong><?php _e('Height', 'gde'); ?></strong>
 			</td>
@@ -103,7 +109,7 @@ $profiles = gde_get_profiles();
 				<span class="note"><?php _e('Format: 40% or 300px', 'gde'); ?></span>
 			</td>
 		</tr>
-		<tr>
+		<tr class="ovrride">
 			<td align="right" class="gray dwl_gray">
 				<strong><?php _e('Start Page #', 'gde'); ?></strong>
 			</td>
@@ -111,7 +117,7 @@ $profiles = gde_get_profiles();
 				<input name="page" type="text" class="opt dwl" id="page" size="6" value="1" />
 			</td>
 		</tr>
-		<tr>
+		<tr class="ovrride">
 			<td align="right" class="gray dwl_gray">
 				<strong><?php _e('Show Download Link', 'gde'); ?></strong>
 			</td>
@@ -120,12 +126,13 @@ $profiles = gde_get_profiles();
 				<input name="save" type="radio" class="opt dwl save" value="0" /> <?php _e('No', 'gde'); ?>
 			</td>
 		</tr>
-		<tr>
+		<tr class="ovrride">
 			<td colspan="2" class="gray dwl_gray">
 				<input name="disable_cache" type="checkbox" value="-1" class="disable_cache dwl opt" />
 				<?php _e('Disable caching (this document is frequently overwritten)', 'gde'); ?>
 			</td>
 		</tr>
+		</span>
 	</table>
 	</fieldset>
    

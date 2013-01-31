@@ -137,6 +137,14 @@ More common questions are answered on the GDE web site [here](http://www.davistr
 
 (E) Enhanced Viewer
 
+= 2.5.5 =
+* Added: Option to restrict full screen view to logged-in users
+* Fixed: Rate limit exceeded on is.gd shortened URLs (thanks Dan)
+* Fixed: Some settings remain in database after uninstall
+* Fixed: Dimensions not sanitized in editor dialog
+* Changed: Activation rebuilt to alleviate profile related errors
+* Changed: Insert from Media Library ability restored for WP 3.5+
+
 = 2.5.4 =
 * Fixed: Force download option gives PHP error (thanks Zverina)
 * Fixed: Force download breaks on filenames with multiple extensions

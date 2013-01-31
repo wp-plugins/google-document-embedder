@@ -7,6 +7,11 @@
 // access wp functions externally
 require_once('lib-bootstrap.php');
 
+// no access if parent plugin is disabled
+if ( ! function_exists('gde_activate') ) {
+	wp_die('<p>'.__('You do not have sufficient permissions to access this page.').'</p>');
+}
+
 if ( isset( $_REQUEST['json'] ) ) {
 	switch ( $_REQUEST['json'] ) {
 		case "profiles":
@@ -59,7 +64,7 @@ if ( isset( $_REQUEST['json'] ) ) {
 	$blogid = get_current_blog_id();
 	
 	$table = $wpdb->base_prefix . 'gde_dx_log';
-	$data = $wpdb->get_col( "SELECT * FROM $table WHERE blogid = '$blogid'", 2 );
+	$data = $wpdb->get_col( "SELECT * FROM $table WHERE blogid = '$blogid' ORDER BY id ASC", 2 );
 	
 	header('Content-type: text/plain');
 	

@@ -26,9 +26,6 @@ if ( ! defined( 'ABSPATH' ) ) {	exit; }
 @define( 'GDE_WP_URL', 'http://wordpress.org/extend/plugins/google-document-embedder/' );
 @define( 'GDE_BETA_API', 'http://dev.davismetro.com/api/1.0/' );
 
-// add admin functions only if needed
-if ( is_admin() ) { require_once( GDE_PLUGIN_DIR . 'functions-admin.php' ); }
-
 /**
  * List supported extensions & MIME types
  *
@@ -276,15 +273,15 @@ function gde_sanitize_dims( $dim ) {
 }
 
 /**
- * 
+ * Shorten ("mask") the URL to the embedded file
  *
  * @since   2.5.0.1
  * @return  string Short url response from API call, or false on error
  */
 function gde_get_short_url( $u ) {
 	$u = urlencode( $u );
-	$service[] = "http://is.gd/create.php?format=simple&url=" . $u;
 	$service[] = "http://tinyurl.com/api-create.php?url=" . $u;
+	$service[] = "http://is.gd/create.php?format=simple&url=" . $u;
 	
 	foreach ( $service as $url ) {
 		$passed = false;
@@ -292,12 +289,17 @@ function gde_get_short_url( $u ) {
 		if ( is_wp_error( $response ) || empty ( $response['body'] ) ) {
 			continue;
 		} else {
-			$passed = true;
-			break;
+			// check for rate limit exceeded or other error response
+			if ( ! gde_valid_link( $response['body'] ) ) {
+				continue;
+			} else {
+				$passed = true;
+				break;
+			}
 		}
 	}
 	
-	if ( $passed && ! empty( $response['body'] ) ) {
+	if ( $passed ) {
 		return $response['body'];
 	} else {
 		// can't shorten - return original URL
@@ -375,13 +377,18 @@ function gde_ga_event( $file ) {
  * @return  array Array of plugin data parsed from main plugin file
  */
 function gde_get_plugin_data() {
+	$mainfile = 'gviewer.php';
+	$slug = 'google-document-embedder';
+	
 	if ( ! function_exists( 'get_plugin_data' ) ) {
 		require_once( ABSPATH . '/wp-admin/includes/plugin.php' );
 	}
-	$plugin_data  = get_plugin_data( GDE_PLUGIN_DIR . 'gviewer.php' );
+	$plugin_data  = get_plugin_data( GDE_PLUGIN_DIR . $mainfile );
 	
-	// add custom data
-	$plugin_data['Slug'] = 'google-document-embedder';
+	// add custom data (lowercase to avoid any future conflicts)
+	$plugin_data['slug'] = $slug;
+	$plugin_data['mainfile'] = $mainfile;
+	$plugin_data['basename'] = $plugin_data['slug'] . "/" . $mainfile;
 	
 	return $plugin_data;
 }
@@ -439,7 +446,7 @@ function gde_dx_log( $text ) {
  * @return  bool Whether or not table creation/update was successful
  */
 function gde_dx_log_create() {
-	global $wpdb;
+	global $wpdb, $gde_db_ver;
 	
 	$table = $wpdb->base_prefix . 'gde_dx_log';
 	$db_ver_installed = get_site_option( 'gde_db_version', 0 );
@@ -450,8 +457,8 @@ function gde_dx_log_create() {
 			  data longtext NOT NULL,
 			  UNIQUE KEY (id)
 			) ENGINE=MyISAM  DEFAULT CHARSET=utf8; ";
-		
-	if ( version_compare( GDE_DB_VER, $db_ver_installed, ">" ) ) {
+	
+	if ( version_compare( $gde_db_ver, $db_ver_installed, ">" ) ) {
 		// upgrade table if needed
 		require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
 		dbDelta( $sql );
@@ -474,7 +481,7 @@ function gde_dx_log_create() {
 }
 
 /**
- * GDE Capture Activation Errors
+ * Capture activation errors ("unexpected output") to dx log
  *
  * @since   2.5.0.1
  * @return  void
@@ -504,7 +511,7 @@ function gde_show_error( $status ) {
  * Check health of database tables
  *
  * @since   2.5.0.3
- * @return  bool or string
+ * @return  mixed
  * @note	Verbose text used in debug information
  */
 function gde_debug_tables( $table = array('gde_profiles', 'gde_secure'), $verbose = false ) {
