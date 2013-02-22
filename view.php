@@ -24,13 +24,11 @@ if ( isset( $_GET['a'] ) && $_GET['a'] == 'gt') {
 	header( "Location: https://docs.google.com/viewer?" . $_SERVER['QUERY_STRING'] );
 	
 } elseif ( isset( $_GET['jsfile'] ) ) {
-	// proxy javascript content - not currently used
-	
-	/*
+	// proxy javascript content - not doing anything here but Google changes return 404 if not proxied (??)
 	$code = gde_get_contents("https://docs.google.com/" . $_GET['jsfile']);  
 	header('Content-type: text/javascript');  
 	echo $code;
-	*/
+	
 } else {
 	
 	// trap language
@@ -72,8 +70,8 @@ if ( isset( $_GET['a'] ) && $_GET['a'] == 'gt') {
 	} else {
 		// fix js path
 		$search[] = "gview/resources_gview/client/js";
-		$replace[] = "https://docs.google.com/gview/resources_gview/client/js";
-		//$replace[] = "?jsfile=gview/resources_gview/client/js";	// use this instead to proxy the js
+		//$replace[] = "https://docs.google.com/gview/resources_gview/client/js"; // use this if js not proxied
+		$replace[] = "?jsfile=gview/resources_gview/client/js";	// use this instead to proxy the js
 		
 		// mode-specific styles
 		if ( $mode == "chrome" ) {

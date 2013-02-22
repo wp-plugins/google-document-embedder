@@ -137,12 +137,20 @@ More common questions are answered on the GDE web site [here](http://www.davistr
 
 (E) Enhanced Viewer
 
+= 2.5.6 =
+* Fixed: (E) Hangs on document load due to Google code changes
+* Fixed: (E) Profile language not honored on New Window button tip (thanks Ege)
+* Fixed: New profiles appear blank on initial load
+* Fixed: HTTP status code check is too stringent for some servers
+* Fixed: Spurious database error on deactivation if log table not present
+* Fixed: PHP error when API key retrieval fails
+
 = 2.5.5 =
-* Added: Option to restrict full screen view to logged-in users
+* Added: (E) Option to restrict full screen view to logged-in users
+* Fixed: "Unable to load profile settings" on some installs
 * Fixed: Rate limit exceeded on is.gd shortened URLs (thanks Dan)
 * Fixed: Some settings remain in database after uninstall
 * Fixed: Dimensions not sanitized in editor dialog
-* Changed: Activation rebuilt to alleviate profile related errors
 * Changed: Insert from Media Library ability restored for WP 3.5+
 
 = 2.5.4 =
@@ -236,5 +244,5 @@ More common questions are answered on the GDE web site [here](http://www.davistr
 
 == Upgrade Notice ==
 
-= 2.5.4 =
+= 2.5.6 =
 Bug fix release

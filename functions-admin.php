@@ -168,6 +168,7 @@ function gde_write_profile( $data, $id = null, $overwrite = false ) {
 				// overwrite description
 				$newdata['profile_desc'] = $data[1];
 			}
+			
 			if ( ! empty( $data[2] ) && ( $data[2] !== serialize( $olddata ) ) ) {
 				// overwrite data
 				$newdata['profile_data'] = $data[2];

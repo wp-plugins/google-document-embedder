@@ -8,7 +8,7 @@ Author: Kevin Davis
 Author URI: http://www.davistribe.org/
 Text Domain: gde
 Domain Path: /languages/
-Version: 2.5.5
+Version: 2.5.6
 License: GPLv2
 */
 
@@ -38,7 +38,7 @@ License: GPLv2
  */
 
 // boring init junk
-$gde_ver 				= "2.5.5.98";
+$gde_ver 				= "2.5.6.98";
 $gde_db_ver 			= "1.2";		// update also in gde_activate()
 
 require_once( plugin_dir_path( __FILE__ ) . 'functions.php' );
@@ -413,7 +413,7 @@ function gde_deactivate() {
 		$blogid = get_current_blog_id();
 		$wpdb->query("DELETE FROM $table WHERE blogid = '$blogid'");
 	} else {
-		$wpdb->query("DROP TABLE $table");
+		$wpdb->query("DROP TABLE IF EXISTS $table");
 	}
 }
 

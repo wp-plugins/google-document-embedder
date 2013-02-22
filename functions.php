@@ -125,7 +125,7 @@ function gde_validate_file( $file = NULL, $force ) {
 		// can't validate
 		return -1;
 	} else {
-		if ( isset( $result['code'] ) && $result['code'] !== 200 ) {
+		if ( isset( $result['code'] ) && $result['code'] != 200 ) {
 			if ( ! gde_valid_link( $file ) ) {
 				return $badlink;
 			} else {

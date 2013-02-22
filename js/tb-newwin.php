@@ -36,16 +36,33 @@ if (top === self) {
 } else {
 	// replace new window function
 
+	// get current button and title
+	var dv2 = document.getElementById('controlbarOpenInViewerButton');
+	var btntext = dv2.getAttribute("title");
+	
 	// recreate button (change icon, tip, and function)
 	var dv1 = document.createElement("div");
 	dv1.setAttribute("id", "gdeControlbarOpenInViewerButton");
 	dv1.setAttribute("class", "goog-inline-block goog-toolbar-button-outer-box");
-	dv1.setAttribute("title", "<?php echo $tip; ?>");
 	dv1.setAttribute("onclick", "<?php echo $func; ?>();");
+	
+<?php
+	// use WP language (not Google) for tooltip if full screen - this string doesn't exist in Google version
+	if ( $_GET['a'] == "fs" ) {
+?>
+	dv1.setAttribute("title", "<?php echo $tip; ?>");
+<?php
+	} else {
+	// use Google language version for new window, instead of WP language
+?>
+	dv1.setAttribute("title", btntext);
+<?php
+	}
+?>
+	
 	dv1.innerHTML = '<div class="goog-inline-block goog-toolbar-button-inner-box"><div id="<?php echo $ico; ?>" class="toolbar-button-icon"></div></div>';
 	
-	// replace it
-	var dv2 = document.getElementById('controlbarOpenInViewerButton');
+	// replace the button
 	var parentDiv = dv2.parentNode;
 	parentDiv.replaceChild(dv1, dv2);
 }

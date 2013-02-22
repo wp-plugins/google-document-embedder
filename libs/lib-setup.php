@@ -211,22 +211,22 @@ function update_profiles() {
 		$updated = false;
 		
 		$id = $profile['profile_id'];
-		$data = unserialize( $profile['profile_data'] );
-
-		foreach ( $default as $k => $v ) {
-			if ( $k !== "desc" && ! array_key_exists( $k, $data ) ) {
-				$data[$k] = $default[$k];
-				
-				$updated = true;
+		if ( $data = @unserialize( $profile['profile_data'] ) ) {
+			foreach ( $default as $k => $v ) {
+				if ( $k !== "desc" && ! array_key_exists( $k, $data ) ) {
+					$data[$k] = $default[$k];
+					
+					$updated = true;
+				}
 			}
-		}
-		
-		if ( $updated ) {
-			// write updated profile
-			$data = serialize( $data );
-			$newpro = array( $profile['profile_name'], $profile['profile_desc'], $data );
-			if ( gde_write_profile( $newpro, $id, true ) < 1 ) {
-				gde_dx_log("Failed to update profile '" . $profile['profile_name'] . "'");
+			
+			if ( $updated ) {
+				// write updated profile
+				$data = serialize( $data );
+				$newpro = array( $profile['profile_name'], $profile['profile_desc'], $data );
+				if ( gde_write_profile( $newpro, $id, true ) < 1 ) {
+					gde_dx_log("Failed to update profile '" . $profile['profile_name'] . "'");
+				}
 			}
 		}
 	}
@@ -320,7 +320,7 @@ function gde_get_api_key( $ver ) {
 		$response = wp_remote_get( $api_url );
 		
 		if ( is_wp_error( $response ) ) {
-			$error = $result->get_error_message();
+			$error = $response->get_error_message();
 			gde_dx_log("API Error: " . $error);
 			// can't get response
 			return '';

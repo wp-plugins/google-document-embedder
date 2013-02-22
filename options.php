@@ -20,7 +20,7 @@ if ( isset( $_POST['_general_default'] ) ) {
 	$tabid = "protab";
 	
 	if ( ! empty( $_POST['profile-name'] ) ) {
-		$name = preg_replace( "/[^A-Za-z0-9 -]/", '', $_POST['profile-name'] );
+		$name = preg_replace( "/[^A-Za-z0-9 -]/", '', trim( $_POST['profile-name'] ) );
 		$name = strtolower( str_replace( " ", "-", $name ) );
 		
 		if ( ! preg_match( '/[\pL]/u', $name ) ) {
@@ -31,7 +31,7 @@ if ( isset( $_POST['_general_default'] ) ) {
 			gde_show_msg( __('Profile name already exists. Please choose another name.', 'gde'), true );
 		} elseif ( gde_profile_to_profile( $_POST['parent'], $name, stripslashes( $_POST['description'] ) ) ) {
 			// intercept and redirect to edit profile page
-			$lastid = $wpdb->insert_id;
+			$lastid = gde_profile_name_exists( $name );
 			$_POST['action'] = "edit";
 			$_POST['profile'] = $lastid;
 			$noload = "gentab";
