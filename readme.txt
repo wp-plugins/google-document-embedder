@@ -4,7 +4,7 @@ Tags: doc, docx, pdf, ppt, pptx, xls, psd, zip, rar, tiff, ttf, office, powerpoi
 Author URI: http://www.davistribe.org/code/
 Donate link: http://www.davistribe.org/gde/donate/
 Requires at least: 3.2
-Tested up to: 3.5
+Tested up to: 3.6
 Stable tag: trunk
 License: GPLv2 or later
 
@@ -110,7 +110,7 @@ be "publicly available." Please save the file in a publicly accessible location 
 = What about private documents? =
 The file must be publically available, but there is no reason why you need to publish the location. With GDE you can hide the URL as well
 as block direct downloads of the file. In combination with robots.txt and other mechanisms for blocking search engines or file browsing on
-your site, the document can be effectively private to everyone but the viewer itself.
+your site, the document can be effectively private to everyone but the viewer itself. You can also try the [Secure Documents](http://www.davistribe.org/gde/secure-docs/ "Secure Documents") feature for more robust document security.
 
 = Does it work with files saved in Google Docs/Drive? =
 This plug-in utilizes the viewer from Google Docs in a standalone fashion. There is no direct integration with Google Docs and even those
@@ -137,10 +137,17 @@ More common questions are answered on the GDE web site [here](http://www.davistr
 
 (E) Enhanced Viewer
 
+= 2.5.7 =
+* Fixed: No submit button on support tab in using < WP 3.4 (thanks fatherb)
+* Fixed: save=0 option not respected in some cases
+* Fixed: (E) cache=0 option breaks secure document display (thanks Manish)
+* Fixed: (E) Javascript sometimes broken with WP_DEBUG enabled
+* Changed: (E) Increased timeout period on fetching document contents
+
 = 2.5.6 =
 * Fixed: (E) Hangs on document load due to Google code changes
 * Fixed: (E) Profile language not honored on New Window button tip (thanks Ege)
-* Fixed: New profiles appear blank on initial load
+* Fixed: New profiles may appear blank on initial load
 * Fixed: HTTP status code check is too stringent for some servers
 * Fixed: Spurious database error on deactivation if log table not present
 * Fixed: PHP error when API key retrieval fails
@@ -244,5 +251,5 @@ More common questions are answered on the GDE web site [here](http://www.davistr
 
 == Upgrade Notice ==
 
-= 2.5.6 =
-Bug fix release
+= 2.5.7 =
+Maintenance release

@@ -271,7 +271,7 @@ if ( isset( $_GET['a'] ) && $_GET['a'] == 'gt') {
  */
 function gde_get_contents( $url ) {
 	
-	$response = wp_remote_get( $url, array( 'sslverify' => false ) );
+	$response = wp_remote_get( $url, array( 'timeout' => 15, 'sslverify' => false ) );
 	
 	if ( is_wp_error( $response ) || wp_remote_retrieve_response_code( $response ) != 200 ) {
 		gde_dx_log("Error retrieving document");
@@ -306,7 +306,7 @@ function gde_curl_get_contents( $url ) {
 	curl_setopt_array( $ch, array(
 	    CURLOPT_URL            => $url, 
 	    CURLOPT_RETURNTRANSFER => true,
-	    CURLOPT_CONNECTTIMEOUT => 5,	// same as HTTP API
+	    CURLOPT_CONNECTTIMEOUT => 15,	// HTTP API is 5, overridden in gde_get_contents to match this
 	    CURLOPT_SSL_VERIFYPEER => false
 	) );
 	$file_contents = curl_exec( $ch );

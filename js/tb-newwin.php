@@ -48,7 +48,7 @@ if (top === self) {
 	
 <?php
 	// use WP language (not Google) for tooltip if full screen - this string doesn't exist in Google version
-	if ( $_GET['a'] == "fs" ) {
+	if ( isset( $_GET['a'] ) && $_GET['a'] == "fs" ) {
 ?>
 	dv1.setAttribute("title", "<?php echo $tip; ?>");
 <?php

@@ -135,9 +135,11 @@
 		echo "Yes\n";
 	} else { echo "No\n"; }
 	
-	echo "\n-- Active Theme --\n";
-	$theme = wp_get_theme();
-	echo $theme->Name . " " . $theme->Version;
+	if (version_compare($wp_version, "3.4", ">") ) {
+		echo "\n-- Active Theme --\n";
+		$theme = wp_get_theme();
+		echo $theme->Name . " " . $theme->Version;
+	}
 	
 	echo "\n\n--- Other Active Plugins ---\n";
 	$plugins = get_plugins();

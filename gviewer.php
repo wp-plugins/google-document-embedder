@@ -8,7 +8,7 @@ Author: Kevin Davis
 Author URI: http://www.davistribe.org/
 Text Domain: gde
 Domain Path: /languages/
-Version: 2.5.6
+Version: 2.5.7
 License: GPLv2
 */
 
@@ -38,7 +38,7 @@ License: GPLv2
  */
 
 // boring init junk
-$gde_ver 				= "2.5.6.98";
+$gde_ver 				= "2.5.7.98";
 $gde_db_ver 			= "1.2";		// update also in gde_activate()
 
 require_once( plugin_dir_path( __FILE__ ) . 'functions.php' );
@@ -132,8 +132,10 @@ function gde_do_shortcode( $atts ) {
 	}
 	
 	// use profile defaults if shortcode override not defined
-	if ( empty( $save ) ) {
-		$save = $profile['link_show'];
+	if ( $save !== "0" ) {
+		if ( empty( $save ) ) {
+			$save = $profile['link_show'];
+		}
 	}
 	if ( empty( $width ) ) {
 		$width = $profile['default_width'];
@@ -226,7 +228,8 @@ function gde_do_shortcode( $atts ) {
 		}
 		
 		// obfuscate filename if cache disabled (globally or via shortcode)
-		if ( ! empty( $links[0] ) && ( $cache == "off" || $cache == "0" ) ) {
+		// note that this is ignored if the document is secure to prevent each hit from generating a new db row
+		if ( ! empty( $links[1] ) && ( $cache == "off" || $cache == "0" ) ) {
 			$links[0] .= "?" . time();
 		}
 		

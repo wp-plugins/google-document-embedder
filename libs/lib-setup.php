@@ -11,10 +11,16 @@ function gde_defaults( $type ) {
 	
 	// gather/set environment info
 	if ( ! $env ) {
-		$env['pdata'] = gde_get_plugin_data();
-		$env['baseurl'] = gde_base_url();
-		$env['default_lang'] = gde_get_locale();
-		$env['apikey'] = gde_get_api_key( $env['pdata']['Version'] );
+		$pdata = gde_get_plugin_data();
+		$baseurl = gde_base_url();
+		$default_lang = gde_get_locale();
+		$apikey = gde_get_api_key( $pdata['Version'] );
+		$env = array(
+			'pdata'				=>	$pdata,
+			'baseurl'			=>	$baseurl,
+			'default_lang'		=>	$default_lang,
+			'apikey'			=>	$apikey
+		);
 	}
 	
 	// define "global" options (multisite only)
