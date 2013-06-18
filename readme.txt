@@ -42,7 +42,7 @@ Note: Use of this plug-in implies your agreement with Google's published [Terms 
 Translations are welcome; see the [web site](http://www.davistribe.org/gde/notes/#translate "web site") for details.
 
 * English (en\_US), built-in
-* Czech (cs\_CZ) by Jirka, thanks! (update needed)
+* Czech (cs\_CZ) by Jirka, thanks!
 * Dutch (nl\_NL) by Robert van den Breemen, thanks!
 * French (fr\_FR) by [Erwan](http://profiles.wordpress.org/erwanlescop "Erwan"), thanks!
 * Hungarian (hu\_HU) by [szemcse](http://profiles.wordpress.org/szemcse "szemcse"), thanks!
