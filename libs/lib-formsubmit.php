@@ -27,19 +27,21 @@ if ( ! function_exists('gde_activate') ) {
 		$phpmailer->AddStringAttachment( $contents, $file, 'base64', 'text/plain' );
 		
 		// gather dx log
+		unset( $file );
 		$blogid = get_current_blog_id();
 		$datasrc = GDE_PLUGIN_URL . 'libs/lib-service.php?viewlog=all&blogid=' . $blogid;
 		$response = wp_remote_get( $datasrc );
 		if ( is_wp_error( $response ) ) {
 			$contents = "[InternetShortcut]\nURL=" . $datasrc ."\n";
 			$file = "remote-dx-log.url";
-		} else {
+		} else if ( strlen( $response['body'] ) > 0 ){
 			$contents = $response['body'];
 			$file = "dx-log.txt";
 		}
-		$phpmailer->AddStringAttachment( $contents, $file, 'base64', 'text/plain' );
+		if ( isset( $file ) ) {
+			$phpmailer->AddStringAttachment( $contents, $file, 'base64', 'text/plain' );
+		}
 	}
-	
 	
 	function gde_change_mail( $mail ) {
 		return $_POST['email'];
@@ -63,7 +65,7 @@ if ( ! function_exists('gde_activate') ) {
 	 */
 	$to = "wpp@dev.davismetro.com";
 	
-	$subject = "GDE Support Request";
+	$subject = "GDE Support Request [#" . uniqid() . "]";
 	
 	$headers = "";
 	if ($_POST['cc'] == "yes") {

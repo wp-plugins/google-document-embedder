@@ -104,6 +104,7 @@ function gde_validate_file( $file = NULL, $force ) {
 	$nofile = __('File not specified, check shortcode syntax', 'gde');
 	$badlink = __('Requested URL is invalid', 'gde');
 	$badtype = __('Unsupported File Type', 'gde') . " (%e)";
+	$unktype = __('Unable to determine file type from URL', 'gde');
 	$notfound = __('Error retrieving file - if necessary turn off error checking', 'gde') . " (%e)";
 	
 	if ( ! $file ) {
@@ -139,6 +140,10 @@ function gde_validate_file( $file = NULL, $force ) {
 				$fn = basename( $file );
 				$fnp = gde_split_filename( $fn );
 				$type = $fnp[1];
+				
+				if ( $type == '' ) {
+					return $unktype;
+				}
 				$badtype = str_replace( "%e", $type, $badtype );
 				
 				return $badtype;

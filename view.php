@@ -179,7 +179,7 @@ if ( isset( $_GET['a'] ) && $_GET['a'] == 'gt') {
 		}
 		
 		// hide selection of text
-		if (strstr($vw, 'x')) {
+		if ( strstr( $vw, 'x' ) ) {
 			$search[] = 'class="page-image';
 			$replace[] = 'class="page-image noselect';
 			$newstyles[] = ".rubberband { display: none; }";
@@ -224,6 +224,26 @@ if ( isset( $_GET['a'] ) && $_GET['a'] == 'gt') {
 			$cssblock = '<link rel="stylesheet" type="text/css" href="'.$css."\">\n</head>";
 			$search[] = "</head>";
 			$replace[] = $cssblock;
+		}
+		
+		// override right-click behavior (if link is private)
+		if ( $profile['link_block'] == "yes" ) {
+			$search[] = "<body";
+			$replace[] = '<body oncontextmenu="return false;"';
+			$search[] = "</body>";
+			$replace[] = '
+			<script type="text/javascript">
+				if (document.addEventListener) {
+					document.addEventListener(\'contextmenu\', function(e) {
+						e.preventDefault();
+					}, false);
+				} else {
+					document.attachEvent(\'oncontextmenu\', function() {
+						window.event.returnValue = false;
+					});
+				}
+			</script>
+			'."\n</body>";
 		}
 		
 		// override new window behavior

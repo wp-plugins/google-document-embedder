@@ -137,8 +137,13 @@ More common questions are answered on the GDE web site [here](http://www.davistr
 
 (E) Enhanced Viewer
 
+= 2.5.8 =
+* Added: (E) Right-click menu disabled on secure documents
+* Fixed: Support tab service errors
+* Changed: Czech translation updated (thanks Jirka)
+
 = 2.5.7 =
-* Fixed: No submit button on support tab in using < WP 3.4 (thanks fatherb)
+* Fixed: No submit button on support tab if using < WP 3.4 (thanks fatherb)
 * Fixed: save=0 option not respected in some cases
 * Fixed: (E) cache=0 option breaks secure document display (thanks Manish)
 * Fixed: (E) Javascript sometimes broken with WP_DEBUG enabled
@@ -251,5 +256,5 @@ More common questions are answered on the GDE web site [here](http://www.davistr
 
 == Upgrade Notice ==
 
-= 2.5.7 =
+= 2.5.8 =
 Maintenance release

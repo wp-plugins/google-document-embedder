@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Google Doc Embedder\n"
 "POT-Creation-Date: 2013-01-29 13:40-0600\n"
-"PO-Revision-Date: 2013-01-29 13:41-0600\n"
-"Last-Translator: Kevin Davis <wpp@tnw.org>\n"
+"PO-Revision-Date: 2013-08-23 08:23-0600\n"
+"Last-Translator: Kevin Davis <kev@tnw.org>\n"
 "Language-Team: Kevin Davis <wpp@tnw.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -11,107 +11,107 @@ msgstr ""
 "X-Poedit-KeywordsList: __;_e\n"
 "X-Poedit-SearchPath-0: .\n"
 
-#: functions-admin.php:264
+#: functions-admin.php:266
 msgid "Import"
 msgstr ""
 
-#: functions-admin.php:275
+#: functions-admin.php:277
 msgid "Performing full import..."
 msgstr ""
 
-#: functions-admin.php:279 functions-admin.php:304
+#: functions-admin.php:281 functions-admin.php:306
 msgid "Importing profiles"
 msgstr ""
 
-#: functions-admin.php:285 functions-admin.php:299 functions-admin.php:310
-#: functions-admin.php:323
+#: functions-admin.php:287 functions-admin.php:301 functions-admin.php:312
+#: functions-admin.php:325
 msgid "done"
 msgstr ""
 
-#: functions-admin.php:288 functions-admin.php:297 functions-admin.php:313
-#: functions-admin.php:321
+#: functions-admin.php:290 functions-admin.php:299 functions-admin.php:315
+#: functions-admin.php:323
 msgid "failed"
 msgstr ""
 
-#: functions-admin.php:294
+#: functions-admin.php:296
 msgid "Importing settings"
 msgstr ""
 
-#: functions-admin.php:317
+#: functions-admin.php:319
 msgid "Importing settings... "
 msgstr ""
 
-#: functions-admin.php:326 functions-admin.php:569 options.php:141
+#: functions-admin.php:328 functions-admin.php:571 options.php:141
 msgid "Please select a valid export file to import."
 msgstr ""
 
-#: functions-admin.php:330
+#: functions-admin.php:332
 msgid "All or part of the import failed. See above for information."
 msgstr ""
 
-#: functions-admin.php:332
+#: functions-admin.php:334
 msgid "Import completed successfully."
 msgstr ""
 
-#: functions-admin.php:335
+#: functions-admin.php:337
 msgid "Return to GDE Settings"
 msgstr ""
 
-#: functions-admin.php:412 functions-admin.php:538 options.php:168
+#: functions-admin.php:414 functions-admin.php:540 options.php:168
 #: libs/tab-advanced.php:143
 msgid "Settings"
 msgstr ""
 
-#: functions-admin.php:421
+#: functions-admin.php:423
 msgid "You do not have sufficient permissions to access this page"
 msgstr ""
 
-#: functions-admin.php:526
+#: functions-admin.php:528
 msgid "plugin"
 msgstr ""
 
-#: functions-admin.php:527
+#: functions-admin.php:529
 msgid "Version"
 msgstr ""
 
-#: functions-admin.php:565
+#: functions-admin.php:567
 msgid "This profile will be permanently deleted."
 msgstr ""
 
-#: functions-admin.php:565 functions-admin.php:566 functions-admin.php:567
-#: functions-admin.php:570
+#: functions-admin.php:567 functions-admin.php:568 functions-admin.php:569
+#: functions-admin.php:572
 msgid "Are you sure?"
 msgstr ""
 
-#: functions-admin.php:566
+#: functions-admin.php:568
 msgid "Settings for this profile will overwrite the default profile."
 msgstr ""
 
-#: functions-admin.php:567
+#: functions-admin.php:569
 msgid ""
 "Your profile list will be reset to its original state. All changes will be "
 "lost."
 msgstr ""
 
-#: functions-admin.php:570
+#: functions-admin.php:572
 msgid ""
 "Any settings or duplicate profile names in this import will overwrite the "
 "current values."
 msgstr ""
 
-#: functions-admin.php:572
+#: functions-admin.php:574
 msgid "Please include a shortcode or message to request support."
 msgstr ""
 
-#: functions-admin.php:610
+#: functions-admin.php:612
 msgid "Embed file using Google Doc Embedder"
 msgstr ""
 
-#: functions-admin.php:627 libs/lib-eddialog.php:85
+#: functions-admin.php:629 libs/lib-eddialog.php:85
 msgid "Select the GDE viewer profile to use"
 msgstr ""
 
-#: functions-admin.php:778
+#: functions-admin.php:780
 msgid ""
 "You are running a pre-release version of Google Doc Embedder. Please watch "
 "this space for important updates."
@@ -130,24 +130,28 @@ msgid "Unsupported File Type"
 msgstr ""
 
 #: functions.php:107
+msgid "Unable to determine file type from URL"
+msgstr ""
+
+#: functions.php:108
 msgid "Error retrieving file - if necessary turn off error checking"
 msgstr ""
 
-#: functions.php:227
+#: functions.php:232
 msgid "Unknown"
 msgstr ""
 
 # Megabytes (for file size reporting)
-#: functions.php:229 libs/tab-advanced.php:38
+#: functions.php:234 libs/tab-advanced.php:38
 msgid "MB"
 msgstr ""
 
-#: functions.php:361 gviewer.php:301 libs/lib-setup.php:83
-#: libs/lib-setup.php:133
+#: functions.php:366 gviewer.php:304 libs/lib-setup.php:71
+#: libs/lib-setup.php:121
 msgid "Download"
 msgstr ""
 
-#: functions.php:500 view.php:399
+#: functions.php:505 view.php:417
 msgid "Error"
 msgstr ""
 
@@ -159,16 +163,16 @@ msgstr ""
 msgid "Unable to load requested profile."
 msgstr ""
 
-#: gviewer.php:235
+#: gviewer.php:238
 msgid "Unable to secure document"
 msgstr ""
 
-#: gviewer.php:398
+#: gviewer.php:401
 msgid "Setup wasn't able to create the required database tables."
 msgstr ""
 
 #: load.php:8 libs/lib-formsubmit.php:9 libs/lib-secure.php:9
-#: libs/lib-service.php:53 libs/lib-service.php:71 libs/lib-service.php:74
+#: libs/lib-service.php:12 libs/lib-service.php:59 libs/lib-service.php:80
 msgid "You do not have sufficient permissions to access this page."
 msgstr ""
 
@@ -248,7 +252,7 @@ msgstr ""
 msgid "Support"
 msgstr ""
 
-#: options.php:349
+#: options.php:349 libs/tab-support.php:29
 msgid "Help"
 msgstr ""
 
@@ -264,11 +268,11 @@ msgstr ""
 msgid "Make Default"
 msgstr ""
 
-#: view.php:44
+#: view.php:42
 msgid "Invalid URL format"
 msgstr ""
 
-#: view.php:400
+#: view.php:418
 msgid ""
 "Unable to retrieve document contents. Please try again or switch to Standard "
 "Viewer."
@@ -322,11 +326,11 @@ msgstr ""
 msgid "Use selected profile settings"
 msgstr ""
 
-#: libs/lib-eddialog.php:103 libs/lib-profile.php:189
+#: libs/lib-eddialog.php:103 libs/lib-profile.php:201
 msgid "Height"
 msgstr ""
 
-#: libs/lib-eddialog.php:108 libs/lib-profile.php:185
+#: libs/lib-eddialog.php:108 libs/lib-profile.php:197
 msgid "Width"
 msgstr ""
 
@@ -387,262 +391,262 @@ msgstr ""
 msgid "Edit Profile"
 msgstr ""
 
-#: libs/lib-profile.php:50
+#: libs/lib-profile.php:62
 msgid "Viewer Mode"
 msgstr ""
 
-#: libs/lib-profile.php:54
+#: libs/lib-profile.php:66
 msgid "Standard Viewer"
 msgstr ""
 
-#: libs/lib-profile.php:54
+#: libs/lib-profile.php:66
 msgid "Embed the basic viewer only"
 msgstr ""
 
-#: libs/lib-profile.php:55
+#: libs/lib-profile.php:67
 msgid "Enhanced Viewer"
 msgstr ""
 
-#: libs/lib-profile.php:55
+#: libs/lib-profile.php:67
 msgid "Enable extended viewer options"
 msgstr ""
 
-#: libs/lib-profile.php:65
+#: libs/lib-profile.php:77
 msgid "Enhanced Viewer Settings"
 msgstr ""
 
-#: libs/lib-profile.php:69
+#: libs/lib-profile.php:81
 msgid "Toolbar"
 msgstr ""
 
-#: libs/lib-profile.php:73
+#: libs/lib-profile.php:85
 msgid "Remove Toolbar"
 msgstr ""
 
-#: libs/lib-profile.php:78
+#: libs/lib-profile.php:90
 msgid "Use Mobile Toolbar"
 msgstr ""
 
-#: libs/lib-profile.php:82
+#: libs/lib-profile.php:94
 msgid "Mobile Devices Only (Default)"
 msgstr ""
 
-#: libs/lib-profile.php:82
+#: libs/lib-profile.php:94
 msgid "Use mobile toolbar when mobile device detected"
 msgstr ""
 
-#: libs/lib-profile.php:83
+#: libs/lib-profile.php:95
 msgid "Always"
 msgstr ""
 
-#: libs/lib-profile.php:83
+#: libs/lib-profile.php:95
 msgid "Use mobile toolbar for all visitors"
 msgstr ""
 
-#: libs/lib-profile.php:84
+#: libs/lib-profile.php:96
 msgid "Never"
 msgstr ""
 
-#: libs/lib-profile.php:84
+#: libs/lib-profile.php:96
 msgid "Never use mobile toolbar"
 msgstr ""
 
-#: libs/lib-profile.php:91
+#: libs/lib-profile.php:103
 msgid "Toolbar Items"
 msgstr ""
 
-#: libs/lib-profile.php:94
+#: libs/lib-profile.php:106
 msgid "Page Numbers"
 msgstr ""
 
-#: libs/lib-profile.php:95
+#: libs/lib-profile.php:107
 msgid "Previous/Next Page"
 msgstr ""
 
-#: libs/lib-profile.php:96
+#: libs/lib-profile.php:108
 msgid "Zoom In/Out"
 msgstr ""
 
-#: libs/lib-profile.php:97
+#: libs/lib-profile.php:109
 msgid "Full Screen/New Window"
 msgstr ""
 
-#: libs/lib-profile.php:100
+#: libs/lib-profile.php:112
 msgid ""
 "Uncheck items to remove from toolbar. Buttons will vary based on file type "
 "and device used."
 msgstr ""
 
-#: libs/lib-profile.php:104
+#: libs/lib-profile.php:116
 msgid "Full Screen Behavior"
 msgstr ""
 
-#: libs/lib-profile.php:108
+#: libs/lib-profile.php:120
 msgid "Google-Hosted Page (Default)"
 msgstr ""
 
-#: libs/lib-profile.php:110
+#: libs/lib-profile.php:122
 msgid "Full Screen Viewer"
 msgstr ""
 
-#: libs/lib-profile.php:115
+#: libs/lib-profile.php:127
 msgid "Open in New Window"
 msgstr ""
 
-#: libs/lib-profile.php:116
+#: libs/lib-profile.php:128
 msgid "Allow Logged-in Users Only"
 msgstr ""
 
-#: libs/lib-profile.php:117
+#: libs/lib-profile.php:129
 msgid "Allow Printing"
 msgstr ""
 
-#: libs/lib-profile.php:122
+#: libs/lib-profile.php:134
 msgid "Page Area Background Color"
 msgstr ""
 
-#: libs/lib-profile.php:127
+#: libs/lib-profile.php:139
 msgid "None (Transparent)"
 msgstr ""
 
-#: libs/lib-profile.php:132
+#: libs/lib-profile.php:144
 msgid "Page Border Color"
 msgstr ""
 
-#: libs/lib-profile.php:137
+#: libs/lib-profile.php:149
 msgid "No Border"
 msgstr ""
 
-#: libs/lib-profile.php:142
+#: libs/lib-profile.php:154
 msgid "Custom CSS File"
 msgstr ""
 
-#: libs/lib-profile.php:148
+#: libs/lib-profile.php:160
 msgid "URL of custom CSS file (may override some of the above options)"
 msgstr ""
 
-#: libs/lib-profile.php:152
+#: libs/lib-profile.php:164
 msgid "Security"
 msgstr ""
 
-#: libs/lib-profile.php:155
+#: libs/lib-profile.php:167
 msgid "Hide ability to select/copy/paste text"
 msgstr ""
 
-#: libs/lib-profile.php:156
+#: libs/lib-profile.php:168
 msgid "Block all download requests for file"
 msgstr ""
 
-#: libs/lib-profile.php:167
+#: libs/lib-profile.php:179
 msgid "Default Language"
 msgstr ""
 
-#: libs/lib-profile.php:179
+#: libs/lib-profile.php:191
 msgid "Language of toolbar button tips"
 msgstr ""
 
-#: libs/lib-profile.php:183
+#: libs/lib-profile.php:195
 msgid "Default Size"
 msgstr ""
 
-#: libs/lib-profile.php:194
+#: libs/lib-profile.php:206
 msgid "Enter as pixels or percentage (example: 500px or 100%)"
 msgstr ""
 
-#: libs/lib-profile.php:198
+#: libs/lib-profile.php:210
 msgid "File Base URL"
 msgstr ""
 
-#: libs/lib-profile.php:204
+#: libs/lib-profile.php:216
 msgid ""
 "Any file not starting with <code>http</code> will be prefixed by this value"
 msgstr ""
 
-#: libs/lib-profile.php:208
+#: libs/lib-profile.php:220
 msgid "Download Link"
 msgstr ""
 
-#: libs/lib-profile.php:212
+#: libs/lib-profile.php:224
 msgid "All Users"
 msgstr ""
 
-#: libs/lib-profile.php:212
+#: libs/lib-profile.php:224
 msgid "Download link visible to everyone by default"
 msgstr ""
 
-#: libs/lib-profile.php:213
+#: libs/lib-profile.php:225
 msgid "Logged-in Users"
 msgstr ""
 
-#: libs/lib-profile.php:213
+#: libs/lib-profile.php:225
 msgid "Download link visible to logged-in users"
 msgstr ""
 
-#: libs/lib-profile.php:214 libs/tab-advanced.php:93
+#: libs/lib-profile.php:226 libs/tab-advanced.php:93
 msgid "None"
 msgstr ""
 
-#: libs/lib-profile.php:214
+#: libs/lib-profile.php:226
 msgid "Download link is not visible by default"
 msgstr ""
 
-#: libs/lib-profile.php:221
+#: libs/lib-profile.php:233
 msgid "Link Text"
 msgstr ""
 
-#: libs/lib-profile.php:224
+#: libs/lib-profile.php:236
 msgid "You can further customize text using these dynamic replacements:"
 msgstr ""
 
-#: libs/lib-profile.php:225
+#: libs/lib-profile.php:237
 msgid "filename"
 msgstr ""
 
-#: libs/lib-profile.php:226
+#: libs/lib-profile.php:238
 msgid "file type"
 msgstr ""
 
-#: libs/lib-profile.php:227
+#: libs/lib-profile.php:239
 msgid "file size"
 msgstr ""
 
-#: libs/lib-profile.php:231
+#: libs/lib-profile.php:243
 msgid "Link Position"
 msgstr ""
 
-#: libs/lib-profile.php:235
+#: libs/lib-profile.php:247
 msgid "Above Viewer"
 msgstr ""
 
-#: libs/lib-profile.php:236
+#: libs/lib-profile.php:248
 msgid "Below Viewer"
 msgstr ""
 
-#: libs/lib-profile.php:242
+#: libs/lib-profile.php:254
 msgid "Link Behavior"
 msgstr ""
 
-#: libs/lib-profile.php:245
+#: libs/lib-profile.php:257
 msgid "Force download (bypass browser plugins)"
 msgstr ""
 
-#: libs/lib-profile.php:246
+#: libs/lib-profile.php:258
 msgid "Shorten URL"
 msgstr ""
 
-#: libs/lib-profile.php:254 libs/tab-advanced.php:122
+#: libs/lib-profile.php:266 libs/tab-advanced.php:122
 msgid "Save Changes"
 msgstr ""
 
-#: libs/lib-setup.php:64
+#: libs/lib-setup.php:52
 msgid "This is the default profile, used when no profile is specified."
 msgstr ""
 
-#: libs/lib-setup.php:89
+#: libs/lib-setup.php:77
 msgid "Hide document location and text selection, prevent downloads"
 msgstr ""
 
-#: libs/lib-setup.php:114
+#: libs/lib-setup.php:102
 msgid "Dark-colored theme, example of custom CSS option"
 msgstr ""
 
@@ -843,19 +847,22 @@ msgstr ""
 
 #: libs/tab-support.php:27
 msgid ""
-"Please review the documentation before submitting a request for support:"
+"Most support questions have already been answered. Please review these pages "
+"before asking for support:"
 msgstr ""
 
 #: libs/tab-support.php:30
 msgid "Plugin FAQ"
 msgstr ""
 
-#: libs/tab-support.php:32
-msgid "If you're still experiencing a problem, please complete the form below."
+#: libs/tab-support.php:37
+msgid "Support Request"
 msgstr ""
 
 #: libs/tab-support.php:38
-msgid "Support Request"
+msgid ""
+"Requests sent from this form are handled by an actual human, so please don't "
+"send test messages or other spam."
 msgstr ""
 
 #: libs/tab-support.php:42
@@ -924,21 +931,21 @@ msgid ""
 "attached."
 msgstr ""
 
-#: libs/tab-support.php:158
+#: libs/tab-support.php:160
 msgid ""
 "I'm less likely to be able to help you if you do not include debug "
 "information."
 msgstr ""
 
-#: libs/tab-support.php:160
+#: libs/tab-support.php:162
 msgid "Send Request"
 msgstr ""
 
-#: libs/tab-support.php:164
+#: libs/tab-support.php:166
 msgid "Request Sent"
 msgstr ""
 
-#: libs/tab-support.php:165
+#: libs/tab-support.php:167
 msgid ""
 "Delivery failed. You can manually send this information to wpp@tnw.org for "
 "help."

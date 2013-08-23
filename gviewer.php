@@ -8,7 +8,7 @@ Author: Kevin Davis
 Author URI: http://www.davistribe.org/
 Text Domain: gde
 Domain Path: /languages/
-Version: 2.5.7
+Version: 2.5.8
 License: GPLv2
 */
 
@@ -32,13 +32,13 @@ License: GPLv2
  *
  * @package    google-document-embedder
  * @author     Kevin Davis <wpp@tnw.org>
- * @copyright  Copyright 2012 Kevin Davis
+ * @copyright  Copyright 2013 Kevin Davis
  * @license    http://www.gnu.org/licenses/gpl.txt GPL 2.0
  * @link       http://www.davistribe.org/gde/
  */
 
 // boring init junk
-$gde_ver 				= "2.5.7.98";
+$gde_ver 				= "2.5.8.98";
 $gde_db_ver 			= "1.2";		// update also in gde_activate()
 
 require_once( plugin_dir_path( __FILE__ ) . 'functions.php' );

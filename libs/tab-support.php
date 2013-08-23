@@ -24,18 +24,18 @@
 ?>
 
 <div class="gde-support-warn">
-	<p><strong><?php _e('Please review the documentation before submitting a request for support:', 'gde'); ?></strong></p>
+	<p><strong><?php _e('Most support questions have already been answered. Please review these pages before asking for support:', 'gde'); ?></strong></p>
 	<ul style="list-style-type:square; padding-left:25px;line-height:1em;">
-		<li><a href="<?php echo $pdata['PluginURI']; ?>">Google Doc Embedder</a></li>
+		<li><a href="<?php echo $pdata['PluginURI']; ?>/notes/">Google Doc Embedder <?php _e('Help', 'gde'); ?></a></li>
 		<li><a href="<?php echo GDE_WP_URL; ?>faq/"><?php _e('Plugin FAQ', 'gde'); ?></a></li>
 	</ul>
-	<p><?php _e("If you're still experiencing a problem, please complete the form below.", 'gde'); ?></p>
 </div>
 <br clear="both" />
 
 <form action="<?php echo GDE_PLUGIN_URL;?>libs/lib-formsubmit.php" id="debugForm">
 
 <h3><?php _e('Support Request', 'gde'); ?></h3>
+<p><?php _e("Requests sent from this form are handled by an actual human, so please don't send test messages or other spam.", 'gde'); ?></p>
 
 <table class="form-table">
 <tr valign="top">
