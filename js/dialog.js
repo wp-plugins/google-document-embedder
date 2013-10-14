@@ -27,9 +27,9 @@ var GDEInsertDialog = {
 					update_sc();
 				});
 				
-				jQuery('#page').blur(function(){
-					update_sc();
-				});
+				//jQuery('#page').blur(function(){
+				//	update_sc();
+				//});
 				
 				jQuery('.save').click(function(){
 					 update_sc();
@@ -126,9 +126,9 @@ var GDEInsertDialog = {
 						shortcode = shortcode + '  width="'+width+'"';
 					}
 					
-					if (( jQuery('#page').val() != "1" ) & ( jQuery('#page').val() ) !='') {
-						shortcode = shortcode + '  page="'+jQuery('#page').val()+'"';
-					}
+					//if (( jQuery('#page').val() != "1" ) & ( jQuery('#page').val() ) !='') {
+					//	shortcode = shortcode + '  page="'+jQuery('#page').val()+'"';
+					//}
 					
 					if ( jQuery("input[name='save']:checked").val() == '1') {
 						shortcode = shortcode + '  save="1"';

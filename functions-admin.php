@@ -808,6 +808,7 @@ function gde_warn_on_plugin_page( $plugin_file ) {
  * @return  bool True or false, there is a (newer) beta available
  */
 function gde_check_for_beta( $plugin_file ) {
+	return false;	// disable beta api (bandwidth issues)
 	global $gdeoptions, $pdata;
 	
 	// beta checking is enabled
@@ -851,6 +852,7 @@ function gde_check_for_beta( $plugin_file ) {
  * @return  bool Whether or not a new beta is available
  */
 function gde_beta_available() {
+	return false;	// disable beta api (bandwidth issues)
 	global $gdeoptions, $pdata;
 	
 	$key = 'gde_beta_version';

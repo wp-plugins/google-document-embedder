@@ -4,11 +4,11 @@ Tags: doc, docx, pdf, ppt, pptx, xls, psd, zip, rar, tiff, ttf, office, powerpoi
 Author URI: http://www.davistribe.org/code/
 Donate link: http://www.davistribe.org/gde/donate/
 Requires at least: 3.2
-Tested up to: 3.6
+Tested up to: 3.7
 Stable tag: trunk
 License: GPLv2 or later
 
-Lets you embed MS Office, PDF, and many other file types in a web page using the Google Docs Viewer (no Flash or PDF browser plug-ins required).
+Lets you embed PDF, MS Office, and many other file types in a web page using the Google Docs Viewer (no Flash or PDF browser plug-ins required).
 
 == Description ==
 
@@ -93,7 +93,6 @@ Common optional attributes:
 * `profile=` : Enter the number or name of the desired profile for the viewer to use (default profile is used if not specified)
 * `width=` : To override the profile's default width of the viewer, enter a new width value - e.g., "400px" or "80%"
 * `height=` : To override the profile's default height of the viewer, enter a new height value - e.g., "400px" or "80%"
-* `page=` : Set to the number of the page you want the document to open up to (if not page 1)
 
 For a list of all available attributes, see [Usage](http://www.davistribe.org/gde/usage/ "Usage").
 
@@ -118,9 +117,8 @@ documents stored there and shared publicly do not embed reliably with their stan
 supported by the plug-in. Please store your original documents somewhere on your web site in their native supported formats.
 
 = Does it work in Multisite environments? =
-Yes, though the plugin does not support network activation at this time. For now, please activate individually on muultisite installs.
-I will work to improve this in a coming version. Otherwise, more granular multisite options are planned for future versions based on demand.
-If you use GDE in a multisite environment, I welcome your feedback on what functionality you would like to see.
+The plugin works on network installs, though it must be activated on a per-site basis (not network activated). There are no multisite
+specific features at this time, but it will function normally in this environment. If you use GDE in a multisite environment, I welcome your feedback on what functionality you would like to see.
 
 = Other Common Questions =
 More common questions are answered on the GDE web site [here](http://www.davistribe.org/gde/notes/ "Notes").
@@ -136,6 +134,10 @@ More common questions are answered on the GDE web site [here](http://www.davistr
 == Changelog ==
 
 (E) Enhanced Viewer
+
+= 2.5.9 =
+* Fixed: Mixed content restrictions while parent page is SSL
+* Removed: page= shortcode attribute (broken in Google Viewer)
 
 = 2.5.8 =
 * Added: (E) Right-click menu disabled on secure documents
@@ -256,5 +258,5 @@ More common questions are answered on the GDE web site [here](http://www.davistr
 
 == Upgrade Notice ==
 
-= 2.5.8 =
+= 2.5.9 =
 Maintenance release

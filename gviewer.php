@@ -3,12 +3,12 @@
 /*
 Plugin Name: Google Doc Embedder
 Plugin URI: http://www.davistribe.org/gde/
-Description: Lets you embed MS Office, PDF, TIFF, and many other file types in a web page using the Google Docs Viewer (no Flash or PDF browser plug-ins required).
+Description: Lets you embed PDF, MS Office, TIFF, and many other file types in a web page using the Google Docs Viewer (no Flash or PDF browser plug-ins required).
 Author: Kevin Davis
 Author URI: http://www.davistribe.org/
 Text Domain: gde
 Domain Path: /languages/
-Version: 2.5.8
+Version: 2.5.9
 License: GPLv2
 */
 
@@ -38,7 +38,7 @@ License: GPLv2
  */
 
 // boring init junk
-$gde_ver 				= "2.5.8.98";
+$gde_ver 				= "2.5.9.98";
 $gde_db_ver 			= "1.2";		// update also in gde_activate()
 
 require_once( plugin_dir_path( __FILE__ ) . 'functions.php' );
@@ -96,7 +96,7 @@ function gde_do_shortcode( $atts ) {
 		'height' => '',
 		'cache' => '',
 		'title' => '', // not yet implemented
-		'page' => '',
+		//'page' => '',	// support broken in Google Viewer
 		
 		// backwards compatibility < gde 2.5 (still work but now "deprecated" and discouraged in the documentation)
 		'authonly' => '',
@@ -241,8 +241,10 @@ function gde_do_shortcode( $atts ) {
 			// which viewer?
 			if ( $profile['viewer'] == "enhanced" ) {
 				$lnk = GDE_PLUGIN_URL . "view.php?url=" . urlencode( $links[0] ) . "&hl=" . $lang . "&gpid=" . $pid;
+				// make protocol-agnostic
+				$lnk = preg_replace( '/^https?:/i', '', $lnk );
 			} else {
-				$lnk = "http://docs.google.com/viewer?url=" . urlencode( $links[0]  ) . "&hl=" . $lang;
+				$lnk = "//docs.google.com/viewer?url=" . urlencode( $links[0]  ) . "&hl=" . $lang;
 			}
 			
 			// what mode?
@@ -264,10 +266,10 @@ function gde_do_shortcode( $atts ) {
 				
 				// frame attributes
 				$vattr[] = ' scrolling="no"';						// iphone scrolling bug
-				if ( ! empty( $page ) && is_numeric( $page ) ) {	// selected starting page
-					$page = (int) $page - 1;
-					$vattr[] = ' onload="javascript:this.contentWindow.location.hash=\':0.page.' . $page . '\';"';
-				}
+				//if ( ! empty( $page ) && is_numeric( $page ) ) {	// selected starting page
+				//	$page = (int) $page - 1;
+				//	$vattr[] = ' onload="javascript:this.contentWindow.location.hash=\':0.page.' . $page . '\';"';
+				//}
 				$vwr = str_replace( "%ATTRS%", implode( '', $vattr ), $vwr );
 			}
 			

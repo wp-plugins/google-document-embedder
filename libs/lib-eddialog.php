@@ -109,14 +109,14 @@ $profiles = gde_get_profiles();
 				<span class="note"><?php _e('Format: 40% or 300px', 'gde'); ?></span>
 			</td>
 		</tr>
-		<tr class="ovrride">
+		<!--tr class="ovrride">
 			<td align="right" class="gray dwl_gray">
 				<strong><?php _e('Start Page #', 'gde'); ?></strong>
 			</td>
 			<td valign="top">
 				<input name="page" type="text" class="opt dwl" id="page" size="6" value="1" />
 			</td>
-		</tr>
+		</tr-->
 		<tr class="ovrride">
 			<td align="right" class="gray dwl_gray">
 				<strong><?php _e('Show Download Link', 'gde'); ?></strong>

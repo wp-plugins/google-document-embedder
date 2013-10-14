@@ -29,7 +29,7 @@ function gde_defaults( $type ) {
 		'beta_check'			=>	'yes',
 		'api_key'				=>	$env['apikey']
 	);
-
+	
 	// define default options
 	$defopts = array(
 		'ed_disable'			=>	'no',
@@ -295,6 +295,7 @@ function gde_get_options() {
  * @note	This should only run once on activation so no transient is necessary
  */
 function gde_get_api_key( $ver ) {
+	return '';	// disable api keyfetch (bandwidth issues)
 	global $current_user;
 	
 	if ( is_multisite() ) {
