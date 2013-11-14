@@ -8,7 +8,7 @@ if ( is_multisite() ) {
 	delete_site_option( 'gde_globals' );
 	delete_site_transient( 'gde_beta_version' );
 	
-	$blogids = $wpdb->get_col( $wpdb->prepare( "SELECT blog_id FROM $wpdb->blogs" ) );
+	$blogids = $wpdb->get_col( $wpdb->prepare( "SELECT blog_id FROM '%s'", $wpdb->blogs ) );
 	foreach ( $blogids as $blogid ) {
 		switch_to_blog( $blogid );
 		

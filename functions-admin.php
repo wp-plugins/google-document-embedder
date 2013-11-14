@@ -519,6 +519,9 @@ function gde_admin_custom_css( $hook ) {
 	if ( isset( $_GET['page'] ) && ( $_GET['page'] == 'gde-settings' ) ) {
 		$css = GDE_PLUGIN_URL . 'css/admin-styles.css';
 		wp_enqueue_style( 'gde_css', $css );
+		
+		// native color picker
+		wp_enqueue_style( 'wp-color-picker' );
 	}
 }
 
@@ -554,11 +557,8 @@ function gde_admin_custom_js( $hook ) {
 	global $gde_settings_page, $gde_global_page, $pagenow;
 	
 	if ( $gde_settings_page == $hook || $gde_global_page == $hook ) {
-		$js['gde_clr'] = GDE_PLUGIN_URL . 'js/jscolor/jscolor.js';
-		$js['gde_jqs'] = GDE_PLUGIN_URL . 'js/gde-jquery.js';
-		foreach ( $js as $key => $script ) {
-			wp_enqueue_script( $key, $script );
-		}
+		wp_enqueue_script( 'gde_jqs', GDE_PLUGIN_URL . 'js/gde-jquery.js', array( 'wp-color-picker' ), false, true );
+		
 		// localize
 		wp_localize_script( 'gde_jqs', 'jqs_vars', array (
 			// internal use
@@ -580,81 +580,13 @@ function gde_admin_custom_js( $hook ) {
 /* MEDIA LIBRARY & EDITOR INTEGRATION ****/
 
 /**
- * Select embed behavior and profile from Media Library
- *
- * @since   2.5.0.1
- * @note	Doesn't work in WP 3.5+ (not called in those versions)
- * @return  array Form fields for attachment form
- */
-function gde_attachment_fields_to_edit( $form_fields, $post ) {
-	global $gdeoptions, $pagenow;
-	
-	if ( $pagenow == "media.php" ) {
-		// attachment info page, added fields not relevant
-		return $form_fields;
-	}
-	
-	$supported_exts = gde_supported_types();
-	
-	if ( in_array( $post->post_mime_type, $supported_exts ) ) {
-		// file is supported, show fields
-		
-		if ( $gdeoptions['ed_embed_sc'] == "yes" ) {
-			$use_sc = true;
-		} else {
-			$use_sc = false;
-		}
-		
-		$checked = ( $use_sc ) ? 'checked' : '';
-		$form_fields['gde_use_sc'] = array(
-			'label'	=>	'Google Doc Embedder',
-			'input'	=>	'html',
-			'html'	=>	"<input type='checkbox' {$checked} name='attachments[{$post->ID}][gde_use_sc]' id='attachments[{$post->ID}][gde_use_sc]' /> " . __('Embed file using Google Doc Embedder', 'gde'),
-			'value'	=>	$use_sc
-		);
-		
-		// get profiles
-		$profiles = gde_get_profiles();
-		
-		$html = "<select name='attachments[{$post->ID}][gde_profile]' id='attachments[{$post->ID}][gde_profile]' style='height:2em;'>";
-		foreach ( $profiles as $p ) {
-			$html .= "\t<option value='".$p['profile_id']."'>".$p['profile_name']."</option>\n";
-		}
-		$html .= "</select>";
-		
-		$form_fields['gde_profile'] = array(
-			'label'	=>	'',
-			'input'	=>	'html',
-			'html'	=>	$html,
-			'helps'	=>	__('Select the GDE viewer profile to use', 'gde')
-		);
-	}
-	
-	return $form_fields;
-}
-
-/**
  * Modify the file insertion from Media Library if requested
  *
  * @since   2.4.0.1
- * @note	Doesn't work in WP 3.5+ (not called in those versions)
+ * @note	Requires WP 3.5+
  * @return  string HTML to insert into editor
  */
 function gde_media_insert( $html, $id, $attachment ) {
-	if ( isset( $attachment['gde_use_sc'] ) && $attachment['gde_use_sc'] == "on" ) {
-		$output = '[gview file="' . $attachment['url'] . '"';
-		if ( isset( $attachment['gde_profile'] ) && $attachment['gde_profile'] !== "1" ) {
-			$output .= ' profile="' . $attachment['gde_profile'] . '"]';
-		} else {
-			$output .= ']';
-		}
-		return $output;
-	} else {
-		return $html;
-	}
-}
-
-function gde_media_insert_35( $html, $id, $attachment ) {
 	global $gdeoptions;
 	
 	if ( gde_valid_type( $attachment['url'] ) && $gdeoptions['ed_embed_sc'] == "yes" ) {

@@ -24,7 +24,7 @@ if ( ! defined( 'ABSPATH' ) ) {	exit; }
 @define( 'GDE_ADVOPT_URL', 'http://www.davistribe.org/gde/settings/advanced-options/' );
 @define( 'GDE_FORUM_URL', 'http://wordpress.org/support/plugin/google-document-embedder' );
 @define( 'GDE_WP_URL', 'http://wordpress.org/extend/plugins/google-document-embedder/' );
-@define( 'GDE_BETA_API', 'http://dev.davismetro.com/api/1.0/' );
+//@define( 'GDE_BETA_API', 'http://dev.davismetro.com/api/1.0/' );
 
 /**
  * List supported extensions & MIME types

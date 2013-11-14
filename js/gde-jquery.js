@@ -61,8 +61,6 @@ jQuery(function ($) {
 	updateHelp('linkshow-h', title);
 	var title = $('#tb_mobile').children(":selected").attr("title");
 	updateHelp('mobile-h', title);
-	colorSelected('gdev_t', 'vw_bgcolor');
-	colorSelected('gdev_b', 'vw_pbcolor');
 	
 	// adv tab
 	var title = $('#beta_check').children(":selected").attr("title");
@@ -102,18 +100,11 @@ jQuery(function ($) {
 		toggleLink(lset);
 		allowSecure();
 	});
-	$('#gdev_t').change(function() {
-		colorSelected('gdev_t', 'vw_bgcolor');
-	});
-	$('#gdev_b').change(function() {
-		colorSelected('gdev_b', 'vw_pbcolor');
-	});
-	$('#vw_bgcolor').change(function() {
-		$('#vw_bgcolor_holder').val($('#vw_bgcolor').val());
-	});
-	$('#vw_pbcolor').change(function() {
-		$('#vw_pbcolor_holder').val($('#vw_pbcolor').val());
-	});
+	
+	$('#vw_bgcolor').attr('data-default-color', '#EBEBEB');
+	$('#vw_pbcolor').attr('data-default-color', '#DADADA');
+	var colorPickerOptions = { palettes: false };
+	$('.gde-color-field').wpColorPicker(colorPickerOptions).removeAttr('disabled');
 	
 	// adv tab
 	$('#ed_disable').change(function() {
@@ -171,17 +162,6 @@ jQuery(function ($) {
 			$('#linkblock').show();
 		} else {
 			$('#linkblock').hide();
-		}
-	}
-	
-	function colorSelected(source, target) {
-		if ($('#' + source).is(':checked')) {
-			$('#' + target).attr('disabled', 'disabled').hide();
-			$('#' + target + "_holder").show();
-		} else {
-			$('#' + target).removeAttr('disabled');
-			$('#' + target + "_holder").hide();
-			$('#' + target).show();
 		}
 	}
 	

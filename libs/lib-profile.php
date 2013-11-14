@@ -134,8 +134,7 @@ print_r($p);
 						<th scope="row"><?php _e('Page Area Background Color', 'gde'); ?></th>
 						<td>
 <?php
-	gde_profile_text( $p['vw_bgcolor'], 'vw_bgcolor', 'color {hash:true,required:false}', 10 );
-	gde_profile_text( $p['vw_bgcolor'], 'vw_bgcolor_holder', 'holder', 10, false );
+	gde_profile_text( $p['vw_bgcolor'], 'vw_bgcolor', 'gde-color-field', 10 );
 	gde_profile_checkbox( $p['vw_flags'], 'gdev_t', __('None (Transparent)', 'gde') );
 ?>
 						</td>
@@ -144,8 +143,7 @@ print_r($p);
 						<th scope="row"><?php _e('Page Border Color', 'gde'); ?></th>
 						<td>
 <?php
-	gde_profile_text( $p['vw_pbcolor'], 'vw_pbcolor', 'color {hash:true,required:false}', 10 );
-	gde_profile_text( $p['vw_pbcolor'], 'vw_pbcolor_holder', 'holder', 10, false );
+	gde_profile_text( $p['vw_pbcolor'], 'vw_pbcolor', 'gde-color-field', 10 );
 	gde_profile_checkbox( $p['vw_flags'], 'gdev_b', __('No Border', 'gde') );
 ?>
 						</td>

@@ -106,6 +106,14 @@ p.gde-submit {
 	margin-left: 3px;
 }
 
+#gdev_t, #gdev_b {
+	margin-top: -6px;
+}
+
+#bgcolor label, #pbcolor label {
+	vertical-align: super;
+}
+
 #toolbuttons td label, #fullscreen td label {
 	margin-right: 10px;
 }
