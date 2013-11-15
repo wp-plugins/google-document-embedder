@@ -124,7 +124,7 @@ if ( isset( $_POST['_general_default'] ) ) {
 	
 	// check import file validity
 	if ( isset( $_FILES['import'] ) && ! empty( $_FILES['import'] ) ) {
-		if ( $_FILES['import']['size'] > 0  && is_uploaded_file( $_FILES['import']['tmp_name'] ) && preg_match( '/json$/i', $_FILES['import']['type'] ) ) {
+		if ( $_FILES['import']['size'] > 0  && is_uploaded_file( $_FILES['import']['tmp_name'] ) && preg_match( '/json$/i', $_FILES['import']['name'] ) ) {
 			// file OK, check for json content
 			$json = json_decode( file_get_contents( $_FILES['import']['tmp_name'] ), true );
 			if ( $json !== null && is_array( $json ) ) {

@@ -135,6 +135,10 @@ More common questions are answered on the GDE web site [here](http://www.davistr
 
 (E) Enhanced Viewer
 
+= 2.5.11 =
+* Fixed: Settings and profiles import
+* Changed: Removed beta delivery API (disabled in 2.5.9)
+
 = 2.5.10 =
 * Fixed: PHP warning on multisite during uninstall (thanks TigranTovmasyan)
 * Changed: (E) Viewer settings use native color picker

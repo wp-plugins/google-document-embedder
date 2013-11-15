@@ -61,15 +61,10 @@
 ?>
 				</td>
 			</tr>
-			<tr valign="top">
+			<tr valign="top" style="display:none;">
 				<th scope="row"><?php _e('Version Notifications', 'gde'); ?></th>
 				<td>
-					<select name="beta_check" id="beta_check">
-<?php
-	gde_profile_option( $g['beta_check'], 'yes', __('All Versions', 'gde'), __('You will receive release and beta notifications', 'gde') );
-	gde_profile_option( $g['beta_check'], 'no', __('Release Versions Only', 'gde'), __('You will not receive beta notifications', 'gde') );
-?>
-					</select><br/>
+					<input type="hidden" name="beta_check" value="no">
 					<span class="gde-fnote" id="beta-h"></span>
 				</td>
 			</tr>

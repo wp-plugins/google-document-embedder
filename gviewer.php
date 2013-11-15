@@ -8,7 +8,7 @@ Author: Kevin Davis
 Author URI: http://www.davistribe.org/
 Text Domain: gde
 Domain Path: /languages/
-Version: 2.5.10
+Version: 2.5.11
 License: GPLv2
 */
 
@@ -331,14 +331,8 @@ if ( is_admin() ) {
 	// add quick settings link to plugin list
 	add_filter( "plugin_action_links_" . plugin_basename( __FILE__ ), 'gde_actlinks' );
 	
-	// beta notification (if enabled)
-	if ( gde_check_for_beta( __FILE__ ) ) {
-		// override plugin update text
-		add_action( 'admin_enqueue_scripts', 'gde_admin_beta_js_update' );
-	} else {
-		// no update available, but notify if currently using a beta
-		add_action( 'after_plugin_row', 'gde_warn_on_plugin_page' );
-	}
+	// notify if currently using a beta
+	add_action( 'after_plugin_row', 'gde_warn_on_plugin_page' );
 	
 	// editor integration
 	if ( ! isset( $gdeoptions['ed_disable'] ) || $gdeoptions['ed_disable'] == "no" ) {

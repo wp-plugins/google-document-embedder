@@ -671,8 +671,6 @@ function gde_register_mce_button( $buttons ) {
 	return $buttons;
 }
 
-/* BETA CHECKING ****/
-
 /**
  * Check current beta status
  *
@@ -730,130 +728,6 @@ function gde_warn_on_plugin_page( $plugin_file ) {
 				</tr>
 			');
 		}
-	}
-}
-
-/**
- * Run beta checking process
- *
- * @since   2.5.0.1
- * @return  bool True or false, there is a (newer) beta available
- */
-function gde_check_for_beta( $plugin_file ) {
-	return false;	// disable beta api (bandwidth issues)
-	global $gdeoptions, $pdata;
-	
-	// beta checking is enabled
-	if ( $gdeoptions['beta_check'] == "yes" ) {
-	
-		if ( gde_beta_available() ) {
-			
-			require GDE_PLUGIN_DIR . 'libs/lib-betacheck.php';
-			$betacheck = new PluginUpdateChecker(
-				GDE_BETA_API . 'beta-info/gde',
-				$plugin_file,
-				$pdata['slug']
-			);
-
-			if ( ! $state = get_option('external_updates-' . $pdata['slug']) ) {
-				// get beta info if not cached
-				$betacheck->checkForUpdates();
-				if ( ! $state = get_option('external_updates-' . $pdata['slug']) ) {
-					// something's wrong with the process - skip
-					gde_dx_log("Can't fetch beta info - skipping");
-					return false;
-				} else {
-					if ( version_compare( $state->update->version, $pdata['Version'], '>' ) ) {
-						return true;
-					}
-				}
-			} elseif ( version_compare( $state->update->version, $pdata['Version'], '>' ) ) {
-				return true;
-			}
-		}
-	}
-	
-	// otherwise...
-	return false;
-}
-
-/**
- * Check to see if a beta is available (generally or to this install's API key)
- *
- * @since   2.5.0.1
- * @return  bool Whether or not a new beta is available
- */
-function gde_beta_available() {
-	return false;	// disable beta api (bandwidth issues)
-	global $gdeoptions, $pdata;
-	
-	$key = 'gde_beta_version';
-	
-	if ( $avail_version = get_site_transient( $key ) ) {
-		// transient already set - compare versions
-		if ( version_compare( $pdata['Version'], $avail_version, '>=' ) ) {
-			// installed version is same or newer, don't do anything
-			return false;
-		} else {
-			// transient is newer, get beta info (no version check necessary)
-			return true;
-		}
-	} else {
-		// beta status unknown - attempt to fetch
-		$api_url = GDE_BETA_API . "versions/gde";
-		
-		if ( ! empty ( $gdeoptions['api_key'] ) ) {
-			$api_url .= '?api_key=' . $gdeoptions['api_key'];
-		}
-		
-		gde_dx_log("Performing remote beta check");
-		$response = wp_remote_get( $api_url );
-		
-		// set checking interval lower if currently running a beta
-		if ( gde_is_beta() ) {
-			$hours = 3;
-		} else {
-			$hours = 24;
-		}
-		
-		if ( ! is_wp_error( $response ) ) {
-			if ( $json = json_decode( wp_remote_retrieve_body( $response ) ) ) {
-				if ( isset( $json->beta->version ) ) {
-					$ver = $json->beta->version;
-					gde_dx_log("Beta detected: ".$ver);
-				}
-				if ( ! empty( $ver ) ) {
-					gde_dx_log("Beta detected, don't check again for $hours hours");
-					set_site_transient( $key, $ver, 60*60*$hours );
-					
-					// there is a beta available, let the checker decide if it's relevant
-					return true;
-				} else {
-					// no beta available - don't check again for x hours
-					gde_dx_log("No beta detected, check again in $hours hours");
-					set_site_transient( $key, $pdata['Version'], 60*60*24 );
-					return false;
-				}
-			}
-		}
-		
-		// otherwise (in case of retrieve failure)
-		return false;
-	}	
-}
-
-/**
- * Include custom js for plugin page (beta notification)
- *
- * @since   2.5.0.1
- * @return  void
- */
-function gde_admin_beta_js_update() {
-	global $pagenow;
-	
-	if ( current_user_can('activate_plugins' && $pagenow == 'plugins.php' ) ) {
-		$js = GDE_PLUGIN_URL . 'js/gde-betanotify.js';
-		wp_enqueue_script( 'gde_betanotify', $js );
 	}
 }
 

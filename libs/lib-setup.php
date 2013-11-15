@@ -14,7 +14,7 @@ function gde_defaults( $type ) {
 		$pdata = gde_get_plugin_data();
 		$baseurl = gde_base_url();
 		$default_lang = gde_get_locale();
-		$apikey = gde_get_api_key( $pdata['Version'] );
+		$apikey = '';
 		$env = array(
 			'pdata'				=>	$pdata,
 			'baseurl'			=>	$baseurl,
@@ -26,7 +26,7 @@ function gde_defaults( $type ) {
 	// define "global" options (multisite only)
 	$globalopts = array(
 		'file_maxsize'			=>	'12',
-		'beta_check'			=>	'yes',
+		'beta_check'			=>	'no',
 		'api_key'				=>	$env['apikey']
 	);
 	
@@ -39,7 +39,7 @@ function gde_defaults( $type ) {
 		'error_check'			=>	'yes',
 		'error_display'			=>	'yes',
 		'error_log'				=>	'no',
-		'beta_check'			=>	'yes',
+		'beta_check'			=>	'no',
 		'ga_enable'				=>	'no',
 		'ga_category'			=>	$env['pdata']['Name'],
 		'ga_label'				=>	'url',
@@ -285,72 +285,6 @@ function gde_get_options() {
 	}
 	
 	return $gdeoptions;
-}
-
-/**
- * Fetch Beta API Key
- *
- * @since   2.5.0.1
- * @return  string Stored or newly generated API key, or blank value.
- * @note	This should only run once on activation so no transient is necessary
- */
-function gde_get_api_key( $ver ) {
-	return '';	// disable api keyfetch (bandwidth issues)
-	global $current_user;
-	
-	if ( is_multisite() ) {
-		$gdeglobals = get_site_option( 'gde_globals' );
-		$api = $gdeglobals['api_key'];
-	} else {
-		$gdeoptions = get_option( 'gde_options' );
-		if ( isset( $gdeoptions['api_key'] ) ) {
-			$api = $gdeoptions['api_key'];
-		} else {
-			$api = "";
-		}
-	}
-	
-	if ( ! empty ( $api ) ) {
-		gde_dx_log("API key already set: $api");
-		return $api;
-	} else {
-		gde_dx_log("Requesting new API key");
-		get_currentuserinfo();
-		$keystring = $current_user->user_login . $current_user->user_email;
-		if ( empty($keystring) ) {
-			$keystring = "John146JesussaidtohimIamthewaythetruthandthelifenoonecomestotheFatherexceptthroughMe";
-		}
-		$keystring = str_shuffle( preg_replace("/[^A-Za-z0-9]/", "", $keystring ) );
-		
-		// attempt get new key
-		$api_url = GDE_BETA_API . "keygen/$keystring?p=gde&v=" . $ver;
-		$response = wp_remote_get( $api_url );
-		
-		if ( is_wp_error( $response ) ) {
-			$error = $response->get_error_message();
-			gde_dx_log("API Error: " . $error);
-			// can't get response
-			return '';
-		} else {
-			if ( $json = json_decode( wp_remote_retrieve_body( $response ) ) ) {
-				if ( isset( $json->api_key ) ) {
-					$key = $json->api_key;
-				}
-				if ( ! empty( $key ) ) {
-					gde_dx_log("API Key: $key");
-					return $key;
-				} else {
-					gde_dx_log("API returned empty response");
-					// empty value response
-					return '';
-				}
-			} else {
-				// invalid response
-				gde_dx_log("API returned invalid response");
-				return '';
-			}
-		}
-	}
 }
 
 /**

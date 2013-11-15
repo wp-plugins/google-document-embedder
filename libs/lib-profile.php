@@ -33,18 +33,6 @@ function gde_profile_form( $id = 1 ) {
 		}
 ?>
 
-<!--
-
-<?php
-
-echo "id: $id\n\n";
-echo gettype($p)."\n\n";
-print_r($p); 
-
-?>
-
--->
-
 <div id="profile-form">
 
 	<form action="" method="post">

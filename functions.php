@@ -17,14 +17,13 @@ if ( ! defined( 'ABSPATH' ) ) {	exit; }
 @define( 'GDE_PLUGIN_DIR', trailingslashit( plugin_dir_path( __FILE__ ) ) );
 @define( 'GDE_PLUGIN_URL', trailingslashit( plugin_dir_url( __FILE__ ) ) );
 
-// external urls (help, beta API, etc.)
+// help links
 @define( 'GDE_STDOPT_URL', 'http://www.davistribe.org/gde/settings/viewer-options/' );
 @define( 'GDE_ENHOPT_URL', 'http://www.davistribe.org/gde/settings/enhanced-options/' );
 @define( 'GDE_PROOPT_URL', 'http://www.davistribe.org/gde/settings/viewer-profiles/' );
 @define( 'GDE_ADVOPT_URL', 'http://www.davistribe.org/gde/settings/advanced-options/' );
 @define( 'GDE_FORUM_URL', 'http://wordpress.org/support/plugin/google-document-embedder' );
 @define( 'GDE_WP_URL', 'http://wordpress.org/extend/plugins/google-document-embedder/' );
-//@define( 'GDE_BETA_API', 'http://dev.davismetro.com/api/1.0/' );
 
 /**
  * List supported extensions & MIME types
