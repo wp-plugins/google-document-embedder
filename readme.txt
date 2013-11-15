@@ -137,7 +137,7 @@ More common questions are answered on the GDE web site [here](http://www.davistr
 
 = 2.5.11 =
 * Fixed: Settings and profiles import
-* Changed: Removed beta delivery API (disabled in 2.5.9)
+* Changed: Removed more unreachable legacy code
 
 = 2.5.10 =
 * Fixed: PHP warning on multisite during uninstall (thanks TigranTovmasyan)
@@ -147,6 +147,7 @@ More common questions are answered on the GDE web site [here](http://www.davistr
 = 2.5.9 =
 * Fixed: Mixed content restrictions while parent page is SSL
 * Removed: page= shortcode attribute (broken in Google Viewer)
+* Removed: Beta delivery api (server bandwidth issues/WP repo policies)
 
 = 2.5.8 =
 * Added: (E) Right-click menu disabled on secure documents
