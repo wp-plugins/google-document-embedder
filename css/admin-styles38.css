@@ -1,11 +1,11 @@
 #gdeadmintabs  ul.ui-tabs-nav {
-	border-bottom: 1px solid #CCCCCC;
-	font-size: 12px;
-	height: 27px;
+	border: none;
+	font-size: 13px;
+	height: 23px;
 	list-style: none outside none;
 	margin: 14px 0 0;
 	overflow: visible;
-	padding: 0 0 0 6px;
+	padding: 0;
 }
 
 #gdeadmintabs ul.ui-tabs-nav li {
@@ -21,42 +21,26 @@
 	width: auto;
 }
 
-#gdeadmintabs ul.ui-tabs-nav li.ui-tabs-selected a {
-	border-color: #CCCCCC #CCCCCC #FFFFFF;
-	border-image: none;
-	border-style: solid;
-	border-width: 1px;
-	color: #464646;
-	font-weight: normal;
-	height: 25px;
-	padding: 1px 13px 0;
-}
-
-#gdeadmintabs ul.ui-tabs-nav span {
-	font-size: 12px;
-	font-weight: bolder;
-}
-
 #gdeadmintabs ul.ui-tabs-nav li a {
 	background: none no-repeat scroll 0 50% transparent;
 	display: block;
 	float: left;
-	color: #AAAAAA;
+	color: #0074A2;
+	font-weight: 600;
 	position: relative;
 	line-height: 25px;
 	text-decoration: none;
-	padding: 1px 13px 0;
+	padding: 1px 26px 0 0;
+	border-style: none !important;
 }
 
 #gdeadmintabs ul.ui-tabs-nav li.ui-tabs-selected a {
-	border-style: solid;
-	color: #464646;
-	font-weight: normal;
+	color: #000000;
 	outline: 0 !important;
 }
 
 #gdeadmintabs ul.ui-tabs-nav li.ui-tabs-selected a:hover, #gdeadmintabs ul.ui-tabs-nav a:hover {
-	color: #D54E21;
+	color: #2EA2CC;
 	outline: 0 !important;
 }
 
@@ -149,8 +133,12 @@ input:-moz-placeholder { color: #777777; }
 	margin-bottom: 3em;
 }
 
+.nav-tab {
+	font-size: 13px !important;
+}
+
 h3.gde-fix-h3 {
 	/* fix profile tab heading style (match base h3) */
-	font-size: 1.17em !important;
+	font-size: 1.3em !important;
 	margin: 12px 0 !important;
 }

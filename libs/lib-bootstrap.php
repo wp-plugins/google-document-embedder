@@ -4,13 +4,16 @@
 $path = '';
 
 // bootstrap for getting ABSPATH constant to wp-load.php outside the admin screen
-if ( ! defined('WP_LOAD_PATH') ) {
+if ( ! defined( 'WP_LOAD_PATH' ) ) {
 	$classic_root = dirname( dirname( dirname( dirname( dirname( __FILE__ ) ) ) ) ) . '/';
 	if ( file_exists( $classic_root . 'wp-load.php' ) ) {
-		define('WP_LOAD_PATH', $classic_root);
+		define( 'WP_LOAD_PATH', $classic_root );
 	} else {
 		if ( file_exists( $path . 'wp-load.php' ) ) {
-			define('WP_LOAD_PATH', $path);
+			define( 'WP_LOAD_PATH', $path );
+			
+			// standardize current working directory
+			@chdir( WP_LOAD_PATH ); 
 		} else {
 			exit( 'Could not find wp-load.php' );
 		}

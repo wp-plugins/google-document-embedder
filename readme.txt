@@ -43,7 +43,7 @@ Translations are welcome; see the [web site](http://www.davistribe.org/gde/notes
 
 * English (en\_US), built-in
 * Czech (cs\_CZ) by Jirka, thanks!
-* Dutch (nl\_NL) by Robert van den Breemen, thanks!
+* Dutch (nl\_NL) by Niko Strijbol, thanks!
 * French (fr\_FR) by [Erwan](http://profiles.wordpress.org/erwanlescop "Erwan"), thanks!
 * Hungarian (hu\_HU) by [szemcse](http://profiles.wordpress.org/szemcse "szemcse"), thanks!
 * Russian (ru\_RU) by J&#243;zek, thanks!
@@ -134,6 +134,11 @@ More common questions are answered on the GDE web site [here](http://www.davistr
 == Changelog ==
 
 (E) Enhanced Viewer
+
+= 2.5.12 =
+* Changed: Updated mobile detection library
+* Changed: Updated settings navigation style for WP 3.8+
+* Changed: Updated Dutch translation (thanks Niko)
 
 = 2.5.11 =
 * Fixed: Settings and profiles import
@@ -228,5 +233,5 @@ More common questions are answered on the GDE web site [here](http://www.davistr
 
 == Upgrade Notice ==
 
-= 2.5.10 =
+= 2.5.12 =
 Maintenance release

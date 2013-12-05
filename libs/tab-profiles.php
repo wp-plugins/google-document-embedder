@@ -97,7 +97,7 @@
 		<div class="col-wrap">
 			<div class="form-wrap">
 				<?php gde_help_link( GDE_PROOPT_URL, 'right' ); ?>
-				<h3><?php _e('Add New Profile', 'gde'); ?></h3>
+				<h3 class="gde-fix-h3"><?php _e('Add New Profile', 'gde'); ?></h3>
 				<form action="" method="post">
 				<?php wp_nonce_field('create-new-profile', '_profiles_new'); ?>
 					<div class="form-field">

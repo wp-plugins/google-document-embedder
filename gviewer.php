@@ -8,7 +8,7 @@ Author: Kevin Davis
 Author URI: http://www.davistribe.org/
 Text Domain: gde
 Domain Path: /languages/
-Version: 2.5.11
+Version: 2.5.12
 License: GPLv2
 */
 
@@ -38,7 +38,7 @@ License: GPLv2
  */
 
 // boring init junk
-$gde_ver 				= "2.5.10.98";
+$gde_ver 				= "2.5.12.98";
 $gde_db_ver 			= "1.2";		// update also in gde_activate()
 
 require_once( plugin_dir_path( __FILE__ ) . 'functions.php' );

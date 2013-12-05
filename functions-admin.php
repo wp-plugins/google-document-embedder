@@ -516,8 +516,14 @@ function gde_sec_cleanup() {
  * @return  void
  */
 function gde_admin_custom_css( $hook ) {
+	global $wp_version;
+	
 	if ( isset( $_GET['page'] ) && ( $_GET['page'] == 'gde-settings' ) ) {
-		$css = GDE_PLUGIN_URL . 'css/admin-styles.css';
+		if ( version_compare( $wp_version, '3.8-RC1', '>=' ) ) {
+			$css = GDE_PLUGIN_URL . 'css/admin-styles38.css';
+		} else {
+			$css = GDE_PLUGIN_URL . 'css/admin-styles.css';
+		}
 		wp_enqueue_style( 'gde_css', $css );
 		
 		// native color picker
