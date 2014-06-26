@@ -136,6 +136,10 @@ More common questions are answered on the GDE web site [here](http://www.davistr
 
 (E) Enhanced Viewer
 
+= 2.5.14 =
+* Fixed: Download link had no text in some circumstances
+* Updated: Hungarian translation (thanks szemcse)
+
 = 2.5.13 =
 * Fixed: Javascript error within WP 3.9 visual editor (thanks Sergey)
 * Fixed: (E) Unsupported browser message on some documents
