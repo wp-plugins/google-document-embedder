@@ -4,13 +4,17 @@ Tags: doc, docx, pdf, ppt, pptx, xls, psd, zip, rar, tiff, ttf, office, powerpoi
 Author URI: http://www.davistribe.org/code/
 Donate link: http://www.davistribe.org/gde/donate/
 Requires at least: 3.5
-Tested up to: 3.9
+Tested up to: 4.0
 Stable tag: trunk
 License: GPLv2 or later
 
 Lets you embed PDF, MS Office, and many other file types in a web page using the Google Docs Viewer (no Flash or PDF browser plug-ins required).
 
 == Description ==
+
+**NOTE: A recent unannounced Google Viewer update removed much of the functionality of this plugin. Pending a rewrite of the Enhanced Viewer functionality or
+finding another maintainer, this plugin only works in "Standard Viewer" mode for the time being and does not support the full feature set documented. I regret
+this inconvenience.**
 
 Google Doc Embedder lets you embed several types of files into your WordPress pages using the Google Docs Viewer - allowing inline viewing (and optional downloading) of the following file types, with no Flash or PDF browser plug-ins required:
 
@@ -46,6 +50,7 @@ Translations are welcome; see the [web site](http://www.davistribe.org/gde/notes
 * Dutch (nl\_NL) by Niko Strijbol, thanks!
 * French (fr\_FR) by [Erwan](http://profiles.wordpress.org/erwanlescop "Erwan"), thanks!
 * Hungarian (hu\_HU) by [szemcse](http://profiles.wordpress.org/szemcse "szemcse"), thanks!
+* Italian (it\_IT) by [Marco](https://plus.google.com/+MarcoMardegan "Marco"), thanks!
 * Russian (ru\_RU) by J&#243;zek, thanks!
 * Spanish (es\_ES) by [elarequi](http://elarequi.com/propuestastic/ "elarequi"), thanks!
 * Turkish (tr\_TR) by [LettoBlog](http://profiles.wordpress.org/lettoblog "LettoBlog"), thanks!
@@ -136,6 +141,12 @@ More common questions are answered on the GDE web site [here](http://www.davistr
 
 (E) Enhanced Viewer
 
+= 2.5.15 =
+* Removed: Enhanced Viewer and moble option, pending rewrite after Google breakage
+* Added: Italian translation (thanks Marco)
+* Fixed: Potential block download and hidden toolbar conflict (thanks Tom)
+* Fixed: Garbled Cyrillic text in editor dialog (thanks bones852)
+
 = 2.5.14 =
 * Fixed: Download link had no text in some circumstances
 * Updated: Hungarian translation (thanks szemcse)
@@ -216,29 +227,6 @@ More common questions are answered on the GDE web site [here](http://www.davistr
 * Fixed: Default profile not created on clean install (thanks Clifford)
 * Fixed: Viewer size from shortcode doesn't default to pixel
 * Fixed: Erroneous error message when file validation is blocked
-
-= 2.5 =
-* Added: "Profiles" allow each viewer instance to have its own settings
-* Added: (E) Private document support (block downloads of source file)
-* Added: (E) Customize viewer color scheme
-* Added: (E) Full toolbar customization, including removal
-* Added: Backup/Import of settings and viewer profiles
-* Added: page= shortcode attribute to start viewer on designated page
-* Added: Beta delivery API for automatic updates of pre-release versions
-* Added: Media Library and editor integration improvements
-* Added: Support for dynamic protocol document links (thanks Clifford)
-* Added: French translation (thanks Erwan)
-* Added: Ukrainian translation (thanks J&#243;zek)
-* Fixed: Uses WordPress HTTP API instead of cURL etc. throughout
-* Fixed: (E) Hidden toolbar buttons still narrowly clickable (thanks rohan)
-* Fixed: Editor dialog and default base URL with non-standard include
-* Fixed: File validation fails if content-length missing (thanks paulod)
-* Fixed: Invalid HTML in support form
-* Changed: Completely rewritten core and administrative interface
-* Changed: (E) Improved default viewer toolbar style
-* Changed: Now requires WordPress 3.2+ (due to necessary PHP5 functions)
-* Changed: Errors now show inline instead of as HTML comments by default
-* Removed: force= shortcode attribute (redundant and confusing)
 
 [Full history...](http://www.davistribe.org/gde/changelog/ "Full history")
 

@@ -52,7 +52,7 @@ function gde_profile_form( $id = 1 ) {
 						<select name="viewer" id="viewer">
 <?php
 	gde_profile_option( $p['viewer'], 'standard', __('Standard Viewer', 'gde'), __('Embed the basic viewer only', 'gde') );
-	gde_profile_option( $p['viewer'], 'enhanced', __('Enhanced Viewer', 'gde'), __('Enable extended viewer options', 'gde') );
+	//gde_profile_option( $p['viewer'], 'enhanced', __('Enhanced Viewer', 'gde'), __('Enable extended viewer options', 'gde') );
 ?>
 						</select><br/>
 						<span class="gde-fnote" id="viewer-h"></span>
@@ -60,7 +60,7 @@ function gde_profile_form( $id = 1 ) {
 				</tr>
 			</tbody>
 		</table>
-		
+		<!--
 		<fieldset class="gde-inner<?php echo $hideenh; ?>" id="gde-enh-fs">
 			<legend><?php _e('Enhanced Viewer Settings', 'gde'); ?></legend>
 				<table class="form-table">
@@ -158,7 +158,7 @@ function gde_profile_form( $id = 1 ) {
 				</tbody>
 			</table>
 		</fieldset>
-		
+		-->
 		<table class="form-table">
 			<tbody>
 				<tr valign="top">

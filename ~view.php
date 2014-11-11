@@ -49,7 +49,8 @@ if ( isset( $_GET['a'] ) && $_GET['a'] == 'gt') {
 	
 	// get profile
 	if ( isset( $_GET['gpid'] ) ) {
-		if ( $profile = gde_get_profile( $_GET['gpid'] ) ) {
+		$gpid = mysql_real_escape_string( $_GET['gpid'] );
+		if ( $profile = gde_get_profile( $gpid ) ) {
 			$tb = $profile['tb_flags'];
 			$vw = $profile['vw_flags'];
 			$bg = $profile['vw_bgcolor'];
