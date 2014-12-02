@@ -241,7 +241,7 @@ function gde_profile_form( $id = 1 ) {
 					<td>
 <?php
 	gde_profile_checkbox( $p['link_force'], 'force', __('Force download (bypass browser plugins)', 'gde'), 'linkforce', 1 );
-	gde_profile_checkbox( $p['link_mask'], 'mask', __('Shorten URL', 'gde'), 'linkmask', 1 );
+	//gde_profile_checkbox( $p['link_mask'], 'mask', __('Shorten URL', 'gde'), 'linkmask', 1 );
 ?>
 					</td>
 				</tr>

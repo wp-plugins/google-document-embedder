@@ -1,5 +1,5 @@
 === Google Doc Embedder ===
-Contributors: k3davis
+Contributors: k3davis, danlester
 Tags: doc, docx, pdf, ppt, pptx, xls, psd, zip, rar, tiff, ttf, office, powerpoint, google
 Author URI: http://www.davistribe.org/code/
 Donate link: http://www.davistribe.org/gde/donate/
@@ -141,8 +141,11 @@ More common questions are answered on the GDE web site [here](http://www.davistr
 
 (E) Enhanced Viewer
 
+= 2.5.16 =
+* Removed: Masked URL ability, pending rewrite after Google breakage
+
 = 2.5.15 =
-* Removed: Enhanced Viewer and moble option, pending rewrite after Google breakage
+* Removed: Enhanced Viewer and mobile option, pending rewrite after Google breakage
 * Added: Italian translation (thanks Marco)
 * Fixed: Potential block download and hidden toolbar conflict (thanks Tom)
 * Fixed: Garbled Cyrillic text in editor dialog (thanks bones852)
