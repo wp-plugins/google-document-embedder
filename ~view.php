@@ -4,6 +4,10 @@
  * Enhanced Viewer
  */
 
+// disable if adddressed. $_GET['gpid'] below has SQL injection vulnerability and should
+// be replaced if this file is used again.
+exit;
+ 
 // access wp functions externally
 require_once('libs/lib-bootstrap.php');
 

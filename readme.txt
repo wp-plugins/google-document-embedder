@@ -141,6 +141,9 @@ More common questions are answered on the GDE web site [here](http://www.davistr
 
 (E) Enhanced Viewer
 
+= 2.5.17 =
+* Fixed: Potential security vulnerability in disabled enhanced viewer code
+
 = 2.5.16 =
 * Removed: Masked URL ability, pending rewrite after Google breakage
 

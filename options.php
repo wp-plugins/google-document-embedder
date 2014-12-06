@@ -203,11 +203,11 @@ if ( ! $import ) {
 					<span><?php _e('Advanced', 'gde'); ?></span>
 				</a>
 			</li>
-			<li id="suptab" class="ui-state-default ui-corner-top">
+			<!--li id="suptab" class="ui-state-default ui-corner-top">
 				<a href="#support" class="nav-tab">
 					<span><?php _e('Support', 'gde'); ?></span>
 				</a>
-			</li>
+			</li-->
 		</ul>
 	</div>
 	
@@ -241,7 +241,7 @@ if ( ! $import ) {
 		</div>
 
 		<div id="supcontent" class="gde-tab">
-			<?php gde_show_tab('support'); ?>
+			<?php //gde_show_tab('support'); ?>
 		</div>
 	</div>
 	
