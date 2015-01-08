@@ -1,22 +1,35 @@
 === Google Doc Embedder ===
-Contributors: k3davis, danlester
-Tags: doc, docx, pdf, ppt, pptx, xls, psd, zip, rar, tiff, ttf, office, powerpoint, google
+Contributors: danlester, k3davis
+Tags: doc, docx, pdf, ppt, pptx, xls, office, powerpoint, google, document, embed
 Author URI: http://www.davistribe.org/code/
 Donate link: http://www.davistribe.org/gde/donate/
 Requires at least: 3.5
-Tested up to: 4.0
+Tested up to: 4.1
 Stable tag: trunk
 License: GPLv2 or later
 
-Lets you embed PDF, MS Office, and many other file types in a web page using the Google Docs Viewer (no Flash or PDF browser plug-ins required).
+Lets you embed PDF, MS Office, and many other file types in a web page using the free Google Docs Viewer (no Flash or PDF browser plug-ins required).
 
 == Description ==
 
-**NOTE: A recent unannounced Google Viewer update removed much of the functionality of this plugin. Pending a rewrite of the Enhanced Viewer functionality or
-finding another maintainer, this plugin only works in "Standard Viewer" mode for the time being and does not support the full feature set documented. I regret
-this inconvenience.**
+Google Doc Embedder lets you embed several types of files into your WordPress pages using the free Google Docs Viewer - allowing inline viewing (and optional downloading) of a wide range of popular file types, with no Flash or PDF browser plug-ins required.
 
-Google Doc Embedder lets you embed several types of files into your WordPress pages using the Google Docs Viewer - allowing inline viewing (and optional downloading) of the following file types, with no Flash or PDF browser plug-ins required:
+> <strong>NOTE: Recent changes by Google to their viewer mean that some other plugins may be more suitable in some cases:</strong><br>
+> 
+> * If you are able to store your files in Google Drive, try the [Google Drive Embedder plugin](http://wp-glogin.com/wpgoogledoctodrive). This will be faster to display, and more reliable.
+> * If you are looking for mobile-friendly PDF embedding, or the ability to make it difficult to download the full PDF (the old 'enhanced mode'), please find out more about [our proposed new plugin](http://pdf-embedder.instapage.com/).
+> * If this plugin works as you require then we will continue to support it assuming Google still provides the underlying Doc Viewer in its current form!
+> 
+> This plugin only works in "Standard Viewer" mode for the time being since the recent changes to Google Doc Viewer were incompatible with the "Enhanced Viewer" mode.
+
+= More about Google Doc Embedder =
+
+Similar to services like Scribd, Google Doc Embedder will allow you to embed these files directly into your page or post, not requiring
+the user to have Microsoft Word, Adobe Reader, PowerPoint, or other software installed to view the contents. Unlike Scribd, the files do
+not need to be uploaded to any service first - including Google Docs - but can exist anywhere publicly accessible on your site or the
+internet.
+
+Supported file formats include:
 
 * Adobe Acrobat (PDF)
 * Microsoft Word (DOC/DOCX*)
@@ -32,11 +45,6 @@ Google Doc Embedder lets you embed several types of files into your WordPress pa
 * OpenType/TrueType Fonts (OTF, TTF)
 * XML Paper Specification (XPS)
 * Archive Files (ZIP/RAR)
-
-Similar to services like Scribd, Google Doc Embedder will allow you to embed these files directly into your page or post, not requiring
-the user to have Microsoft Word, Adobe Reader, PowerPoint, or other software installed to view the contents. Unlike Scribd, the files do
-not need to be uploaded to any service first - including Google Docs - but can exist anywhere publicly accessible on your site or the
-internet.
 
 Office XML (2007+) file formats are sometimes problematic with Google Viewer. Please test your documents, and when possible I recommend
 you use the Office 2003 equivalent formats instead.
@@ -238,5 +246,3 @@ More common questions are answered on the GDE web site [here](http://www.davistr
 
 == Upgrade Notice ==
 
-= 2.5.13 =
-Maintenance release
