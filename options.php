@@ -167,6 +167,10 @@ if ( ! $import ) {
 	<div class="icon32" id="icon-options-general"></div>
 	<h2>Google Doc Embedder <?php _e('Settings', 'gde'); ?></h2>
 	
+	<p><em>Please see the notice on our 
+		<a href="https://wordpress.org/plugins/google-document-embedder/" target="_blank">plugin homepage</a> to find out about recent changes to the Google Viewer.
+	</em></p>
+	
 	<div id="gdeadmintabs" class="ui-tabs ui-widget ui-widget-content ui-corner-all">
 		<ul class="nav-tab-wrapper ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all">
 <?php

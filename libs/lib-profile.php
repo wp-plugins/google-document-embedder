@@ -56,6 +56,10 @@ function gde_profile_form( $id = 1 ) {
 ?>
 						</select><br/>
 						<span class="gde-fnote" id="viewer-h"></span>
+						
+						<p><b>To find out why Enhanced Mode is no longer available, see the notice on our 
+							<a href="https://wordpress.org/plugins/google-document-embedder/" target="_blank">plugin homepage</a>.
+						</b></p>
 					</td>
 				</tr>
 			</tbody>
