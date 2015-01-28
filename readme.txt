@@ -149,6 +149,9 @@ More common questions are answered on the GDE web site [here](http://www.davistr
 
 (E) Enhanced Viewer
 
+= 2.5.19 =
+* Fixed potential XSS attack flaw - please update to this version.
+
 = 2.5.18 =
 * Added: Notice on settings page about recent changes to Google Viewer.
 

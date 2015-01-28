@@ -37,12 +37,12 @@ function gde_profile_form( $id = 1 ) {
 
 	<form action="" method="post">
 	<?php wp_nonce_field($naction, $nname); ?>
-	<input type="hidden" name="profile_id" value="<?php echo $id; ?>">
+	<input type="hidden" name="profile_id" value="<?php echo esc_attr($id); ?>">
 
 	<?php gde_help_link( GDE_STDOPT_URL, 'right' ); ?>
 	<h3><?php echo $title; ?></h3>
 	
-		<?php if ( isset( $desc ) ) { echo $desc; } ?>
+		<?php if ( isset( $desc ) ) { echo htmlentities($desc); } ?>
 		
 		<table class="form-table">
 			<tbody>
@@ -222,7 +222,7 @@ function gde_profile_form( $id = 1 ) {
 				<tr valign="top" id="linktext">
 					<th scope="row"><?php _e('Link Text', 'gde'); ?></th>
 					<td>
-						<input size="50" name="link_text" value="<?php echo $p['link_text']; ?>" type="text"><br/>
+						<input size="50" name="link_text" value="<?php echo esc_attr($p['link_text']); ?>" type="text"><br/>
 						<span class="gde-fnote"><?php _e('You can further customize text using these dynamic replacements:', 'gde'); ?></span><br>
 						<code>%FILE</code> : <?php _e('filename', 'gde'); ?> &nbsp;&nbsp;&nbsp;
 						<code>%TYPE</code> : <?php _e('file type', 'gde'); ?> &nbsp;&nbsp;&nbsp;
