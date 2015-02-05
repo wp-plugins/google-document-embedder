@@ -17,7 +17,7 @@ Google Doc Embedder lets you embed several types of files into your WordPress pa
 > <strong>NOTE: Recent changes by Google to their viewer mean that some other plugins may be more suitable in some cases:</strong><br>
 > 
 > * If you are able to store your files in Google Drive, try the [Google Drive Embedder plugin](http://wp-glogin.com/wpgoogledoctodrive). This will be faster to display, and more reliable.
-> * If you are looking for mobile-friendly PDF embedding, or the ability to make it difficult to download the full PDF (the old 'enhanced mode'), please find out more about [our proposed new plugin](http://pdf-embedder.instapage.com/).
+> * If you are looking for the ability to make it difficult to download the full PDF (the old 'enhanced mode'), please find out more about [our new plugin - PDF Embedder Secure](http://wp-pdf.com/secure/?utm_source=GDE%20Readme&utm_medium=wordpressorg&utm_campaign=Freemium).
 > * If this plugin works as you require then we will continue to support it assuming Google still provides the underlying Doc Viewer in its current form!
 > 
 > This plugin only works in "Standard Viewer" mode for the time being since the recent changes to Google Doc Viewer were incompatible with the "Enhanced Viewer" mode.
